@@ -32,3 +32,38 @@ application.windows32
 application.windows64
 application.macosx
 out
+
+# netbeans
+nbproject/private/
+build/
+nbbuild/
+
+# the dist file could make some problems
+# dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+.nb-gradle/
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Intellij
+.idea/
+*.iml
+*.iws
+
+# Mac
+.DS_Store
+
+# Maven
+log/
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
