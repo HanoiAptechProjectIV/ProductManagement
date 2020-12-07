@@ -35,12 +35,14 @@ application.macosx
 out
 
 # netbeans
-nbproject/private/
+nbproject/
 build/
 nbbuild/
+build.xml
+test/
 
 # the dist file could make some problems
-# dist/
+dist/
 nbdist/
 nbactions.xml
 nb-configuration.xml
