@@ -1,7 +1,6 @@
-create database ProductManagement
-use ProductManagement
+create database ProductManagement;
+use ProductManagement;
 
-drop database productmanagement
 
 create table Category (
 	id int not null identity(1,1) primary key, 
@@ -54,9 +53,3 @@ create table OrderDetail (
 	foreign key (order_id) references [Order](id),
 	foreign key ([user_id]) references [User](id)
 )
-
-alter table Brand add primary key (id)
-
-drop table [User]
-
-select * from [User]
