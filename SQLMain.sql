@@ -4,22 +4,26 @@ use ProductManagement;
 
 create table Category (
 	id int not null identity(1,1) primary key, 
-	name nvarchar(30)
+	name nvarchar(30),
+	description text
 )
 
 create table Brand (
 	id int not null identity(1,1) primary key, 
 	name nvarchar(30), 
 	logo varchar(50),
-	manufacturer nvarchar(30)
+	manufacturer nvarchar(30),
+	description text
 )
 
 create table Product (
 	id int not null identity(1,1) primary key,
-	name nvarchar(30),
-	description nvarchar(255),
-	price float, quantity int,
-	image varchar(50), 
+	name nvarchar(50),
+	description text,
+	price decimal(9,2), 
+	quantity int,
+	image text,
+	date_added datetime DEFAULT CURRENT_TIMESTAMP, 
 	category_id int,
 	brand_id int,
 	foreign key (category_id) references Category(id),
@@ -28,17 +32,18 @@ create table Product (
 
 create table [Order] (
 	id int not null identity(1,1) primary key,
-	created_day DateTime,
+	created_day DateTime DEFAULT CURRENT_TIMESTAMP,
 	total_price float
 )
 
 create table [User] (
 	id int not null identity(1,1) primary key,
-	username varchar(20),
-	[password] varchar(20),
-	name nvarchar(20),
+	username varchar(30),
+	[password] varchar(50),
+	name nvarchar(30),
+	gender bit,
 	phone varchar(20),
-	email varchar(20),
+	email varchar(50),
 	[address] nvarchar(50),
 	role int
 )
