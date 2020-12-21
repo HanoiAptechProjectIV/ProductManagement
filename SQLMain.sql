@@ -33,7 +33,7 @@ create table Product (
 create table [Order] (
 	id int not null identity(1,1) primary key,
 	created_day DateTime DEFAULT CURRENT_TIMESTAMP,
-	total_price float
+	amount float
 )
 
 create table [User] (
