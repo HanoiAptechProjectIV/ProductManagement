@@ -36,7 +36,7 @@ create table Product (
 	id int not null identity(1,1) primary key,
 	name nvarchar(50),
 	[description] text,
-	price float, 
+	price int, 
 	quantity int,
 	[image] varchar(50),
 	date_added datetime DEFAULT CURRENT_TIMESTAMP, 
@@ -62,7 +62,7 @@ create table [Order] (
 	created_day DateTime DEFAULT CURRENT_TIMESTAMP,
 	payment_day DateTime,
 	[user_id] int,
-	amount float,
+	amount int,
 	[status] varchar(50),
 	foreign key ([user_id]) references [User](id)
 )
