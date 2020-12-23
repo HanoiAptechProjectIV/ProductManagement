@@ -20,7 +20,7 @@ create table Product (
 	id int not null identity(1,1) primary key,
 	name nvarchar(50),
 	description text,
-	price float, 
+	price int, 
 	quantity int,
 	image varchar(50),
 	date_added datetime DEFAULT CURRENT_TIMESTAMP, 
@@ -33,7 +33,7 @@ create table Product (
 create table [Order] (
 	id int not null identity(1,1) primary key,
 	created_day DateTime DEFAULT CURRENT_TIMESTAMP,
-	amount float
+	amount int
 )
 
 create table [User] (
