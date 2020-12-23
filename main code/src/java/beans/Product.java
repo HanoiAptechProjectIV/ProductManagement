@@ -15,12 +15,12 @@ public class Product {
     private int id ,quantity, categoryId, brandId;
     private String name, description, image;
     private LocalDate dateAdded;
-    private double price;
+    private int price;
 
     public Product() {
     }
 
-    public Product(int id, int quantity, int categoryId, int brandId, String name, String description, String image, LocalDate dateAdded, double price) {
+    public Product(int id, int quantity, int categoryId, int brandId, String name, String description, String image, LocalDate dateAdded, int price) {
         this.id = id;
         this.quantity = quantity;
         this.categoryId = categoryId;
@@ -31,8 +31,13 @@ public class Product {
         this.dateAdded = dateAdded;
         this.price = price;
     }
-
-    public Product(int id, String name, double price) {
+    
+    public Product(String name, int price) {
+        this.name = name;
+        this.price = price;
+    }
+    
+    public Product(int id, String name, int price) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -107,11 +112,11 @@ public class Product {
         this.dateAdded = dateAdded;
     }
 
-    public double getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(int price) {
         this.price = price;
     }
     

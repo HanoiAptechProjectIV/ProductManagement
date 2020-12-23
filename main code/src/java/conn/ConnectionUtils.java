@@ -20,15 +20,15 @@ public class ConnectionUtils {
         String hostName = "localhost";
         String sqlInstanceName = "";
         String database = "ProductManagement";
-        String userName = "lab";
+        String username = "lab";
         String password = "";
  
-        return getConnection(hostName, sqlInstanceName, database, userName, password);
+        return getConnection(hostName, sqlInstanceName, database, username, password);
     }
  
     // Kết nối tới SQLServer, sử dụng thư viện SQLJDBC.
     private static Connection getConnection(String hostName, //
-            String sqlInstanceName, String database, String userName, String password)//
+            String sqlInstanceName, String database, String username, String password)//
             throws ClassNotFoundException, SQLException {
  
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
@@ -39,7 +39,7 @@ public class ConnectionUtils {
         String connectionURL = "jdbc:sqlserver://" + hostName + ":1433" //
                 + ";instance=" + sqlInstanceName + ";databaseName=" + database;
  
-        Connection conn = DriverManager.getConnection(connectionURL, userName, password);
+        Connection conn = DriverManager.getConnection(connectionURL, username, password);
         return conn;
     }
     

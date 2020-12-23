@@ -29,7 +29,7 @@ public class OrderDAO {
         while (rs.next()) {
             int id = rs.getInt("id");
             LocalDate createdDay = rs.getDate("created_day").toLocalDate();
-            double amount = rs.getDouble("amount");
+            int amount = rs.getInt("amount");
             
             Order order = new Order();
             order.setId(id);
@@ -50,7 +50,7 @@ public class OrderDAO {
  
         while (rs.next()) {
             LocalDate createdDay = rs.getDate("created_day").toLocalDate();
-            double amount = rs.getDouble("amount");
+            int amount = rs.getInt("amount");
             
             Order order = new Order();
             order.setId(id);
@@ -68,7 +68,7 @@ public class OrderDAO {
         java.sql.Date createDay = java.sql.Date.valueOf(order.getCreatedDay());
  
         pstm.setDate(1, createDay);
-        pstm.setDouble(2, order.getAmount());
+        pstm.setInt(2, order.getAmount());
  
         pstm.executeUpdate();
     }    
@@ -80,7 +80,7 @@ public class OrderDAO {
         java.sql.Date createDay = java.sql.Date.valueOf(order.getCreatedDay());
  
         pstm.setDate(1, createDay);
-        pstm.setDouble(2, order.getAmount());
+        pstm.setInt(2, order.getAmount());
         pstm.setInt(3, order.getId());
         
         pstm.executeUpdate();

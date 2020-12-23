@@ -44,12 +44,12 @@ public class LoginServlet extends HttpServlet {
  
     }
  
-    // Khi người nhập userName & password, và nhấn Submit.
+    // Khi người nhập username & password, và nhấn Submit.
     // Phương thức này sẽ được thực thi.
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String userName = request.getParameter("userName");
+        String username = request.getParameter("username");
         String password = request.getParameter("password");
         String rememberMeStr = request.getParameter("rememberMe");
         boolean remember = "Y".equals(rememberMeStr);
@@ -58,14 +58,14 @@ public class LoginServlet extends HttpServlet {
         boolean hasError = false;
         String errorString = null;
  
-        if (userName == null || password == null || userName.length() == 0 || password.length() == 0) {
+        if (username == null || password == null || username.length() == 0 || password.length() == 0) {
             hasError = true;
             errorString = "Required username and password!";
         } else {
             Connection conn = MyUtils.getStoredConnection(request);
             try {
                 // Tìm user trong DB.
-                user = UserDAO.findUser(conn, userName, password);
+                user = UserDAO.findUser(conn, username, password);
  
                 if (user == null) {
                     hasError = true;
@@ -81,7 +81,7 @@ public class LoginServlet extends HttpServlet {
         // forward (chuyển hướng) tới /WEB-INF/views/login.jsp
         if (hasError) {
             user = new User();
-            user.setUsername(userName);
+            user.setUsername(username);
             user.setPassword(password);
  
             // Lưu các thông tin vào request attribute trước khi forward.

@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class BrandDAO {
     public static List<Brand> queryBrand(Connection conn) throws SQLException {
-        String sql = "Select * from Brand a ";
+        String sql = "Select * from Brand";
  
         PreparedStatement pstm = conn.prepareStatement(sql);
  

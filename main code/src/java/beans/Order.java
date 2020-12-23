@@ -14,12 +14,12 @@ import java.time.LocalDate;
 public class Order {
     private int id;
     private LocalDate createdDay;
-    private double amount;
+    private int amount;
 
     public Order() {
     }
 
-    public Order(int id, LocalDate createdDay, double amount) {
+    public Order(int id, LocalDate createdDay, int amount) {
         this.id = id;
         this.createdDay = createdDay;
         this.amount = amount;
@@ -46,11 +46,11 @@ public class Order {
         this.createdDay = createdDay;
     }
 
-    public double getAmount() {
+    public int getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(int amount) {
         this.amount = amount;
     }
     

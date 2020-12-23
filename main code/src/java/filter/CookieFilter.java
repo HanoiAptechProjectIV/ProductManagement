@@ -63,9 +63,9 @@ public class CookieFilter implements Filter {
         // Cờ (flag) để kiểm tra Cookie.
         String checked = (String) session.getAttribute("COOKIE_CHECKED");
         if (checked == null && conn != null) {
-            String userName = MyUtils.getUserNameInCookie(req);
+            String username = MyUtils.getUserNameInCookie(req);
             try {
-                User user = UserDAO.findUser(conn, userName);
+                User user = UserDAO.findUser(conn, username);
                 MyUtils.storeLoginedUser(session, user);
             } catch (SQLException e) {
                 e.printStackTrace();

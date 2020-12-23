@@ -14,16 +14,16 @@
  </head>
  <body>
  
-    <jsp:include page="_header.jsp"></jsp:include>
-    <jsp:include page="_menu.jsp"></jsp:include>
+    <jsp:include page="../../_header.jsp"></jsp:include>
+    <jsp:include page="../../_menu.jsp"></jsp:include>
  
-    <h3>Hello: ${user.userName}</h3>
+    <h3>Hello: ${user.username}</h3>
  
-    User Name: <b>${user.userName}</b>
+    User Name: <b>${user.username}</b>
     <br />
-    Gender: ${user.gender } <br />
+    Password: ${user.password } <br />
  
-    <jsp:include page="_footer.jsp"></jsp:include>
+    <jsp:include page="../../_footer.jsp"></jsp:include>
  
  </body>
 </html>

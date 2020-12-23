@@ -79,9 +79,9 @@ public class EditProductServlet extends HttpServlet {
         int id = Integer.parseInt( request.getParameter("id"));
         String name = (String) request.getParameter("name");
         String priceStr = request.getParameter("price");
-        double price = 0;
+        int price = 0;
         try {
-            price = Double.parseDouble(priceStr);
+            price = Integer.parseInt(priceStr);
         } catch (Exception e) {
         }
         Product product = new Product(id, name, price);

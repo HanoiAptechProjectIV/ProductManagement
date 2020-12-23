@@ -34,9 +34,7 @@ public class HomeServlet extends HttpServlet {
        // (Người dùng không bao giờ truy cập trực tiếp được vào các trang JSP
        // đặt trong WEB-INF)
        RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/homeView.jsp");
-        
        dispatcher.forward(request, response);
-        
    }
  
    @Override

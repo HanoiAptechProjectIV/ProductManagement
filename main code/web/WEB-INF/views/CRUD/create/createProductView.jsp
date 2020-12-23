@@ -16,8 +16,8 @@
    </head>
    <body>
     
-      <jsp:include page="_header.jsp"></jsp:include>
-      <jsp:include page="_menu.jsp"></jsp:include>
+      <jsp:include page="../../_header.jsp"></jsp:include>
+      <jsp:include page="../../_menu.jsp"></jsp:include>
        
       <h3>Create Product</h3>
        
@@ -25,10 +25,6 @@
        
       <form method="POST" action="${pageContext.request.contextPath}/createProduct">
          <table border="0">
-            <tr>
-               <td>Code</td>
-               <td><input type="text" name="code" value="${product.code}" /></td>
-            </tr>
             <tr>
                <td>Name</td>
                <td><input type="text" name="name" value="${product.name}" /></td>
@@ -46,7 +42,7 @@
          </table>
       </form>
        
-      <jsp:include page="_footer.jsp"></jsp:include>
+      <jsp:include page="../../_footer.jsp"></jsp:include>
        
    </body>
 </html>

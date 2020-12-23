@@ -49,15 +49,14 @@ public class CreateProductServlet extends HttpServlet {
             throws ServletException, IOException {
         Connection conn = MyUtils.getStoredConnection(request);
  
-        int id = Integer.parseInt( request.getParameter("id"));
         String name = (String) request.getParameter("name");
         String priceStr = request.getParameter("price");
-        double price = 0;
+        int price = 0;
         try {
-            price = Double.parseDouble(priceStr);
+            price = Integer.parseInt(priceStr);
         } catch (Exception e) {
         }
-        Product product = new Product(id, name, price);
+        Product product = new Product(name, price);
  
         String errorString = null;
  

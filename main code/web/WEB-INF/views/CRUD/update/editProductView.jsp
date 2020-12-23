@@ -15,8 +15,8 @@
    </head>
    <body>
  
-      <jsp:include page="_header.jsp"></jsp:include>
-      <jsp:include page="_menu.jsp"></jsp:include>
+      <jsp:include page="../../_header.jsp"></jsp:include>
+      <jsp:include page="../../_menu.jsp"></jsp:include>
  
       <h3>Edit Product</h3>
  
@@ -24,11 +24,11 @@
  
       <c:if test="${not empty product}">
          <form method="POST" action="${pageContext.request.contextPath}/editProduct">
-            <input type="hidden" name="code" value="${product.code}" />
+            <input type="hidden" name="id" value="${product.id}" />
             <table border="0">
                <tr>
                   <td>Code</td>
-                  <td style="color:red;">${product.code}</td>
+                  <td style="color:red;">${product.id}</td>
                </tr>
                <tr>
                   <td>Name</td>
@@ -48,7 +48,7 @@
          </form>
       </c:if>
  
-      <jsp:include page="_footer.jsp"></jsp:include>
+      <jsp:include page="../../_footer.jsp"></jsp:include>
  
    </body>
 </html>

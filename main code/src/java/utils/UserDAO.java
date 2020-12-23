@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class UserDAO {
     public static List<User> queryUser(Connection conn) throws SQLException {
-        String sql = "Select * from [User] a ";
+        String sql = "Select * from [User]";
  
         PreparedStatement pstm = conn.prepareStatement(sql);
  
@@ -118,7 +118,7 @@ public class UserDAO {
     } 
     
     public static User findUser(Connection conn, String username, String password) throws SQLException {
-        String sql = "Select * from [User] a where a.username=?, a.password=?";
+        String sql = "Select * from [User] a where a.username=? and a.password=?";
  
         PreparedStatement pstm = conn.prepareStatement(sql);
         pstm.setString(1, username);

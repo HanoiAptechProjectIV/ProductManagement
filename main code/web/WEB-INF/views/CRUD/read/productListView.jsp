@@ -15,8 +15,8 @@
  </head>
  <body>
  
-    <jsp:include page="_header.jsp"></jsp:include>
-    <jsp:include page="_menu.jsp"></jsp:include>
+    <jsp:include page="../../_header.jsp"></jsp:include>
+    <jsp:include page="../../_menu.jsp"></jsp:include>
  
     <h3>Product List</h3>
  
@@ -32,14 +32,14 @@
        </tr>
        <c:forEach items="${productList}" var="product" >
           <tr>
-             <td>${product.code}</td>
+             <td>${product.id}</td>
              <td>${product.name}</td>
              <td>${product.price}</td>
              <td>
-                <a href="editProduct?code=${product.code}">Edit</a>
+                <a href="editProduct?id=${product.id}">Edit</a>
              </td>
              <td>
-                <a href="deleteProduct?code=${product.code}">Delete</a>
+                <a href="deleteProduct?id=${product.id}">Delete</a>
              </td>
           </tr>
        </c:forEach>
@@ -47,7 +47,7 @@
  
     <a href="createProduct" >Create Product</a>
  
-    <jsp:include page="_footer.jsp"></jsp:include>
+    <jsp:include page="../../_footer.jsp"></jsp:include>
  
  </body>
 </html>
