@@ -77,7 +77,7 @@ create table OrderDetail (
 	foreign key (order_id) references [Order](id)
 )
 
-create table EmployeeProduct (
+create table ProductManagement (
 	id int not null identity(1,1) primary key,
 	employee_id int,
 	product_id int,
@@ -85,7 +85,7 @@ create table EmployeeProduct (
 	foreign key (employee_id) references Employee(id)	
 )
 
-create table EmployeeOrder (
+create table OrderManagement (
 	id int not null identity(1,1) primary key,
 	employee_id int,
 	order_id int,
