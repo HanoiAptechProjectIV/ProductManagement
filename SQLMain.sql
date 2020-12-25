@@ -1,6 +1,11 @@
 create database ProductManagement;
 use ProductManagement;
 
+create table [Admin] (
+	username varchar(30) primary key,
+	[password] varchar(30)
+)
+insert into [Admin](username, [password]) values('admin', '123')
 
 create table Category (
 	id int not null identity(1,1) primary key, 
