@@ -51,10 +51,10 @@ create table [Order] (
 
 create table OrderDetail (
 	id int not null identity(1,1) primary key,
+	[status] varchar(50),
 	product_id int, 
 	order_id int, 
 	purchased_quantity int,
-	[status] varchar(50),
 	foreign key (product_id) references Product(id),
 	foreign key (order_id) references [Order](id),
 )
