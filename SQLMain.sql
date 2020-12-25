@@ -9,13 +9,13 @@ insert into [Admin](username, [password]) values('admin', '123')
 
 create table Category (
 	id int not null identity(1,1) primary key, 
-	name nvarchar(50),
+	name nvarchar(50) unique,
 	description text
 )
 
 create table Brand (
 	id int not null identity(1,1) primary key, 
-	name nvarchar(50), 
+	name nvarchar(50) unique, 
 	logo varchar(50),
 	manufacturer nvarchar(50),
 	description text
@@ -23,7 +23,7 @@ create table Brand (
 
 create table Product (
 	id int not null identity(1,1) primary key,
-	name nvarchar(50),
+	name nvarchar(50) unique,
 	description text,
 	price int, 
 	quantity int,
@@ -37,7 +37,7 @@ create table Product (
 
 create table [User] (
 	id int not null identity(1,1) primary key,
-	username varchar(30),
+	username varchar(30) unique,
 	[password] varchar(30),
 	name nvarchar(50),
 	gender bit,
