@@ -44,6 +44,7 @@ create table [User] (
 create table [Order] (
 	id int not null identity(1,1) primary key,
 	created_day DateTime DEFAULT CURRENT_TIMESTAMP,
+	payment_day DateTime,
 	amount int,
 	[user_id] int, 	
 	foreign key ([user_id]) references [User](id)	
