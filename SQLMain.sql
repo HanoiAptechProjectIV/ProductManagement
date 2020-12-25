@@ -7,10 +7,6 @@ create table Employee (
 	username varchar(30),
 	[password] varchar(50),
 	name nvarchar(30),
-	gender bit,
-	phone varchar(20),
-	email varchar(50),
-	[address] nvarchar(50),
 	[role] int
 )
 
