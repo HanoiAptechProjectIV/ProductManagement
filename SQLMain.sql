@@ -76,7 +76,7 @@ values('sản phẩm 1', 100000, 50, 'sản phẩm chất lượnng', '2020/12/2
 insert into [User](username, password, name, gender, phone, email, address)
 values('customer', '123', 'John Doe', 1, '098 765 4321', 'johndoe@customer.com', 'Ha Noi')
 
-insert into [Order](created_day, payment_day, amount, [user_id])
+insert into [Order](created_time, payment_time, amount, [user_id])
 values ('12/26/2020 15:00:00', '01/01/2021 15:28:00', 2200000, 1)
 
 insert into OrderDetail(status, product_id, order_id, purchased_quantity)
