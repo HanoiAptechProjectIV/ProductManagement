@@ -64,3 +64,19 @@ create table OrderDetail (
 	foreign key (product_id) references Product(id),
 	foreign key (order_id) references [Order](id),
 )
+
+insert into Category(name, description) values('danh mục 1', 'mô tả')
+
+insert into Brand (name, manufacturer, description) values('thương hiệu 1', 'made in china', 'mô tả')
+
+insert into Product(name, price, quantity, description, date_added, category_id, brand_id)
+values('sản phẩm 1', 100000, 50, 'sản phẩm chất lượnng', '12/26/2020', 1, 1)
+
+insert into [User](username, password, name, gender, phone, email, address)
+values('customer', '123', 'John Doe', 1, '098 765 4321', 'johndoe@customer.com', 'Ha Noi')
+
+insert into [Order](created_day, payment_day, amount, [user_id])
+values ('12/26/2020', '01/01/2021', 200000, 1)
+
+insert into OrderDetail(status, product_id, order_id, purchased_quantity)
+values('success transaction', 1, 1, 2)					   
