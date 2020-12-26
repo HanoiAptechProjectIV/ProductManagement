@@ -27,17 +27,17 @@ public class OrderDetailDAO {
         List<OrderDetail> list = new ArrayList<OrderDetail>();
         while (rs.next()) {
             int id = rs.getInt("id");
-            int name = rs.getInt("user_id");
-            int description = rs.getInt("product_id");
-            int logo = rs.getInt("order_id");
-            int manufacturer= rs.getInt("purchased_quantity");
+            String status = rs.getString("status");
+            int productId = rs.getInt("product_id");
+            int orderId = rs.getInt("order_id");
+            int purchasedQuantity= rs.getInt("purchased_quantity");
             
             OrderDetail orderDetail = new OrderDetail();
             orderDetail.setId(id);
-            orderDetail.setUserId(name);
-            orderDetail.setProductId(description);
-            orderDetail.setOrderId(logo);
-            orderDetail.setPurchasedQuantity(manufacturer);
+            orderDetail.setStatus(status);
+            orderDetail.setProductId(productId);
+            orderDetail.setOrderId(orderId);
+            orderDetail.setPurchasedQuantity(purchasedQuantity);
             list.add(orderDetail);
         }
         return list;
@@ -52,28 +52,54 @@ public class OrderDetailDAO {
         ResultSet rs = pstm.executeQuery();
  
         while (rs.next()) {
-            int name = rs.getInt("user_id");
-            int description = rs.getInt("product_id");
-            int logo = rs.getInt("order_id");
-            int manufacturer= rs.getInt("purchased_quantity");
+            String status = rs.getString("status");
+            int productId = rs.getInt("product_id");
+            int orderId = rs.getInt("order_id");
+            int purchasedQuantity= rs.getInt("purchased_quantity");
             
             OrderDetail orderDetail = new OrderDetail();
             orderDetail.setId(id);
-            orderDetail.setUserId(name);
-            orderDetail.setProductId(description);
-            orderDetail.setOrderId(logo);
-            orderDetail.setPurchasedQuantity(manufacturer);          
+            orderDetail.setStatus(status);
+            orderDetail.setProductId(productId);
+            orderDetail.setOrderId(orderId);
+            orderDetail.setPurchasedQuantity(purchasedQuantity);         
             return orderDetail;
         }
         return null;
     }
-
+    
+    public static List<OrderDetail> findOrderDetailList(Connection conn, int orderId) throws SQLException {
+        String sql = "Select * from OrderDetail a where a.order_id=?";
+ 
+        PreparedStatement pstm = conn.prepareStatement(sql);
+        pstm.setInt(1, orderId);
+ 
+        ResultSet rs = pstm.executeQuery();
+        List<OrderDetail> list = new ArrayList<OrderDetail>();
+        
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String status = rs.getString("status");
+            int productId = rs.getInt("product_id");
+            int purchasedQuantity= rs.getInt("purchased_quantity");
+            
+            OrderDetail orderDetail = new OrderDetail();
+            orderDetail.setId(id);
+            orderDetail.setStatus(status);
+            orderDetail.setProductId(productId);
+            orderDetail.setOrderId(orderId);
+            orderDetail.setPurchasedQuantity(purchasedQuantity);   
+            list.add(orderDetail);
+        }
+        return list;
+    }
+    
     public static void insertOrderDetail(Connection conn, OrderDetail orderDetail) throws SQLException {
-        String sql = "Insert into OrderDetail(user_id, product_id , order_id , purchased_quantity ) values (?,?,?,?)";
+        String sql = "Insert into OrderDetail(status, product_id , order_id , purchased_quantity ) values (?,?,?,?)";
  
         PreparedStatement pstm = conn.prepareStatement(sql);
  
-        pstm.setInt(1, orderDetail.getUserId());
+        pstm.setString(1, orderDetail.getStatus());
         pstm.setInt(2, orderDetail.getProductId());
         pstm.setInt(3, orderDetail.getOrderId());
         pstm.setInt(4, orderDetail.getPurchasedQuantity());
@@ -82,18 +108,17 @@ public class OrderDetailDAO {
     }    
     
     public static void updateOrderDetail(Connection conn, OrderDetail orderDetail) throws SQLException {
-        String sql = "Update OrderDetail set user_id =?, product_id =?, order_id =?, purchased_quantity  =? where id=? ";
+        String sql = "Update OrderDetail set status =?, product_id =?, purchased_quantity =? where id = ? ";
  
         PreparedStatement pstm = conn.prepareStatement(sql);
  
-        pstm.setInt(1, orderDetail.getUserId());
+        pstm.setString(1, orderDetail.getStatus());
         pstm.setInt(2, orderDetail.getProductId());
-        pstm.setInt(3, orderDetail.getOrderId());
-        pstm.setInt(4, orderDetail.getPurchasedQuantity());      
-        pstm.setInt(5, orderDetail.getId());      
+        pstm.setInt(3, orderDetail.getPurchasedQuantity());      
+        pstm.setInt(4, orderDetail.getId());
         
         pstm.executeUpdate();
-    }    
+    }      
     
     public static void deleteOrderDetail(Connection conn, int id) throws SQLException {
         String sql = "Delete From OrderDetail where id= ?";

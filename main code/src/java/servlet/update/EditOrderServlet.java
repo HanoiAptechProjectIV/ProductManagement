@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlet;
+package servlet.update;
 
 /**
  *
@@ -12,103 +12,112 @@ package servlet;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
- 
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
- 
-import beans.Product;
-import utils.ProductDAO;
+
+import beans.Order;
+import beans.OrderDetail;
+import java.time.LocalDateTime;
+import utils.OrderDAO;
 import utils.MyUtils;
- 
-@WebServlet(urlPatterns = { "/editProduct" })
-public class EditProductServlet extends HttpServlet {
+import utils.OrderDetailDAO;
+
+@WebServlet(urlPatterns = {"/editOrder"})
+public class EditOrderServlet extends HttpServlet {
+
     private static final long serialVersionUID = 1L;
- 
-    public EditProductServlet() {
+
+    public EditOrderServlet() {
         super();
     }
- 
+
     // Hiển thị trang sửa sản phẩm.
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Connection conn = MyUtils.getStoredConnection(request);
- 
+
         int id = Integer.parseInt(request.getParameter("id"));
- 
-        Product product = null;
- 
+        int idDetail = Integer.parseInt(request.getParameter("idOrderDetail"));
+
+        Order order = null;
+        OrderDetail orderDetail = null;
         String errorString = null;
- 
+
         try {
-            product = ProductDAO.findProduct(conn, id);
+            order = OrderDAO.findOrder(conn, id);
+            orderDetail = OrderDetailDAO.findOrderDetail(conn, idDetail);
         } catch (SQLException e) {
             e.printStackTrace();
             errorString = e.getMessage();
         }
- 
+
         // Không có lỗi.
         // Sản phẩm không tồn tại để edit.
         // Redirect sang trang danh sách sản phẩm.
-        if (errorString != null && product == null) {
-            response.sendRedirect(request.getServletPath() + "/productList");
+        if (errorString != null && order == null) {
+            response.sendRedirect(request.getServletPath() + "/orderList");
             return;
         }
- 
+
         // Lưu thông tin vào request attribute trước khi forward sang views.
         request.setAttribute("errorString", errorString);
-        request.setAttribute("product", product);
- 
+        request.setAttribute("order", order);
+        request.setAttribute("orderDetail", orderDetail);
+
         RequestDispatcher dispatcher = request.getServletContext()
-                .getRequestDispatcher("/WEB-INF/views/CRUD/update/editProductView.jsp");
+                .getRequestDispatcher("/WEB-INF/views/CRUD/update/editOrderView.jsp");
         dispatcher.forward(request, response);
- 
+
     }
- 
+
     // Sau khi người dùng sửa đổi thông tin sản phẩm, và nhấn Submit.
     // Phương thức này sẽ được thực thi.
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Connection conn = MyUtils.getStoredConnection(request);
- 
-        int id = Integer.parseInt( request.getParameter("id"));
-        String name = (String) request.getParameter("name");
-        String priceStr = request.getParameter("price");
-        int price = 0;
-        try {
-            price = Integer.parseInt(priceStr);
-        } catch (Exception e) {
-        }
-        Product product = new Product(id, name, price);
- 
+
+        int id = Integer.parseInt(request.getParameter("id"));
+        int idOrderDetail = Integer.parseInt(request.getParameter("idOrderDetail")); 
+        int userId = Integer.parseInt(request.getParameter("userId"));
+        int productId = Integer.parseInt(request.getParameter("productId"));
+        int amount = Integer.parseInt(request.getParameter("amount"));
+        int purchasedQuantity = Integer.parseInt(request.getParameter("purchasedQuantity"));
+        LocalDateTime createdTime = LocalDateTime.parse(request.getParameter("createdTime"));
+        LocalDateTime paymentTime = LocalDateTime.parse(request.getParameter("paymentTime"));
+        String status = request.getParameter("status");
+
+        Order order = new Order(id, createdTime, paymentTime, amount, userId);
+        OrderDetail orderDetail = new OrderDetail(idOrderDetail, id, productId, purchasedQuantity, status);
         String errorString = null;
- 
         try {
-            ProductDAO.updateProduct(conn, product);
+            OrderDAO.updateOrder(conn, order);
+            OrderDetailDAO.updateOrderDetail(conn, orderDetail);
         } catch (SQLException e) {
             e.printStackTrace();
             errorString = e.getMessage();
         }
         // Lưu thông tin vào request attribute trước khi forward sang views.
         request.setAttribute("errorString", errorString);
-        request.setAttribute("product", product);
- 
+        request.setAttribute("order", order);
+        request.setAttribute("orderDetail", orderDetail);
+
         // Nếu có lỗi forward sang trang edit.
         if (errorString != null) {
             RequestDispatcher dispatcher = request.getServletContext()
-                    .getRequestDispatcher("/WEB-INF/views/CRUD/update/editProductView.jsp");
+                    .getRequestDispatcher("/WEB-INF/views/CRUD/update/editOrderView.jsp");
             dispatcher.forward(request, response);
-        }
-        // Nếu mọi thứ tốt đẹp.
+        } // Nếu mọi thứ tốt đẹp.
         // Redirect sang trang danh sách sản phẩm.
         else {
-            response.sendRedirect(request.getContextPath() + "/productList");
+            response.sendRedirect(request.getContextPath() + "/orderList");
         }
     }
- 
+
 }

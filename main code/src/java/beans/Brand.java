@@ -13,7 +13,7 @@ public class Brand {
     private String name, logo, manufacturer, description;
     private int id;
 
-    public Brand(String name, String logo, String manufacturer, String description, int id) {
+    public Brand(int id, String name, String logo, String manufacturer, String description) {
         this.name = name;
         this.logo = logo;
         this.manufacturer = manufacturer;

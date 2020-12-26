@@ -23,8 +23,8 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
  
-import beans.User;
-import utils.UserDAO;
+import beans.Admin;
+import utils.AdminDAO;
 import utils.MyUtils;
  
 @WebFilter(filterName = "cookieFilter", urlPatterns = { "/*" })
@@ -46,12 +46,13 @@ public class CookieFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
+        System.out.println("Cookie filter");
         HttpServletRequest req = (HttpServletRequest) request;
         HttpSession session = req.getSession();
  
-        User userInSession = MyUtils.getLoginedUser(session);
-        // 
-        if (userInSession != null) {
+        Admin adminInSession = MyUtils.getLoginedAdmin(session);
+        // đã đăng nhập
+        if (adminInSession != null) {
             session.setAttribute("COOKIE_CHECKED", "CHECKED");
             chain.doFilter(request, response);
             return;
@@ -63,10 +64,10 @@ public class CookieFilter implements Filter {
         // Cờ (flag) để kiểm tra Cookie.
         String checked = (String) session.getAttribute("COOKIE_CHECKED");
         if (checked == null && conn != null) {
-            String username = MyUtils.getUserNameInCookie(req);
+            String username = MyUtils.getAdminCookie(req);
             try {
-                User user = UserDAO.findUser(conn, username);
-                MyUtils.storeLoginedUser(session, user);
+                Admin admin = AdminDAO.findAdmin(conn, username);
+                MyUtils.storeLoginedAdmin(session, admin);
             } catch (SQLException e) {
                 e.printStackTrace();
             }

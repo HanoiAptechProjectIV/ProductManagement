@@ -34,6 +34,30 @@
                <td><input type="text" name="price" value="${product.price}" /></td>
             </tr>
             <tr>
+               <td>Image</td>
+               <td><input type="text" name="image" value="${product.image}" /></td>
+            </tr>
+            <tr>
+               <td>Quantity</td>
+               <td><input type="text" name="quantity" value="${product.quantity}" /></td>
+            </tr>
+            <tr>
+               <td>Description</td>
+               <td><input type="text" name="description" value="${product.description}" /></td>
+            </tr>
+            <tr>
+               <td>Date added</td>
+               <td><input type="text" name="dateAdded" value="${product.dateAdded}" /></td>
+            </tr>
+            <tr>
+               <td>Category id</td>
+               <td><input type="text" name="categoryId" value="${product.categoryId}" /></td>
+            </tr>
+            <tr>
+               <td>Brand id</td>
+               <td><input type="text" name="brandId" value="${product.brandId}" /></td>
+            </tr>
+            <tr>
                <td colspan="2">                   
                    <input type="submit" value="Submit" />
                    <a href="productList">Cancel</a>

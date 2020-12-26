@@ -9,8 +9,15 @@
         <filter-name>cookieFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+    <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>    
     <welcome-file-list>
-        <welcome-file>home</welcome-file>
+        <welcome-file>login</welcome-file>
         <welcome-file>WEB-INF/view/homeView.jsp</welcome-file>
     </welcome-file-list>
+    <session-config>
+        <session-timeout>10</session-timeout>
+    </session-config>
 </web-app>

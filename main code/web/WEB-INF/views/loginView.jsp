@@ -24,11 +24,11 @@
          <table border="0">
             <tr>
                <td>User Name</td>
-               <td><input type="text" name="username" value= "${user.username}" /> </td>
+               <td><input type="text" name="username" value= "${admin.username}" /> </td>
             </tr>
             <tr>
                <td>Password</td>
-               <td><input type="text" name="password" value= "${user.password}" /> </td>
+               <td><input type="text" name="password" value= "${admin.password}" /> </td>
             </tr>
             <tr>
                <td>Remember me</td>
@@ -43,7 +43,7 @@
          </table>
       </form>
  
-      <p style="color:blue;">User Name: tom, password: tom001 or jerry/jerry001</p>
+      <p style="color:blue;">User Name: admin, password: 123</p>
  
       <jsp:include page="_footer.jsp"></jsp:include>
    </body>

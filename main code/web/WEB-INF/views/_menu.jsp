@@ -3,12 +3,18 @@
     
 <div style="padding: 5px;">
  
-   <a href="${pageContext.request.contextPath}/">Home</a>
+   <a href="${pageContext.request.contextPath}/home">Home</a>
+   |
+   <a href="${pageContext.request.contextPath}/brandList">Brand List</a>
+   |
+   <a href="${pageContext.request.contextPath}/categoryList">Category List</a>
+   |
+   <a href="${pageContext.request.contextPath}/orderList">Order List</a>
    |
    <a href="${pageContext.request.contextPath}/productList">Product List</a>
    |
-   <a href="${pageContext.request.contextPath}/userInfo">My Account Info</a>
-   |
-   <a href="${pageContext.request.contextPath}/login">Login</a>
+   <a href="${pageContext.request.contextPath}/userList">User List</a>
+   
+   <a href="${pageContext.request.contextPath}/logout">Logout</a>
     
 </div>  

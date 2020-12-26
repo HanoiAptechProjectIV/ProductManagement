@@ -9,6 +9,7 @@ package servlet;
  *
  * @author Hung
  */
+import beans.Admin;
 import java.io.IOException;
  
 import javax.servlet.RequestDispatcher;
@@ -17,6 +18,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import utils.MyUtils;
  
 @WebServlet(urlPatterns = { "/home"})
 public class HomeServlet extends HttpServlet {
@@ -30,6 +33,18 @@ public class HomeServlet extends HttpServlet {
    protected void doGet(HttpServletRequest request, HttpServletResponse response)
            throws ServletException, IOException {
  
+        HttpSession session = request.getSession();
+
+        // Kiểm tra người dùng đã đăng nhập (login) chưa.
+        Admin adminLogined = MyUtils.getLoginedAdmin(session);
+        String loginedAdmin = MyUtils.getAdminCookie(request);
+        // Nếu chưa đăng nhập (login).
+        if (adminLogined == null && loginedAdmin == null) {
+            // Redirect (Chuyển hướng) tới trang login.
+            response.sendRedirect(request.getContextPath() + "/login");
+            return;
+        }
+        
        // Forward toi trang /WEB-INF/views/homeView.jsp
        // (Người dùng không bao giờ truy cập trực tiếp được vào các trang JSP
        // đặt trong WEB-INF)

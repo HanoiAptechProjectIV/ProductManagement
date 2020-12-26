@@ -10,16 +10,16 @@ package beans;
  * @author Hung
  */
 public class User {
-    private int id, role;
+    private int id;
     private String username, password, name, address, phone, email;
     private boolean gender;
 
     public User() {
     }
 
-    public User(int id, int role, String username, String password, String name, String address, String phone, String email, boolean gender) {
+    public User(int id, String username, String password, String name
+            , String address, String phone, String email, boolean gender) {
         this.id = id;
-        this.role = role;
         this.username = username;
         this.password = password;
         this.name = name;
@@ -35,14 +35,6 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getRole() {
-        return role;
-    }
-
-    public void setRole(int role) {
-        this.role = role;
     }
 
     public String getUsername() {
@@ -103,7 +95,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" + "id=" + id + ", role=" + role + ", username=" + username + ", password=" + password + ", name=" + name + ", address=" + address + ", phone=" + phone + ", email=" + email + ", gender=" + gender + '}';
+        return "User{" + "id=" + id + ", username=" + username + ", password=" + password + ", name=" + name + ", address=" + address + ", phone=" + phone + ", email=" + email + ", gender=" + gender + '}';
     }
     
     

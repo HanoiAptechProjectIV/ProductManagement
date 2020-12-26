@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
  
-import beans.User;
+import beans.Admin;
  
 public class MyUtils {
  
@@ -39,28 +39,32 @@ public class MyUtils {
     }
  
     // Lưu trữ thông tin người dùng đã login vào Session.
-    public static void storeLoginedUser(HttpSession session, User loginedUser) {
-        // Trên JSP có thể truy cập thông qua ${loginedUser}
-        session.setAttribute("loginedUser", loginedUser);
+    public static void storeLoginedAdmin(HttpSession session, Admin loginedAdmin) {
+        // Trên JSP có thể truy cập thông qua ${loginedAdmin}
+        session.setAttribute("loginedAdmin", loginedAdmin);
     }
  
     // Lấy thông tin người dùng lưu trữ trong Session.
-    public static User getLoginedUser(HttpSession session) {
-        User loginedUser = (User) session.getAttribute("loginedUser");
-        return loginedUser;
+    public static Admin getLoginedAdmin(HttpSession session) {
+        Admin loginedAdmin = (Admin) session.getAttribute("loginedAdmin");
+        return loginedAdmin;
+    }
+    
+    public static void deleteLoginedAdmin(HttpSession session) {
+        session.removeAttribute("loginedAdmin");
     }
  
     // Lưu thông tin người dùng vào Cookie.
-    public static void storeUserCookie(HttpServletResponse response, User user) {
-        System.out.println("Store user cookie");
-        Cookie cookieUserName = new Cookie(ATT_NAME_USER_NAME, user.getUsername());
+    public static void storeAdminCookie(HttpServletResponse response, Admin admin) {
+        System.out.println("Store admin cookie");
+        Cookie cookieUsername = new Cookie(ATT_NAME_USER_NAME, admin.getUsername());
         // 1 ngày (Đã đổi ra giây)
-        cookieUserName.setMaxAge(24 * 60 * 60);
-        response.addCookie(cookieUserName);
+        cookieUsername.setMaxAge(60*60*24);
+        response.addCookie(cookieUsername);
     }
  
     // Lấy thông tin người dùng lưu trữ trong Cookie
-    public static String getUserNameInCookie(HttpServletRequest request) {
+    public static String getAdminCookie(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
@@ -73,11 +77,11 @@ public class MyUtils {
     }
  
     // Xóa Cookie của người dùng
-    public static void deleteUserCookie(HttpServletResponse response) {
-        Cookie cookieUserName = new Cookie(ATT_NAME_USER_NAME, null);
+    public static void deleteAdminCookie(HttpServletResponse response) {
+        Cookie cookieUsername = new Cookie(ATT_NAME_USER_NAME, null);
         // 0 giây. (Cookie này sẽ hết hiệu lực ngay lập tức)
-        cookieUserName.setMaxAge(0);
-        response.addCookie(cookieUserName);
+        cookieUsername.setMaxAge(0);
+        response.addCookie(cookieUsername);
     }
  
 }

@@ -34,7 +34,6 @@ public class UserDAO {
             String phone = rs.getString("phone");
             String email = rs.getString("email");
             String address = rs.getString("address");
-            int role = rs.getInt("role");
             
             User user = new User();
             user.setId(id);
@@ -45,7 +44,6 @@ public class UserDAO {
             user.setPhone(phone);
             user.setEmail(email);
             user.setAddress(address);
-            user.setRole(role);
             list.add(user);
         }
         return list;
@@ -67,7 +65,6 @@ public class UserDAO {
             String phone = rs.getString("phone");
             String email = rs.getString("email");
             String address = rs.getString("address");
-            int role = rs.getInt("role");
             
             User user = new User();
             user.setId(id);
@@ -78,7 +75,6 @@ public class UserDAO {
             user.setPhone(phone);
             user.setEmail(email);
             user.setAddress(address);
-            user.setRole(role);
             return user;
         }
         return null;
@@ -100,7 +96,6 @@ public class UserDAO {
             String phone = rs.getString("phone");
             String email = rs.getString("email");
             String address = rs.getString("address");
-            int role = rs.getInt("role");
             
             User user = new User();
             user.setId(id);
@@ -111,7 +106,6 @@ public class UserDAO {
             user.setPhone(phone);
             user.setEmail(email);
             user.setAddress(address);
-            user.setRole(role);
             return user;
         }
         return null;
@@ -133,7 +127,6 @@ public class UserDAO {
             String phone = rs.getString("phone");
             String email = rs.getString("email");
             String address = rs.getString("address");
-            int role = rs.getInt("role");
             
             User user = new User();
             user.setId(id);
@@ -144,7 +137,6 @@ public class UserDAO {
             user.setPhone(phone);
             user.setEmail(email);
             user.setAddress(address);
-            user.setRole(role);
             return user;
         }
         return null;
@@ -152,7 +144,7 @@ public class UserDAO {
 
     public static void insertUser(Connection conn, User user) throws SQLException {
         String sql = "Insert into [User](username, password, name, gender, phone, email,"
-                + "address, role) values (?,?,?,?,?,?,?,?)";
+                + "address) values (?,?,?,?,?,?,?)";
  
         PreparedStatement pstm = conn.prepareStatement(sql);
  
@@ -163,13 +155,12 @@ public class UserDAO {
         pstm.setString(5, user.getPhone());
         pstm.setString(6, user.getEmail());
         pstm.setString(7, user.getAddress());
-        pstm.setInt(8, user.getRole());
  
         pstm.executeUpdate();
     }    
     
     public static void updateUser(Connection conn, User user) throws SQLException {
-        String sql = "Update [User] set username=?, password=?, name =?, gender=?, phone=?, email=?, address =?, role=? where id=? ";
+        String sql = "Update [User] set username=?, password=?, name =?, gender=?, phone=?, email=?, address =? where id=? ";
  
         PreparedStatement pstm = conn.prepareStatement(sql);
  
@@ -180,8 +171,7 @@ public class UserDAO {
         pstm.setString(5, user.getPhone());
         pstm.setString(6, user.getEmail());
         pstm.setString(7, user.getAddress());
-        pstm.setInt(8, user.getRole());
-        pstm.setInt(9, user.getId());
+        pstm.setInt(8, user.getId());
         
         pstm.executeUpdate();
     }    

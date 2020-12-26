@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlet;
+package servlet.read;
 
 /**
  *
  * @author Hung
  */
+import beans.Admin;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -22,7 +23,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
  
 import beans.Product;
-import beans.User;
 import javax.servlet.http.HttpSession;
 import utils.ProductDAO;
 import utils.MyUtils;
@@ -40,12 +40,12 @@ public class ProductListServlet extends HttpServlet {
             throws ServletException, IOException {
         
         HttpSession session = request.getSession();
- 
+
         // Kiểm tra người dùng đã đăng nhập (login) chưa.
-        User loginedUser = MyUtils.getLoginedUser(session);
- 
+        Admin adminLogined = MyUtils.getLoginedAdmin(session);
+        String loginedAdmin = MyUtils.getAdminCookie(request);
         // Nếu chưa đăng nhập (login).
-        if (loginedUser == null) {
+        if (adminLogined == null && loginedAdmin == null) {
             // Redirect (Chuyển hướng) tới trang login.
             response.sendRedirect(request.getContextPath() + "/login");
             return;

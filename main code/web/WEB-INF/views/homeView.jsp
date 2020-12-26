@@ -19,12 +19,10 @@
     
       <h3>Home Page</h3>
       
-      This is demo Simple web application using jsp,servlet &amp; Jdbc. <br><br>
+      This is home page<br><br>
       <b>It includes the following functions:</b>
       <ul>
-         <li>Login</li>
-         <li>Storing user information in cookies</li>
-         <li>List</li>
+         <li>View list</li>
          <li>Create</li>
          <li>Edit</li>
          <li>Delete</li>

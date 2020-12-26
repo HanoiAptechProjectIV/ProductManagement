@@ -87,10 +87,10 @@ public class BrandDAO {
         PreparedStatement pstm = conn.prepareStatement(sql);
  
         pstm.setInt(5, brand.getId());
-        pstm.setString(1, brand.getName());
-        pstm.setString(4, brand.getDescription());
-        pstm.setString(3, brand.getManufacturer());
-        pstm.setString(2, brand.getLogo());        
+        pstm.setString(1, brand.getName()); 
+        pstm.setString(2, brand.getLogo());           
+        pstm.setString(3, brand.getManufacturer()); 
+        pstm.setString(4, brand.getDescription());    
         
         pstm.executeUpdate();
     }    

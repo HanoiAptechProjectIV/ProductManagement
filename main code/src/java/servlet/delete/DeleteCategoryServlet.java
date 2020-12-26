@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlet;
+package servlet.delete;
 
 /**
  *
@@ -20,14 +20,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
  
-import utils.ProductDAO;
+import utils.CategoryDAO;
 import utils.MyUtils;
  
-@WebServlet(urlPatterns = { "/deleteProduct" })
-public class DeleteProductServlet extends HttpServlet {
+@WebServlet(urlPatterns = { "/deleteCategory" })
+public class DeleteCategoryServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
  
-    public DeleteProductServlet() {
+    public DeleteCategoryServlet() {
         super();
     }
  
@@ -41,7 +41,7 @@ public class DeleteProductServlet extends HttpServlet {
         String errorString = null;
  
         try {
-            ProductDAO.deleteProduct(conn, id);
+            CategoryDAO.deleteCategory(conn, id);
         } catch (SQLException e) {
             e.printStackTrace();
             errorString = e.getMessage();
@@ -53,13 +53,13 @@ public class DeleteProductServlet extends HttpServlet {
             request.setAttribute("errorString", errorString);
             // 
             RequestDispatcher dispatcher = request.getServletContext()
-                    .getRequestDispatcher("/WEB-INF/views/CRUD/delete/deleteProductErrorView.jsp");
+                    .getRequestDispatcher("/WEB-INF/views/CRUD/delete/deleteCategoryErrorView.jsp");
             dispatcher.forward(request, response);
         }
         // Nếu mọi thứ tốt đẹp.
         // Redirect (chuyển hướng) sang trang danh sách sản phẩm.
         else {
-            response.sendRedirect(request.getContextPath() + "/productList");
+            response.sendRedirect(request.getContextPath() + "/categoryList");
         }
  
     }

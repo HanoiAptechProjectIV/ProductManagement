@@ -1,5 +1,5 @@
 <%-- 
-    Document   : productListView
+    Document   : brandListView
     Created on : Dec 8, 2020, 5:15:13 PM
     Author     : Hung
 --%>
@@ -11,14 +11,14 @@
 <html>
  <head>
     <meta charset="UTF-8">
-    <title>Product List</title>
+    <title>Brand List</title>
  </head>
  <body>
  
     <jsp:include page="../../_header.jsp"></jsp:include>
     <jsp:include page="../../_menu.jsp"></jsp:include>
  
-    <h3>Product List</h3>
+    <h3>Brand List</h3>
  
     <p style="color: red;">${errorString}</p>
  
@@ -26,38 +26,30 @@
        <tr>
           <th>Id</th>
           <th>Name</th>
-          <th>Price</th>
-          <th>Image</th>
-          <th>Quantity</th>
+          <th>Logo</th>
+          <th>Manufacturer</th>
           <th>Description</th>
-          <th>Date added</th>
-          <th>Category id</th>
-          <th>Brand id</th>
           <th>Edit</th>
           <th>Delete</th>
        </tr>
-       <c:forEach items="${productList}" var="product" >
+       <c:forEach items="${brandList}" var="brand" >
           <tr>
-             <td>${product.id}</td>
-             <td>${product.name}</td>
-             <td>${product.price}</td>
-             <td>${product.image}</td>
-             <td>${product.quantity}</td>
-             <td>${product.description}</td>
-             <td>${product.dateAdded}</td>
-             <td>${product.categoryId}</td>
-             <td>${product.brandId}</td>
+             <td>${brand.id}</td>
+             <td>${brand.name}</td>
+             <td>${brand.logo}</td>
+             <td>${brand.manufacturer}</td>
+             <td>${brand.description}</td>
              <td>
-                <a href="editProduct?id=${product.id}">Edit</a>
+                <a href="editBrand?id=${brand.id}">Edit</a>
              </td>
              <td>
-                <a href="deleteProduct?id=${product.id}">Delete</a>
+                <a href="deleteBrand?id=${brand.id}">Delete</a>
              </td>
           </tr>
        </c:forEach>
     </table>
  
-    <a href="createProduct" >Create Product</a>
+    <a href="createBrand" >Create Brand</a>
  
     <jsp:include page="../../_footer.jsp"></jsp:include>
  

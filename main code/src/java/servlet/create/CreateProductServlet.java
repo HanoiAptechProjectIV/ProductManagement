@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlet;
+package servlet.create;
 
 /**
  *
@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
  
 import beans.Product;
+import java.time.LocalDate;
 import utils.ProductDAO;
 import utils.MyUtils;
  
@@ -49,6 +50,7 @@ public class CreateProductServlet extends HttpServlet {
             throws ServletException, IOException {
         Connection conn = MyUtils.getStoredConnection(request);
  
+        int id = 0;
         String name = (String) request.getParameter("name");
         String priceStr = request.getParameter("price");
         int price = 0;
@@ -56,7 +58,14 @@ public class CreateProductServlet extends HttpServlet {
             price = Integer.parseInt(priceStr);
         } catch (Exception e) {
         }
-        Product product = new Product(name, price);
+        String image = request.getParameter("image");
+        int quantity = Integer.parseInt(request.getParameter("quantity"));;
+      
+        String description = request.getParameter("description");
+        LocalDate dateAdded = LocalDate.parse(request.getParameter("dateAdded"));
+        int categoryId = Integer.parseInt(request.getParameter("categoryId"));
+        int brandId = Integer.parseInt(request.getParameter("brandId"));
+        Product product = new Product(id, price, quantity, categoryId, brandId, name, description, image, dateAdded);
  
         String errorString = null;
  

@@ -10,39 +10,39 @@ package beans;
  * @author Hung
  */
 public class OrderDetail {
-    private int id, userId, orderId, productId, purchasedQuantity;
+    private int id, orderId, productId, purchasedQuantity;
+    private String status;
 
     public OrderDetail() {
     }
 
-    public OrderDetail(int id, int userId, int orderId, int productId, int purchasedQuantity) {
+    public OrderDetail(int id, int orderId, int productId, int purchasedQuantity, String status) {
         this.id = id;
-        this.userId = userId;
         this.orderId = orderId;
         this.productId = productId;
         this.purchasedQuantity = purchasedQuantity;
+        this.status = status;
     }
 
     @Override
     public String toString() {
-        return "OrderDetail{" + "id=" + id + ", userId=" + userId + ", orderId=" + orderId + ", productId=" + productId + ", purchasedQuantity=" + purchasedQuantity + '}';
+        return "OrderDetail{" + "id=" + id + ", orderId=" + orderId + ", productId=" + productId + ", purchasedQuantity=" + purchasedQuantity + ", status=" + status + '}';
     }
 
-    
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 
     public int getOrderId() {

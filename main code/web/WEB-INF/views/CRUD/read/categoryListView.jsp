@@ -1,5 +1,5 @@
 <%-- 
-    Document   : productListView
+    Document   : categoryListView
     Created on : Dec 8, 2020, 5:15:13 PM
     Author     : Hung
 --%>
@@ -11,14 +11,14 @@
 <html>
  <head>
     <meta charset="UTF-8">
-    <title>Product List</title>
+    <title>Category List</title>
  </head>
  <body>
  
     <jsp:include page="../../_header.jsp"></jsp:include>
     <jsp:include page="../../_menu.jsp"></jsp:include>
  
-    <h3>Product List</h3>
+    <h3>Category List</h3>
  
     <p style="color: red;">${errorString}</p>
  
@@ -26,38 +26,26 @@
        <tr>
           <th>Id</th>
           <th>Name</th>
-          <th>Price</th>
-          <th>Image</th>
-          <th>Quantity</th>
           <th>Description</th>
-          <th>Date added</th>
-          <th>Category id</th>
-          <th>Brand id</th>
           <th>Edit</th>
           <th>Delete</th>
        </tr>
-       <c:forEach items="${productList}" var="product" >
+       <c:forEach items="${categoryList}" var="category" >
           <tr>
-             <td>${product.id}</td>
-             <td>${product.name}</td>
-             <td>${product.price}</td>
-             <td>${product.image}</td>
-             <td>${product.quantity}</td>
-             <td>${product.description}</td>
-             <td>${product.dateAdded}</td>
-             <td>${product.categoryId}</td>
-             <td>${product.brandId}</td>
+             <td>${category.id}</td>
+             <td>${category.name}</td>
+             <td>${category.description}</td>
              <td>
-                <a href="editProduct?id=${product.id}">Edit</a>
+                <a href="editCategory?id=${category.id}">Edit</a>
              </td>
              <td>
-                <a href="deleteProduct?id=${product.id}">Delete</a>
+                <a href="deleteCategory?id=${category.id}">Delete</a>
              </td>
           </tr>
        </c:forEach>
     </table>
  
-    <a href="createProduct" >Create Product</a>
+    <a href="createCategory" >Create Category</a>
  
     <jsp:include page="../../_footer.jsp"></jsp:include>
  

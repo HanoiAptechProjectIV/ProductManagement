@@ -5,7 +5,7 @@
  */
 package beans;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -13,21 +13,32 @@ import java.time.LocalDate;
  */
 public class Order {
     private int id;
-    private LocalDate createdDay;
+    private LocalDateTime createdTime, paymentTime;
     private int amount;
+    private int userId;
 
     public Order() {
     }
 
-    public Order(int id, LocalDate createdDay, int amount) {
+    public Order(int id, LocalDateTime createdTime, LocalDateTime paymentTime, int amount, int userId) {
         this.id = id;
-        this.createdDay = createdDay;
+        this.createdTime = createdTime;
+        this.paymentTime = paymentTime;
         this.amount = amount;
+        this.userId = userId;
     }
 
     @Override
     public String toString() {
-        return "Order{" + "id=" + id + ", createdDay=" + createdDay + ", amount=" + amount + '}';
+        return "Order{" + "id=" + id + ", createdTime=" + createdTime + ", paymentTime=" + paymentTime + ", amount=" + amount + ", userId=" + userId + '}';
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public int getId() {
@@ -38,12 +49,20 @@ public class Order {
         this.id = id;
     }
 
-    public LocalDate getCreatedDay() {
-        return createdDay;
+    public LocalDateTime getCreatedTime() {
+        return createdTime;
     }
 
-    public void setCreatedDay(LocalDate createdDay) {
-        this.createdDay = createdDay;
+    public void setCreatedTime(LocalDateTime createdTime) {
+        this.createdTime = createdTime;
+    }
+
+    public LocalDateTime getPaymentTime() {
+        return paymentTime;
+    }
+
+    public void setPaymentTime(LocalDateTime paymentTime) {
+        this.paymentTime = paymentTime;
     }
 
     public int getAmount() {

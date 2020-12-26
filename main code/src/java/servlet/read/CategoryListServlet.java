@@ -3,13 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlet;
+package servlet.read;
 
 /**
  *
  * @author Hung
  */
+import beans.Admin;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
  
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,42 +21,54 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
  
-import beans.User;
+import beans.Category;
+import javax.servlet.http.HttpSession;
+import utils.CategoryDAO;
 import utils.MyUtils;
  
-@WebServlet(urlPatterns = { "/userInfo" })
-public class UserInfoServlet extends HttpServlet {
+@WebServlet(urlPatterns = { "/categoryList" })
+public class CategoryListServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
  
-    public UserInfoServlet() {
+    public CategoryListServlet() {
         super();
     }
  
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         HttpSession session = request.getSession();
- 
+
         // Kiểm tra người dùng đã đăng nhập (login) chưa.
-        User loginedUser = MyUtils.getLoginedUser(session);
- 
+        Admin adminLogined = MyUtils.getLoginedAdmin(session);
+        String loginedAdmin = MyUtils.getAdminCookie(request);
         // Nếu chưa đăng nhập (login).
-        if (loginedUser == null) {
+        if (adminLogined == null && loginedAdmin == null) {
             // Redirect (Chuyển hướng) tới trang login.
             response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
-        // Lưu thông tin vào request attribute trước khi forward (chuyển tiếp).
-        request.setAttribute("user", loginedUser);
+        
+        Connection conn = MyUtils.getStoredConnection(request);
  
-        // Nếu người dùng đã login thì forward (chuyển tiếp) tới trang
-        // /WEB-INF/views/userInfoView.jsp
-        RequestDispatcher dispatcher //
-                = this.getServletContext().getRequestDispatcher("/WEB-INF/views/CRUD/read/userInfoView.jsp");
+        String errorString = null;
+        List<Category> list = null;
+        try {
+            list = CategoryDAO.queryCategory(conn);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            errorString = e.getMessage();
+        }
+        // Lưu thông tin vào request attribute trước khi forward sang views.
+        request.setAttribute("errorString", errorString);
+        request.setAttribute("categoryList", list);
+         
+        // Forward sang /WEB-INF/views/categoryListView.jsp
+        RequestDispatcher dispatcher = request.getServletContext()
+                .getRequestDispatcher("/WEB-INF/views/CRUD/read/categoryListView.jsp");
         dispatcher.forward(request, response);
- 
     }
  
     @Override
@@ -62,4 +78,3 @@ public class UserInfoServlet extends HttpServlet {
     }
  
 }
-

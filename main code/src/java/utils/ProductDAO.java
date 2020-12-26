@@ -86,68 +86,44 @@ public class ProductDAO {
         return null;
     }
 
-//    public static void insertProduct(Connection conn, Product product) throws SQLException {
-//        String sql = "Insert into Product(name, description, price, quantity, image"
-//                + ", date_added, category_id, brand_id) values (?,?,?,?,?,?,?,?)";
-// 
-//        PreparedStatement pstm = conn.prepareStatement(sql);
-// 
-//        java.sql.Date dateAdded = java.sql.Date.valueOf(product.getDateAdded());
-//        pstm.setString(1, product.getName());
-//        pstm.setString(2, product.getDescription());
-//        pstm.setInt(3, product.getPrice());
-//        pstm.setInt(4, product.getQuantity());
-//        pstm.setString(5, product.getImage());
-//        pstm.setDate(6, dateAdded);
-//        pstm.setInt(7, product.getCategoryId());
-//        pstm.setInt(8, product.getBrandId());
-// 
-//        pstm.executeUpdate();
-//    }  
-    
-    //demo, sau này xóa
     public static void insertProduct(Connection conn, Product product) throws SQLException {
-        String sql = "Insert into Product(name, price) values (?,?)";
+        String sql = "Insert into Product(name, description, price, quantity, image"
+                + ", date_added, category_id, brand_id) values (?,?,?,?,?,?,?,?)";
  
         PreparedStatement pstm = conn.prepareStatement(sql);
-
+ 
+        java.sql.Date dateAdded = java.sql.Date.valueOf(product.getDateAdded());
         pstm.setString(1, product.getName());
-        pstm.setInt(2, product.getPrice());
+        pstm.setString(2, product.getDescription());
+        pstm.setInt(3, product.getPrice());
+        pstm.setInt(4, product.getQuantity());
+        pstm.setString(5, product.getImage());
+        pstm.setDate(6, dateAdded);
+        pstm.setInt(7, product.getCategoryId());
+        pstm.setInt(8, product.getBrandId());
  
         pstm.executeUpdate();
-    }     
+    }  
+       
 
-//    public static void updateProduct(Connection conn, Product product) throws SQLException {
-//        String sql = "Update Product set name =?, description =?, price=?, quantity =?, image=?"
-//                + ", date_added =?, category_id=?, brand_id =? where id=? ";
-// 
-//        PreparedStatement pstm = conn.prepareStatement(sql);
-//        java.sql.Date dateAdded = java.sql.Date.valueOf(product.getDateAdded());
-// 
-//        pstm.setInt(9, product.getId());
-//        pstm.setString(1, product.getName());
-//        pstm.setString(2, product.getDescription());
-//        pstm.setInt(3, product.getPrice());
-//        pstm.setInt(4, product.getQuantity());
-//        pstm.setString(5, product.getImage());
-//        pstm.setDate(6, dateAdded);
-//        pstm.setInt(7, product.getCategoryId());
-//        pstm.setInt(8, product.getBrandId());
-//        pstm.executeUpdate();
-//    }   
-    
-    //demo sau nay xoa
     public static void updateProduct(Connection conn, Product product) throws SQLException {
-        String sql = "Update Product set name =?, price=? where id=? ";
+        String sql = "Update Product set name =?, description =?, price=?, quantity =?, image=?"
+                + ", date_added =?, category_id=?, brand_id =? where id=? ";
  
         PreparedStatement pstm = conn.prepareStatement(sql);
+        java.sql.Date dateAdded = java.sql.Date.valueOf(product.getDateAdded());
  
-        pstm.setInt(3, product.getId());
+        pstm.setInt(9, product.getId());
         pstm.setString(1, product.getName());
-        pstm.setInt(2, product.getPrice());
-        
+        pstm.setString(2, product.getDescription());
+        pstm.setInt(3, product.getPrice());
+        pstm.setInt(4, product.getQuantity());
+        pstm.setString(5, product.getImage());
+        pstm.setDate(6, dateAdded);
+        pstm.setInt(7, product.getCategoryId());
+        pstm.setInt(8, product.getBrandId());
         pstm.executeUpdate();
-    }       
+    }         
     
     public static void deleteProduct(Connection conn, int id) throws SQLException {
         String sql = "Delete From Product where id= ?";
