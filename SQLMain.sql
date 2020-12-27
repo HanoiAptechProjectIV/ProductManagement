@@ -78,6 +78,8 @@ values('customer', '123', 'John Doe', 1, '098 765 4321', 'johndoe@customer.com',
 
 insert into [Order](created_time, payment_time, amount, [user_id])
 values ('12/26/2020 15:00:00', '01/01/2021 15:28:00', 2200000, 1)
+, ('01/01/2021 17:00:00', '01/01/2021 19:28:00', 100000, 1)							 
 
 insert into OrderDetail(status, product_id, order_id, purchased_quantity)
-values('success transaction', 1, 1, 2), ('success transaction', 2, 1, 10)						       
+values('success transaction', 1, 1, 2), ('success transaction', 2, 1, 10)
+, ('success transaction', 1, 2, 1)							 
