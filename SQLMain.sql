@@ -10,7 +10,8 @@ insert into [Admin](username, [password]) values('admin', '123')
 create table Category (
 	id int not null identity(1,1) primary key, 
 	name nvarchar(50) unique,
-	description text
+	description text,
+	disable bit default 0
 )
 
 create table Brand (
@@ -18,7 +19,8 @@ create table Brand (
 	name nvarchar(50) unique, 
 	logo varchar(50),
 	manufacturer nvarchar(50),
-	description text
+	description text,
+	disable bit default 0
 )
 
 create table Product (
@@ -31,6 +33,7 @@ create table Product (
 	date_added datetime DEFAULT CURRENT_TIMESTAMP, 
 	category_id int,
 	brand_id int,
+	disable bit default 0,
 	foreign key (category_id) references Category(id),
 	foreign key (brand_id) references Brand(id)
 )
