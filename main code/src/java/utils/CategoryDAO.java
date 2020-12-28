@@ -29,18 +29,20 @@ public class CategoryDAO {
             int id = rs.getInt("id");
             String name = rs.getString("name");
             String description = rs.getString("description");
+            boolean disable = rs.getBoolean("disable");
             
             Category category = new Category();
             category.setId(id);
             category.setName(name);
             category.setDescription(description);
+            category.setDisable(disable);
             list.add(category);
         }
         return list;
     } 
     
     public static Category findCategory(Connection conn, int id) throws SQLException {
-        String sql = "Select a.name, a.description from Category a where a.id=?";
+        String sql = "Select * from Category a where a.id=?";
  
         PreparedStatement pstm = conn.prepareStatement(sql);
         pstm.setInt(1, id);
@@ -50,11 +52,13 @@ public class CategoryDAO {
         while (rs.next()) {
             String name = rs.getString("name");
             String description = rs.getString("description");
+            boolean disable = rs.getBoolean("disable");
             
             Category category = new Category();
             category.setId(id);
             category.setName(name);
             category.setDescription(description);
+            category.setDisable(disable);
             return category;
         }
         return null;
@@ -72,14 +76,14 @@ public class CategoryDAO {
     }    
     
     public static void updateCategory(Connection conn, Category category) throws SQLException {
-        String sql = "Update Category set name =?, description =? where id=? ";
+        String sql = "Update Category set name =?, description =?, disable=? where id=? ";
  
         PreparedStatement pstm = conn.prepareStatement(sql);
  
-        pstm.setInt(3, category.getId());
+        pstm.setInt(4, category.getId());
         pstm.setString(1, category.getName());
         pstm.setString(2, category.getDescription());
-        
+        pstm.setBoolean(3, category.isDisable());
         pstm.executeUpdate();
     }    
     

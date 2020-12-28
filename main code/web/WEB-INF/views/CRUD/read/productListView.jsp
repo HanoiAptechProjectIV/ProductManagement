@@ -33,8 +33,8 @@
           <th>Date added</th>
           <th>Category id</th>
           <th>Brand id</th>
+          <th>Disable</th>
           <th>Edit</th>
-          <th>Delete</th>
        </tr>
        <c:forEach items="${productList}" var="product" >
           <tr>
@@ -47,11 +47,9 @@
              <td>${product.dateAdded}</td>
              <td>${product.categoryId}</td>
              <td>${product.brandId}</td>
+             <td>${product.disable}</td>
              <td>
                 <a href="editProduct?id=${product.id}">Edit</a>
-             </td>
-             <td>
-                <a href="deleteProduct?id=${product.id}">Delete</a>
              </td>
           </tr>
        </c:forEach>

@@ -20,15 +20,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
  
-import utils.OrderDAO;
+import utils.AdminDAO;
 import utils.MyUtils;
-import utils.OrderDetailDAO;
  
-@WebServlet(urlPatterns = { "/deleteOrder" })
-public class DeleteOrderServlet extends HttpServlet {
+@WebServlet(urlPatterns = { "/deleteAdmin" })
+public class DeleteAdminServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
  
-    public DeleteOrderServlet() {
+    public DeleteAdminServlet() {
         super();
     }
  
@@ -37,15 +36,12 @@ public class DeleteOrderServlet extends HttpServlet {
             throws ServletException, IOException {
         Connection conn = MyUtils.getStoredConnection(request);
  
-        int idOrder = (request.getParameter("idOrder") != null) 
-                ? Integer.parseInt(request.getParameter("idOrder"))
-                : 0;
-        String deleteDetail = request.getParameter("orderDetail");
+        String username = request.getParameter("username");
+ 
         String errorString = null;
  
         try {
-            OrderDetailDAO.deleteOrderDetailByOrderId(conn, idOrder);
-            OrderDAO.deleteOrder(conn, idOrder);
+            AdminDAO.deleteAdmin(conn, username);
         } catch (SQLException e) {
             e.printStackTrace();
             errorString = e.getMessage();
@@ -57,13 +53,13 @@ public class DeleteOrderServlet extends HttpServlet {
             request.setAttribute("errorString", errorString);
             // 
             RequestDispatcher dispatcher = request.getServletContext()
-                    .getRequestDispatcher("/WEB-INF/views/CRUD/delete/deleteOrderErrorView.jsp");
+                    .getRequestDispatcher("/WEB-INF/views/CRUD/delete/deleteAdminErrorView.jsp");
             dispatcher.forward(request, response);
         }
         // Nếu mọi thứ tốt đẹp.
         // Redirect (chuyển hướng) sang trang danh sách sản phẩm.
         else {
-            response.sendRedirect(request.getContextPath() + "/orderList");
+            response.sendRedirect(request.getContextPath() + "/adminList");
         }
  
     }

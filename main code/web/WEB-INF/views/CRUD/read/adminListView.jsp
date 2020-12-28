@@ -1,5 +1,5 @@
 <%-- 
-    Document   : categoryListView
+    Document   : adminListView
     Created on : Dec 8, 2020, 5:15:13 PM
     Author     : Hung
 --%>
@@ -11,39 +11,39 @@
 <html>
  <head>
     <meta charset="UTF-8">
-    <title>Category List</title>
+    <title>Admin List</title>
  </head>
  <body>
  
     <jsp:include page="../../_header.jsp"></jsp:include>
     <jsp:include page="../../_menu.jsp"></jsp:include>
  
-    <h3>Category List</h3>
+    <h3>Admin List</h3>
  
     <p style="color: red;">${errorString}</p>
  
     <table border="1" cellpadding="5" cellspacing="1" >
        <tr>
-          <th>Id</th>
-          <th>Name</th>
-          <th>Description</th>
-          <th>Disable</th>
+          <th>Username</th>
+          <th>Password</th>
           <th>Edit</th>
+          <th>Delete</th>
        </tr>
-       <c:forEach items="${categoryList}" var="category" >
+       <c:forEach items="${adminList}" var="admin" >
           <tr>
-             <td>${category.id}</td>
-             <td>${category.name}</td>
-             <td>${category.description}</td>
-             <td>${category.disable}</td>
+             <td>${admin.username}</td>
+             <td>${admin.password}</td>
              <td>
-                <a href="editCategory?id=${category.id}">Edit</a>
+                <a href="editAdmin?username=${admin.username}">Edit</a>
+             </td>
+             <td>
+                <a href="deleteAdmin?username=${admin.username}">Delete</a>
              </td>
           </tr>
        </c:forEach>
     </table>
  
-    <a href="createCategory" >Create Category</a>
+    <a href="createAdmin" >Create Admin</a>
  
     <jsp:include page="../../_footer.jsp"></jsp:include>
  

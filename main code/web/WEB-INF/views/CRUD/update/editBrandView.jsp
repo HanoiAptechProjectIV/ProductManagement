@@ -43,6 +43,10 @@
                <td><input type="text" name="description" value="${brand.description}" /></td>
             </tr>
             <tr>
+               <td>Disable</td>
+               <td><input type="text" name="disable" value="${brand.disable}" /></td>
+            </tr>            
+            <tr>
                <td colspan = "2">
                    <input type="submit" value="Submit" />
                    <a href="${pageContext.request.contextPath}/brandList">Cancel</a>

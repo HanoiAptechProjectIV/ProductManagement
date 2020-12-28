@@ -55,7 +55,7 @@ public class CreateBrandServlet extends HttpServlet {
         String manufacturer = request.getParameter("manufacturer");
         String description = request.getParameter("description");
         
-        Brand brand = new Brand(id, name, logo, manufacturer, description);
+        Brand brand = new Brand(id, name, logo, manufacturer, description, false);
         String errorString = null;
  
         if (errorString == null) {

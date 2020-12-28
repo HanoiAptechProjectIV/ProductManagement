@@ -45,9 +45,11 @@ public class AdminDAO {
         ResultSet rs = pstm.executeQuery();
  
         while (rs.next()) {
-            
             Admin admin = new Admin();
+            String password = rs.getString("password");
+            
             admin.setUsername(username);
+            admin.setPassword(password);
             return admin;
         }
         return null;

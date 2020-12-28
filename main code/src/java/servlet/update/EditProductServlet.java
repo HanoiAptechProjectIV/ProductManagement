@@ -92,7 +92,9 @@ public class EditProductServlet extends HttpServlet {
         LocalDate dateAdded = LocalDate.parse(request.getParameter("dateAdded"));
         int categoryId = Integer.parseInt(request.getParameter("categoryId"));
         int brandId = Integer.parseInt(request.getParameter("brandId"));
-        Product product = new Product(id, price, quantity, categoryId, brandId, name, description, image, dateAdded);
+        boolean disable = Boolean.parseBoolean(request.getParameter("disable"));
+        
+        Product product = new Product(id, price, quantity, categoryId, brandId, name, description, image, dateAdded, disable);
  
         String errorString = null;
  

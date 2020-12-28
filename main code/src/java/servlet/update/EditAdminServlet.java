@@ -20,15 +20,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
  
-import beans.Category;
-import utils.CategoryDAO;
+import beans.Admin;
+import utils.AdminDAO;
 import utils.MyUtils;
  
-@WebServlet(urlPatterns = { "/editCategory" })
-public class EditCategoryServlet extends HttpServlet {
+@WebServlet(urlPatterns = { "/editAdmin" })
+public class EditAdminServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
  
-    public EditCategoryServlet() {
+    public EditAdminServlet() {
         super();
     }
  
@@ -38,14 +38,14 @@ public class EditCategoryServlet extends HttpServlet {
             throws ServletException, IOException {
         Connection conn = MyUtils.getStoredConnection(request);
  
-        int id = Integer.parseInt(request.getParameter("id"));
+        String username = request.getParameter("username");
  
-        Category category = null;
+        Admin admin = null;
  
         String errorString = null;
  
         try {
-            category = CategoryDAO.findCategory(conn, id);
+            admin = AdminDAO.findAdmin(conn, username);
         } catch (SQLException e) {
             e.printStackTrace();
             errorString = e.getMessage();
@@ -54,17 +54,17 @@ public class EditCategoryServlet extends HttpServlet {
         // Không có lỗi.
         // Sản phẩm không tồn tại để edit.
         // Redirect sang trang danh sách sản phẩm.
-        if (errorString != null && category == null) {
-            response.sendRedirect(request.getServletPath() + "/categoryList");
+        if (errorString != null && admin == null) {
+            response.sendRedirect(request.getServletPath() + "/adminList");
             return;
         }
  
         // Lưu thông tin vào request attribute trước khi forward sang views.
         request.setAttribute("errorString", errorString);
-        request.setAttribute("category", category);
+        request.setAttribute("admin", admin);
  
         RequestDispatcher dispatcher = request.getServletContext()
-                .getRequestDispatcher("/WEB-INF/views/CRUD/update/editCategoryView.jsp");
+                .getRequestDispatcher("/WEB-INF/views/CRUD/update/editAdminView.jsp");
         dispatcher.forward(request, response);
  
     }
@@ -76,35 +76,33 @@ public class EditCategoryServlet extends HttpServlet {
             throws ServletException, IOException {
         Connection conn = MyUtils.getStoredConnection(request);
  
-        int id = Integer.parseInt( request.getParameter("id"));
-        String name = (String) request.getParameter("name");
-        String description = request.getParameter("description");
-        boolean disable = Boolean.parseBoolean(request.getParameter("disable"));
+        String username = (String) request.getParameter("username");
+        String password = request.getParameter("password");
         
-        Category category = new Category(id, name, description, disable);
+        Admin admin = new Admin(username, password);
  
         String errorString = null;
  
         try {
-            CategoryDAO.updateCategory(conn, category);
+            AdminDAO.updateAdmin(conn, admin);
         } catch (SQLException e) {
             e.printStackTrace();
             errorString = e.getMessage();
         }
         // Lưu thông tin vào request attribute trước khi forward sang views.
         request.setAttribute("errorString", errorString);
-        request.setAttribute("category", category);
+        request.setAttribute("admin", admin);
  
         // Nếu có lỗi forward sang trang edit.
         if (errorString != null) {
             RequestDispatcher dispatcher = request.getServletContext()
-                    .getRequestDispatcher("/WEB-INF/views/CRUD/update/editCategoryView.jsp");
+                    .getRequestDispatcher("/WEB-INF/views/CRUD/update/editAdminView.jsp");
             dispatcher.forward(request, response);
         }
         // Nếu mọi thứ tốt đẹp.
         // Redirect sang trang danh sách sản phẩm.
         else {
-            response.sendRedirect(request.getContextPath() + "/categoryList");
+            response.sendRedirect(request.getContextPath() + "/adminList");
         }
     }
  

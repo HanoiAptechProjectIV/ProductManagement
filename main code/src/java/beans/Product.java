@@ -16,12 +16,13 @@ public class Product {
     private String name, description, image;
     private LocalDate dateAdded;
     private int price;
+    private boolean disable;
 
     public Product() {
     }
 
     public Product(int id, int price, int quantity, int categoryId, int brandId
-            , String name, String description, String image, LocalDate dateAdded) {
+            , String name, String description, String image, LocalDate dateAdded, boolean disable) {
         this.id = id;
         this.quantity = quantity;
         this.categoryId = categoryId;
@@ -31,11 +32,20 @@ public class Product {
         this.image = image;
         this.dateAdded = dateAdded;
         this.price = price;
+        this.disable = disable;
     }
 
     @Override
     public String toString() {
         return "Product{" + "id=" + id + ", quantity=" + quantity + ", categoryId=" + categoryId + ", brandId=" + brandId + ", name=" + name + ", description=" + description + ", image=" + image + ", dateAdded=" + dateAdded + ", price=" + price + '}';
+    }
+
+    public boolean isDisable() {
+        return disable;
+    }
+
+    public void setDisable(boolean disable) {
+        this.disable = disable;
     }
 
     public int getId() {

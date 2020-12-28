@@ -29,8 +29,8 @@
           <th>Logo</th>
           <th>Manufacturer</th>
           <th>Description</th>
+          <th>Disable</th>
           <th>Edit</th>
-          <th>Delete</th>
        </tr>
        <c:forEach items="${brandList}" var="brand" >
           <tr>
@@ -39,11 +39,9 @@
              <td>${brand.logo}</td>
              <td>${brand.manufacturer}</td>
              <td>${brand.description}</td>
+             <td>${brand.disable}</td>
              <td>
                 <a href="editBrand?id=${brand.id}">Edit</a>
-             </td>
-             <td>
-                <a href="deleteBrand?id=${brand.id}">Delete</a>
              </td>
           </tr>
        </c:forEach>

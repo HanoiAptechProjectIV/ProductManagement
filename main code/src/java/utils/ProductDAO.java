@@ -36,6 +36,7 @@ public class ProductDAO {
             LocalDate dateAdded = rs.getDate("date_added").toLocalDate();
             int categoryId = rs.getInt("category_id");
             int brandId = rs.getInt("brand_id");
+            boolean disable = rs.getBoolean("disable");
             
             Product product = new Product();
             product.setId(id);
@@ -47,14 +48,14 @@ public class ProductDAO {
             product.setDateAdded(dateAdded);
             product.setCategoryId(categoryId);
             product.setBrandId(brandId);
+            product.setDisable(disable);
             list.add(product);
         }
         return list;
     } 
     
     public static Product findProduct(Connection conn, int id) throws SQLException {
-        String sql = "Select a.name, a.description, a.Price, a.quantity, a.image,"
-                + "a.date_added, a.category_id, a.brand_id from Product a where a.id=?";
+        String sql = "Select * from Product a where a.id=?";
  
         PreparedStatement pstm = conn.prepareStatement(sql);
         pstm.setInt(1, id);
@@ -70,6 +71,7 @@ public class ProductDAO {
             LocalDate dateAdded = rs.getDate("date_added").toLocalDate();
             int categoryId = rs.getInt("category_id");
             int brandId = rs.getInt("brand_id");
+            boolean disable = rs.getBoolean("disable");
             
             Product product = new Product();
             product.setId(id);
@@ -81,6 +83,7 @@ public class ProductDAO {
             product.setDateAdded(dateAdded);
             product.setCategoryId(categoryId);
             product.setBrandId(brandId);
+            product.setDisable(disable);
             return product;
         }
         return null;
@@ -108,12 +111,12 @@ public class ProductDAO {
 
     public static void updateProduct(Connection conn, Product product) throws SQLException {
         String sql = "Update Product set name =?, description =?, price=?, quantity =?, image=?"
-                + ", date_added =?, category_id=?, brand_id =? where id=? ";
+                + ", date_added =?, category_id=?, brand_id =?, disable=? where id=? ";
  
         PreparedStatement pstm = conn.prepareStatement(sql);
         java.sql.Date dateAdded = java.sql.Date.valueOf(product.getDateAdded());
  
-        pstm.setInt(9, product.getId());
+        pstm.setInt(10, product.getId());
         pstm.setString(1, product.getName());
         pstm.setString(2, product.getDescription());
         pstm.setInt(3, product.getPrice());
@@ -122,6 +125,8 @@ public class ProductDAO {
         pstm.setDate(6, dateAdded);
         pstm.setInt(7, product.getCategoryId());
         pstm.setInt(8, product.getBrandId());
+        pstm.setBoolean(9, product.isDisable());
+        
         pstm.executeUpdate();
     }         
     
@@ -131,6 +136,26 @@ public class ProductDAO {
         PreparedStatement pstm = conn.prepareStatement(sql);
  
         pstm.setInt(1, id);
+ 
+        pstm.executeUpdate();
+    }    
+
+    public static void deleteProductByBrandId(Connection conn, int brandId) throws SQLException {
+        String sql = "Delete From Product where brand_id= ?";
+ 
+        PreparedStatement pstm = conn.prepareStatement(sql);
+ 
+        pstm.setInt(1, brandId);
+ 
+        pstm.executeUpdate();
+    } 
+    
+    public static void deleteProductByCategoryId(Connection conn, int categoryId) throws SQLException {
+        String sql = "Delete From Product where category_id= ?";
+ 
+        PreparedStatement pstm = conn.prepareStatement(sql);
+ 
+        pstm.setInt(1, categoryId);
  
         pstm.executeUpdate();
     }    

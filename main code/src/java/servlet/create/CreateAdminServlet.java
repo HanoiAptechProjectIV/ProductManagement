@@ -20,16 +20,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
  
-import beans.Product;
-import java.time.LocalDate;
-import utils.ProductDAO;
+import beans.Admin;
+import utils.AdminDAO;
 import utils.MyUtils;
  
-@WebServlet(urlPatterns = { "/createProduct" })
-public class CreateProductServlet extends HttpServlet {
+@WebServlet(urlPatterns = { "/createAdmin" })
+public class CreateAdminServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
  
-    public CreateProductServlet() {
+    public CreateAdminServlet() {
         super();
     }
  
@@ -39,7 +38,7 @@ public class CreateProductServlet extends HttpServlet {
             throws ServletException, IOException {
  
         RequestDispatcher dispatcher = request.getServletContext()
-                .getRequestDispatcher("/WEB-INF/views/CRUD/create/createProductView.jsp");
+                .getRequestDispatcher("/WEB-INF/views/CRUD/create/createAdminView.jsp");
         dispatcher.forward(request, response);
     }
  
@@ -49,29 +48,16 @@ public class CreateProductServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Connection conn = MyUtils.getStoredConnection(request);
- 
-        int id = 0;
-        String name = (String) request.getParameter("name");
-        String priceStr = request.getParameter("price");
-        int price = 0;
-        try {
-            price = Integer.parseInt(priceStr);
-        } catch (Exception e) {
-        }
-        String image = request.getParameter("image");
-        int quantity = Integer.parseInt(request.getParameter("quantity"));;
-      
-        String description = request.getParameter("description");
-        LocalDate dateAdded = LocalDate.parse(request.getParameter("dateAdded"));
-        int categoryId = Integer.parseInt(request.getParameter("categoryId"));
-        int brandId = Integer.parseInt(request.getParameter("brandId"));
-        Product product = new Product(id, price, quantity, categoryId, brandId, name, description, image, dateAdded, false);
- 
+        
+        String username = (String) request.getParameter("username");
+        String password = request.getParameter("password");
+        
+        Admin admin = new Admin(username, password);
         String errorString = null;
  
         if (errorString == null) {
             try {
-                ProductDAO.insertProduct(conn, product);
+                AdminDAO.insertAdmin(conn, admin);
             } catch (SQLException e) {
                 e.printStackTrace();
                 errorString = e.getMessage();
@@ -80,18 +66,18 @@ public class CreateProductServlet extends HttpServlet {
  
         // Lưu thông tin vào request attribute trước khi forward sang views.
         request.setAttribute("errorString", errorString);
-        request.setAttribute("product", product);
+        request.setAttribute("admin", admin);
  
         // Nếu có lỗi forward (chuyển tiếp) sang trang 'edit'.
         if (errorString != null) {
             RequestDispatcher dispatcher = request.getServletContext()
-                    .getRequestDispatcher("/WEB-INF/views/CRUD/create/createProductView.jsp");
+                    .getRequestDispatcher("/WEB-INF/views/CRUD/create/createAdminView.jsp");
             dispatcher.forward(request, response);
         }
         // Nếu mọi thứ tốt đẹp.
         // Redirect (chuyển hướng) sang trang danh sách sản phẩm.
         else {
-            response.sendRedirect(request.getContextPath() + "/productList");
+            response.sendRedirect(request.getContextPath() + "/adminList");
         }
     }
  

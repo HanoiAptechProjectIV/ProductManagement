@@ -129,4 +129,14 @@ public class OrderDetailDAO {
  
         pstm.executeUpdate();
     }                
+
+    public static void deleteOrderDetailByOrderId(Connection conn, int orderId) throws SQLException {
+        String sql = "Delete From OrderDetail where order_id= ?";
+ 
+        PreparedStatement pstm = conn.prepareStatement(sql);
+ 
+        pstm.setInt(1, orderId);
+ 
+        pstm.executeUpdate();
+    }                
 }

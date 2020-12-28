@@ -12,14 +12,24 @@ package beans;
 public class Category {
     private int id;
     private String name, description;
+    private boolean disable;
 
     public Category() {
     }
 
-    public Category(int id, String name, String description) {
+    public Category(int id, String name, String description, boolean disable) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.disable = disable;
+    }
+
+    public boolean isDisable() {
+        return disable;
+    }
+
+    public void setDisable(boolean disable) {
+        this.disable = disable;
     }
 
     public int getId() {

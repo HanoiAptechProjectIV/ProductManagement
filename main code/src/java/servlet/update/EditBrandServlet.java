@@ -81,8 +81,9 @@ public class EditBrandServlet extends HttpServlet {
         String logo = request.getParameter("logo");
         String manufacturer = request.getParameter("manufacturer");
         String description = request.getParameter("description");
+        boolean disable = Boolean.parseBoolean(request.getParameter("disable"));
         
-        Brand brand = new Brand(id, name, logo, manufacturer, description);
+        Brand brand = new Brand(id, name, logo, manufacturer, description, disable);
  
         String errorString = null;
  

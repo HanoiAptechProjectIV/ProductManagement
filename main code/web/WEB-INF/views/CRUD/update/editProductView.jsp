@@ -58,6 +58,10 @@
                <td>Brand id</td>
                <td><input type="text" name="brandId" value="${product.brandId}" /></td>
             </tr>
+            <tr>
+               <td>Disable</td>
+               <td><input type="text" name="disable" value="${product.disable}" /></td>
+            </tr>
                <tr>
                   <td colspan = "2">
                       <input type="submit" value="Submit" />

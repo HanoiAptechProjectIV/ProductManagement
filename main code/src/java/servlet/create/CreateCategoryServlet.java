@@ -53,7 +53,7 @@ public class CreateCategoryServlet extends HttpServlet {
         String name = (String) request.getParameter("name");
         String description = request.getParameter("description");
         
-        Category category = new Category(id, name, description);
+        Category category = new Category(id, name, description, false);
         String errorString = null;
  
         if (errorString == null) {

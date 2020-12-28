@@ -41,7 +41,7 @@
                     <td>
                         <c:forEach items="${orderDetailList}" var="orderDetail" >
                             <c:if test="${order.id == orderDetail.orderId}">
-                                ${orderDetail.productId}<hr>
+                                ${orderDetail.productId}<br>
                             </c:if>
                         </c:forEach>
                     </td>
@@ -49,7 +49,7 @@
                     <td>
                         <c:forEach items="${orderDetailList}" var="orderDetail" >
                             <c:if test="${order.id == orderDetail.orderId}">
-                                ${orderDetail.purchasedQuantity}<hr>
+                                ${orderDetail.purchasedQuantity}<br>
                             </c:if>
                         </c:forEach>
                     </td></td>
@@ -58,7 +58,7 @@
                     <td>
                         <c:forEach items="${orderDetailList}" var="orderDetail" >
                             <c:if test="${order.id == orderDetail.orderId}">
-                                ${orderDetail.status}<hr>
+                                ${orderDetail.status}<br>
                             </c:if>
                         </c:forEach>
                     </td>

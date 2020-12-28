@@ -45,8 +45,8 @@
                         <td>Payment time</td>
                         <td><input type="text" name="paymentTime" value="${order.paymentTime}" /></td>
                     </tr>
-                    <tr>
-                    </tr>
+                    <hr>
+                    <br>
                     <table border="1" cellpadding="5" cellspacing="1" >
                         <tr>
                             <th>Order Detail Id</th>
@@ -57,9 +57,9 @@
                         <c:forEach items="${orderDetail}" var="orderDetail" >
                             <tr>
                                 <td><input type="text" readonly name="idOrderDetail${orderDetail.id}" value="${orderDetail.id}" /></td>
-                                <td><input type="text" name="productId${orderDetail.id}" value="${orderDetail.productId}" /></td>
-                                <td><input type="text" name="purchasedQuantity${orderDetail.id}" value="${orderDetail.purchasedQuantity}" /></td>
-                                <td><input type="text" name="status${orderDetail.id}" value="${orderDetail.status}" /></td>
+                                <td><input type="text" name="productId${orderDetail.status}" value="${orderDetail.productId}" /></td>
+                                <td><input type="text" name="purchasedQuantity${orderDetail.status}" value="${orderDetail.purchasedQuantity}" /></td>
+                                <td><input type="text" name="status${orderDetail.status}" value="${orderDetail.status}" /></td>
                             </tr>
                         </c:forEach>
                     </table>

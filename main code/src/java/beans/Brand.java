@@ -12,16 +12,26 @@ package beans;
 public class Brand {
     private String name, logo, manufacturer, description;
     private int id;
+    private boolean disable;
 
-    public Brand(int id, String name, String logo, String manufacturer, String description) {
+    public Brand(int id, String name, String logo, String manufacturer, String description, boolean disable) {
         this.name = name;
         this.logo = logo;
         this.manufacturer = manufacturer;
         this.description = description;
         this.id = id;
+        this.disable = disable;
     }
 
     public Brand() {
+    }
+
+    public boolean isDisable() {
+        return disable;
+    }
+
+    public void setDisable(boolean disable) {
+        this.disable = disable;
     }
 
     public String getName() {

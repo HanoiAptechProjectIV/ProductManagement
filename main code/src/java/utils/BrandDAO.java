@@ -31,6 +31,7 @@ public class BrandDAO {
             String description = rs.getString("description");
             String logo = rs.getString("logo");
             String manufacturer= rs.getString("manufacturer");
+            boolean disable = rs.getBoolean("disable");
             
             Brand brand = new Brand();
             brand.setId(id);
@@ -38,6 +39,7 @@ public class BrandDAO {
             brand.setDescription(description);
             brand.setLogo(logo);
             brand.setManufacturer(manufacturer);
+            brand.setDisable(disable);
             list.add(brand);
         }
         return list;
@@ -56,13 +58,15 @@ public class BrandDAO {
             String description = rs.getString("description");
             String logo = rs.getString("logo");
             String manufacturer= rs.getString("manufacturer");            
+            boolean disable = rs.getBoolean("disable");
             
             Brand brand = new Brand();
             brand.setId(id);
             brand.setName(name);
             brand.setDescription(description);
             brand.setLogo(logo);
-            brand.setManufacturer(manufacturer);            
+            brand.setManufacturer(manufacturer); 
+            brand.setDisable(disable);
             return brand;
         }
         return null;
@@ -82,15 +86,16 @@ public class BrandDAO {
     }    
     
     public static void updateBrand(Connection conn, Brand brand) throws SQLException {
-        String sql = "Update Brand set name =?, logo =?, manufacturer =?, description =? where id=? ";
+        String sql = "Update Brand set name =?, logo =?, manufacturer =?, description =?, disable=? where id=? ";
  
         PreparedStatement pstm = conn.prepareStatement(sql);
  
-        pstm.setInt(5, brand.getId());
+        pstm.setInt(6, brand.getId());
         pstm.setString(1, brand.getName()); 
         pstm.setString(2, brand.getLogo());           
         pstm.setString(3, brand.getManufacturer()); 
-        pstm.setString(4, brand.getDescription());    
+        pstm.setString(4, brand.getDescription());   
+        pstm.setBoolean(5, brand.isDisable());
         
         pstm.executeUpdate();
     }    
