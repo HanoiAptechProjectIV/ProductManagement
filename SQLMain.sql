@@ -10,7 +10,7 @@ insert into [Admin](username, [password]) values('admin', '123')
 create table Category (
 	id int not null identity(1,1) primary key, 
 	name nvarchar(50) unique,
-	description text,
+	description ntext,
 	disable bit default 0
 )
 
@@ -19,14 +19,14 @@ create table Brand (
 	name nvarchar(50) unique, 
 	logo varchar(50),
 	manufacturer nvarchar(50),
-	description text,
+	description ntext,
 	disable bit default 0
 )
 
 create table Product (
 	id int not null identity(1,1) primary key,
 	name nvarchar(50) unique,
-	description text,
+	description ntext,
 	price int, 
 	quantity int,
 	image varchar(50),
@@ -46,7 +46,7 @@ create table [User] (
 	gender bit,
 	phone varchar(20),
 	email varchar(50),
-	[address] nvarchar(50)
+	[address] nvarchar(255)
 )
 
 create table [Order] (
@@ -68,16 +68,16 @@ create table OrderDetail (
 	foreign key (order_id) references [Order](id),
 )
 
-insert into Category(name, description) values('danh mục 1', 'mô tả')
+insert into Category(name, description) values(N'danh mục 1', N'mô tả')
 
-insert into Brand (name, manufacturer, description) values('thương hiệu 1', 'made in china', 'mô tả')
+insert into Brand (name, manufacturer, description) values(N'thương hiệu 1', 'made in china', N'mô tả')
 
 insert into Product(name, price, quantity, description, date_added, category_id, brand_id)
-values('sản phẩm 1', 100000, 50, 'sản phẩm chất lượnng', '2020/12/27 12:30:00', 1, 1)
-, ('sản phẩm 2', 200000, 30, 'sản phẩm chất lượnng', '2020/12/27 12:15:00', 1, 1)					   
+values(N'sản phẩm 1', 100000, 50, N'sản phẩm chất lượnng', '2020/12/27 12:30:00', 1, 1)
+, (N'sản phẩm 2', 200000, 30, N'sản phẩm chất lượnng', '2020/12/27 12:15:00', 1, 1)					   
 
 insert into [User](username, password, name, gender, phone, email, address)
-values('customer', '123', 'John Doe', 1, '098 765 4321', 'johndoe@customer.com', 'Ha Noi')
+values('customer', '123', 'John Doe', 1, '098 765 4321', 'johndoe@customer.com', N'Hà Nội')
 
 insert into [Order](created_time, payment_time, amount, [user_id])
 values ('12/26/2020 15:00:00', '01/01/2021 15:28:00', 2200000, 1)
@@ -85,4 +85,4 @@ values ('12/26/2020 15:00:00', '01/01/2021 15:28:00', 2200000, 1)
 
 insert into OrderDetail(status, product_id, order_id, purchased_quantity)
 values('success transaction', 1, 1, 2), ('success transaction', 2, 1, 10)
-, ('success transaction', 1, 2, 1)							 
+, ('success transaction', 1, 2, 1)										 
