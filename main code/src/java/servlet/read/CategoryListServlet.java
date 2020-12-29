@@ -23,9 +23,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
  
 import beans.Category;
+import java.util.ArrayList;
 import javax.servlet.http.HttpSession;
-import utils.CategoryDAO;
 import utils.MyUtils;
+import utils.CategoryDAO;
  
 @WebServlet(urlPatterns = { "/categoryList" })
 public class CategoryListServlet extends HttpServlet {
@@ -39,24 +40,17 @@ public class CategoryListServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        HttpSession session = request.getSession();
-
-        // Kiểm tra người dùng đã đăng nhập (login) chưa.
-        Admin adminLogined = MyUtils.getLoginedAdmin(session);
-        String loginedAdmin = MyUtils.getAdminCookie(request);
-        // Nếu chưa đăng nhập (login).
-        if (adminLogined == null && loginedAdmin == null) {
-            // Redirect (Chuyển hướng) tới trang login.
-            response.sendRedirect(request.getContextPath() + "/login");
-            return;
-        }
-        
         Connection conn = MyUtils.getStoredConnection(request);
  
         String errorString = null;
-        List<Category> list = null;
+        String name = request.getParameter("search");
+        List<Category> list = new ArrayList<Category>();
         try {
-            list = CategoryDAO.queryCategory(conn);
+            if (name != null) {
+                list.add(CategoryDAO.findCategoryByName(conn, name));
+            } else {
+                list = CategoryDAO.queryCategory(conn);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             errorString = e.getMessage();

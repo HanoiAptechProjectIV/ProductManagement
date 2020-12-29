@@ -12,7 +12,7 @@ package filter;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
- 
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -22,34 +22,33 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
- 
+
 import beans.Admin;
 import utils.AdminDAO;
 import utils.MyUtils;
- 
-@WebFilter(filterName = "cookieFilter", urlPatterns = { "/*" })
+
+@WebFilter(filterName = "cookieFilter", urlPatterns = {"/*"})
 public class CookieFilter implements Filter {
- 
+
     public CookieFilter() {
     }
- 
+
     @Override
     public void init(FilterConfig fConfig) throws ServletException {
- 
+
     }
- 
+
     @Override
     public void destroy() {
- 
+
     }
- 
+
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
-        System.out.println("Cookie filter");
         HttpServletRequest req = (HttpServletRequest) request;
         HttpSession session = req.getSession();
- 
+
         Admin adminInSession = MyUtils.getLoginedAdmin(session);
         // đã đăng nhập
         if (adminInSession != null) {
@@ -57,25 +56,26 @@ public class CookieFilter implements Filter {
             chain.doFilter(request, response);
             return;
         }
- 
+
         // Connection đã được tạo trong JDBCFilter.
         Connection conn = MyUtils.getStoredConnection(request);
- 
+
         // Cờ (flag) để kiểm tra Cookie.
         String checked = (String) session.getAttribute("COOKIE_CHECKED");
         if (checked == null && conn != null) {
             String username = MyUtils.getAdminCookie(req);
+            Admin admin = null;
             try {
-                Admin admin = AdminDAO.findAdmin(conn, username);
-                MyUtils.storeLoginedAdmin(session, admin);
-            } catch (SQLException e) {
-                e.printStackTrace();
+                admin = AdminDAO.findAdmin(conn, username);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
             }
+            MyUtils.storeLoginedAdmin(session, admin);
             // Đánh dấu đã kiểm tra Cookie.
             session.setAttribute("COOKIE_CHECKED", "CHECKED");
         }
- 
+
         chain.doFilter(request, response);
     }
- 
+
 }

@@ -23,6 +23,7 @@ import javax.servlet.http.HttpSession;
 import beans.User;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import utils.MyUtils;
 import utils.UserDAO;
@@ -38,26 +39,16 @@ public class UserListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
- 
-        // Kiểm tra người dùng đã đăng nhập (login) chưa.
-        Admin adminLogined = MyUtils.getLoginedAdmin(session);
-        String loginedAdmin = MyUtils.getAdminCookie(request);
-        // Nếu chưa đăng nhập (login).
-        if (adminLogined == null && loginedAdmin == null) {
-            // Redirect (Chuyển hướng) tới trang login.
-            response.sendRedirect(request.getContextPath() + "/login");
-            return;
-        }
         
         Connection conn = MyUtils.getStoredConnection(request);
- 
         String errorString = null;
-        List<User> list = null;
+        String name = request.getParameter("search");
+        List<User> list = new ArrayList<User>();
         try {
-            list = UserDAO.queryUser(conn);
-            for(User user : list){
-                System.out.println(user.getName());
+            if (name != null) {
+                list.add(UserDAO.findUserByName(conn, name));
+            } else {
+                list = UserDAO.queryUser(conn);
             }
         } catch (SQLException e) {
             e.printStackTrace();

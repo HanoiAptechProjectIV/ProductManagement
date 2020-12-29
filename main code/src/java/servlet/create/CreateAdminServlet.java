@@ -12,36 +12,39 @@ package servlet.create;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
- 
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
- 
+
 import beans.Admin;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import utils.AdminDAO;
 import utils.MyUtils;
- 
-@WebServlet(urlPatterns = { "/createAdmin" })
+
+@WebServlet(urlPatterns = {"/createAdmin"})
 public class CreateAdminServlet extends HttpServlet {
+
     private static final long serialVersionUID = 1L;
- 
+
     public CreateAdminServlet() {
         super();
     }
- 
+
     // Hiển thị trang tạo sản phẩm.
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
- 
+
         RequestDispatcher dispatcher = request.getServletContext()
                 .getRequestDispatcher("/WEB-INF/views/CRUD/create/createAdminView.jsp");
         dispatcher.forward(request, response);
     }
- 
+
     // Khi người dùng nhập các thông tin sản phẩm, và nhấn Submit.
     // Phương thức này sẽ được gọi.
     @Override
@@ -51,34 +54,31 @@ public class CreateAdminServlet extends HttpServlet {
         
         String username = (String) request.getParameter("username");
         String password = request.getParameter("password");
-        
+
         Admin admin = new Admin(username, password);
         String errorString = null;
- 
-        if (errorString == null) {
-            try {
-                AdminDAO.insertAdmin(conn, admin);
-            } catch (SQLException e) {
-                e.printStackTrace();
-                errorString = e.getMessage();
-            }
+
+        try {
+            AdminDAO.insertAdmin(conn, admin);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            errorString = ex.getMessage();
         }
- 
+
         // Lưu thông tin vào request attribute trước khi forward sang views.
         request.setAttribute("errorString", errorString);
         request.setAttribute("admin", admin);
- 
+
         // Nếu có lỗi forward (chuyển tiếp) sang trang 'edit'.
         if (errorString != null) {
             RequestDispatcher dispatcher = request.getServletContext()
                     .getRequestDispatcher("/WEB-INF/views/CRUD/create/createAdminView.jsp");
             dispatcher.forward(request, response);
-        }
-        // Nếu mọi thứ tốt đẹp.
+        } // Nếu mọi thứ tốt đẹp.
         // Redirect (chuyển hướng) sang trang danh sách sản phẩm.
         else {
             response.sendRedirect(request.getContextPath() + "/adminList");
         }
     }
- 
+
 }

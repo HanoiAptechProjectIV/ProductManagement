@@ -51,7 +51,7 @@ public class MyUtils {
     }
     
     public static void deleteLoginedAdmin(HttpSession session) {
-        session.removeAttribute("loginedAdmin");
+        session.invalidate();
     }
  
     // Lưu thông tin người dùng vào Cookie.

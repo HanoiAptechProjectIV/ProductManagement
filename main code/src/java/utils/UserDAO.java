@@ -110,6 +110,37 @@ public class UserDAO {
         }
         return null;
     } 
+
+    public static User findUserByName(Connection conn, String name) throws SQLException {
+        String sql = "Select * from [User] a where a.name=?";
+ 
+        PreparedStatement pstm = conn.prepareStatement(sql);
+        pstm.setString(1, name);
+ 
+        ResultSet rs = pstm.executeQuery();
+ 
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String password = rs.getString("password");
+            String username = rs.getString("username");
+            boolean gender = rs.getBoolean("gender");
+            String phone = rs.getString("phone");
+            String email = rs.getString("email");
+            String address = rs.getString("address");
+            
+            User user = new User();
+            user.setId(id);
+            user.setUsername(username);
+            user.setPassword(password);
+            user.setName(name);
+            user.setGender(gender);
+            user.setPhone(phone);
+            user.setEmail(email);
+            user.setAddress(address);
+            return user;
+        }
+        return null;
+    } 
     
     public static User findUser(Connection conn, String username, String password) throws SQLException {
         String sql = "Select * from [User] a where a.username=? and a.password=?";

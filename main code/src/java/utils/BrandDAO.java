@@ -72,6 +72,33 @@ public class BrandDAO {
         return null;
     }
 
+    public static Brand findBrandByName(Connection conn, String name) throws SQLException {
+        String sql = "Select * from Brand a where a.name=?";
+ 
+        PreparedStatement pstm = conn.prepareStatement(sql);
+        pstm.setString(1, name);
+ 
+        ResultSet rs = pstm.executeQuery();
+ 
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String description = rs.getString("description");
+            String logo = rs.getString("logo");
+            String manufacturer= rs.getString("manufacturer");            
+            boolean disable = rs.getBoolean("disable");
+            
+            Brand brand = new Brand();
+            brand.setId(id);
+            brand.setName(name);
+            brand.setDescription(description);
+            brand.setLogo(logo);
+            brand.setManufacturer(manufacturer); 
+            brand.setDisable(disable);
+            return brand;
+        }
+        return null;
+    }
+
     public static void insertBrand(Connection conn, Brand brand) throws SQLException {
         String sql = "Insert into Brand(name, logo, manufacturer, description) values (?,?,?,?)";
  

@@ -89,6 +89,41 @@ public class ProductDAO {
         return null;
     }
 
+    public static Product findProductByName(Connection conn, String name) throws SQLException {
+        String sql = "Select * from Product a where a.name=?";
+ 
+        PreparedStatement pstm = conn.prepareStatement(sql);
+        pstm.setString(1, name);
+ 
+        ResultSet rs = pstm.executeQuery();
+ 
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String description = rs.getString("description");
+            int price = rs.getInt("price");
+            int quantity = rs.getInt("quantity");
+            String image = rs.getString("image");
+            LocalDate dateAdded = rs.getDate("date_added").toLocalDate();
+            int categoryId = rs.getInt("category_id");
+            int brandId = rs.getInt("brand_id");
+            boolean disable = rs.getBoolean("disable");
+            
+            Product product = new Product();
+            product.setId(id);
+            product.setName(name);
+            product.setDescription(description);
+            product.setPrice(price);
+            product.setQuantity(quantity);
+            product.setImage(image);
+            product.setDateAdded(dateAdded);
+            product.setCategoryId(categoryId);
+            product.setBrandId(brandId);
+            product.setDisable(disable);
+            return product;
+        }
+        return null;
+    }
+
     public static void insertProduct(Connection conn, Product product) throws SQLException {
         String sql = "Insert into Product(name, description, price, quantity, image"
                 + ", date_added, category_id, brand_id) values (?,?,?,?,?,?,?,?)";

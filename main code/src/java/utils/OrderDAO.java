@@ -10,7 +10,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,11 +22,12 @@ import java.util.List;
  * @author Hung
  */
 public class OrderDAO {
+
     public static List<Order> queryOrder(Connection conn) throws SQLException {
         String sql = "Select * from [Order] a ";
- 
+
         PreparedStatement pstm = conn.prepareStatement(sql);
- 
+
         ResultSet rs = pstm.executeQuery();
         List<Order> list = new ArrayList<Order>();
         while (rs.next()) {
@@ -32,7 +36,7 @@ public class OrderDAO {
             LocalDateTime paymentTime = rs.getTimestamp("payment_time").toLocalDateTime();
             int amount = rs.getInt("amount");
             int userId = rs.getInt("user_id");
-            
+
             Order order = new Order();
             order.setId(id);
             order.setCreatedTime(createdTime);
@@ -42,22 +46,22 @@ public class OrderDAO {
             list.add(order);
         }
         return list;
-    } 
-    
+    }
+
     public static Order findOrder(Connection conn, int id) throws SQLException {
         String sql = "Select * from [Order] a where a.id=?";
- 
+
         PreparedStatement pstm = conn.prepareStatement(sql);
         pstm.setInt(1, id);
- 
+
         ResultSet rs = pstm.executeQuery();
- 
+
         while (rs.next()) {
             LocalDateTime createdTime = rs.getTimestamp("created_time").toLocalDateTime();
             LocalDateTime paymentTime = rs.getTimestamp("payment_time").toLocalDateTime();
             int amount = rs.getInt("amount");
             int userId = rs.getInt("user_id");
-            
+
             Order order = new Order();
             order.setId(id);
             order.setCreatedTime(createdTime);
@@ -69,44 +73,104 @@ public class OrderDAO {
         return null;
     }
 
+    public static List<Order> findOrderByUserId(Connection conn, int userId) throws SQLException {
+        String sql = "Select * from [Order] a where a.user_id=?";
+
+        PreparedStatement pstm = conn.prepareStatement(sql);
+        pstm.setInt(1, userId);
+
+        ResultSet rs = pstm.executeQuery();
+        List<Order> list = new ArrayList<Order>();
+        while (rs.next()) {
+            LocalDateTime createdTime = rs.getTimestamp("created_time").toLocalDateTime();
+            LocalDateTime paymentTime = rs.getTimestamp("payment_time").toLocalDateTime();
+            int amount = rs.getInt("amount");
+            int id = rs.getInt("id");
+
+            Order order = new Order();
+            order.setId(id);
+            order.setCreatedTime(createdTime);
+            order.setPaymentTime(paymentTime);
+            order.setAmount(amount);
+            order.setUserId(userId);
+            list.add(order);
+        }    
+        return list;
+    }
+
     public static void insertOrder(Connection conn, Order order) throws SQLException {
         String sql = "Insert into [Order](created_time, payment_time, amount, user_id) values (?,?,?,?)";
- 
+
         PreparedStatement pstm = conn.prepareStatement(sql);
-        java.sql.Date createdTime = java.sql.Date.valueOf(order.getCreatedTime().toLocalDate());
-        java.sql.Date paymentTime = java.sql.Date.valueOf(order.getPaymentTime().toLocalDate());
- 
-        pstm.setDate(1, createdTime);
-        pstm.setDate(2, paymentTime);
+        
+        LocalDateTime cTime = order.getCreatedTime();
+        LocalDateTime pTime = order.getPaymentTime();
+        java.util.Date cDate;
+        java.util.Date pDate;
+        String dateFormat = "yyyy-MM-dd'T'HH:mm:ss";
+        DateTimeFormatter dtf1 = DateTimeFormatter.ofPattern(dateFormat);
+        SimpleDateFormat sdf1 = new SimpleDateFormat(dateFormat);
+        try {
+            cDate = sdf1.parse(cTime.format(dtf1));
+            pDate = sdf1.parse(pTime.format(dtf1));
+        } catch (ParseException e) {
+            cDate = null; 
+            pDate = null; 
+        }
+        java.sql.Timestamp createdTime = new java.sql.Timestamp(cDate.getTime());
+        java.sql.Timestamp paymentTime = new java.sql.Timestamp(pDate.getTime());
+
+        pstm.setTimestamp(1, createdTime);
+        pstm.setTimestamp(2, paymentTime);
         pstm.setInt(3, order.getAmount());
         pstm.setInt(4, order.getUserId());
- 
+
         pstm.executeUpdate();
-    }    
-    
+    }
+
     public static void updateOrder(Connection conn, Order order) throws SQLException {
         String sql = "Update [Order] set created_time =?, amount =?, user_id =?, payment_time =? where id=? ";
- 
+
         PreparedStatement pstm = conn.prepareStatement(sql);
-        java.sql.Date createdTime = java.sql.Date.valueOf(order.getCreatedTime().toLocalDate());
-        java.sql.Date paymentTime = java.sql.Date.valueOf(order.getPaymentTime().toLocalDate());
-        
-        pstm.setDate(1, createdTime);
+        LocalDateTime cTime = order.getCreatedTime();
+        LocalDateTime pTime = order.getPaymentTime();
+        java.util.Date cDate;
+        java.util.Date pDate;
+        String dateFormat = "yyyy-MM-dd'T'HH:mm:ss";
+        DateTimeFormatter dtf1 = DateTimeFormatter.ofPattern(dateFormat);
+        SimpleDateFormat sdf1 = new SimpleDateFormat(dateFormat);
+        try {
+            cDate = sdf1.parse(cTime.format(dtf1));
+            pDate = sdf1.parse(pTime.format(dtf1));
+        } catch (ParseException e) {
+            cDate = null; 
+            pDate = null; 
+        }
+        java.sql.Timestamp createdTime = new java.sql.Timestamp(cDate.getTime());
+        java.sql.Timestamp paymentTime = new java.sql.Timestamp(pDate.getTime());
+        System.out.println(createdTime.toString());
+        System.out.println(paymentTime.toString());
+        System.out.println(cTime.toString());
+        System.out.println(pTime.toString());
+        System.out.println(cDate.toString());
+        System.out.println(pDate.toString());
+
+        pstm.setTimestamp(1, createdTime);
         pstm.setInt(2, order.getAmount());
         pstm.setInt(3, order.getUserId());
-        pstm.setDate(4, paymentTime);
+        pstm.setTimestamp(4, paymentTime);
         pstm.setInt(5, order.getId());
-        
+
         pstm.executeUpdate();
-    }    
-    
+    }
+
     public static void deleteOrder(Connection conn, int id) throws SQLException {
         String sql = "Delete From [Order] where id= ?";
- 
+
         PreparedStatement pstm = conn.prepareStatement(sql);
- 
+
         pstm.setInt(1, id);
- 
+
         pstm.executeUpdate();
-    }    
+    }
 }

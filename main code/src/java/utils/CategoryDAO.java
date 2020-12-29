@@ -64,6 +64,29 @@ public class CategoryDAO {
         return null;
     }
 
+    public static Category findCategoryByName(Connection conn, String name) throws SQLException {
+        String sql = "Select * from Category a where a.name=?";
+ 
+        PreparedStatement pstm = conn.prepareStatement(sql);
+        pstm.setString(1, name);
+ 
+        ResultSet rs = pstm.executeQuery();
+ 
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String description = rs.getString("description");
+            boolean disable = rs.getBoolean("disable");
+            
+            Category category = new Category();
+            category.setId(id);
+            category.setName(name);
+            category.setDescription(description);
+            category.setDisable(disable);
+            return category;
+        }
+        return null;
+    }
+
     public static void insertCategory(Connection conn, Category category) throws SQLException {
         String sql = "Insert into Category(name, description) values (?,?)";
  

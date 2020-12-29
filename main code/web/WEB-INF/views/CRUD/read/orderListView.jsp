@@ -22,6 +22,18 @@
 
             <p style="color: red;">${errorString}</p>
 
+        <table border="0" cellpadding="5" cellspacing="1" >
+            <tr>
+                <td>Search User Id</td>
+                <td>
+                    <form method="POST" action="${pageContext.request.contextPath}/orderList">
+                        <input type="text" name="search"/>
+                        <input type="submit" value="Search"/>
+                    </form>
+                </td>
+            </tr>             
+        </table>
+                        <br/>
         <table border="1" cellpadding="5" cellspacing="1" >
             <tr>
                 <th>Id</th>

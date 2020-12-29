@@ -25,7 +25,6 @@
          <li>View list</li>
          <li>Create</li>
          <li>Edit</li>
-         <li>Delete</li>
       </ul>
  
      <jsp:include page="_footer.jsp"></jsp:include>

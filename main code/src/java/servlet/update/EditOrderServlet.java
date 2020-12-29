@@ -100,7 +100,6 @@ public class EditOrderServlet extends HttpServlet {
             List<OrderDetail> listDetail = OrderDetailDAO.findOrderDetailList(conn, id);
             for(OrderDetail detail : listDetail){
                 int idOrderDetail = Integer.parseInt(request.getParameter("idOrderDetail"+detail.getId())); 
-                System.out.println("prod id "+request.getParameter("productId"+detail.getId()));
                 int productId = Integer.parseInt(request.getParameter("productId"+detail.getId()));
                 int purchasedQuantity = Integer.parseInt(request.getParameter("purchasedQuantity"+detail.getId()));
                 String status = request.getParameter("status"+detail.getId());

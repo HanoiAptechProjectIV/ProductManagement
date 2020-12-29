@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import utils.MyUtils;
  
-@WebServlet(urlPatterns = { "/home"})
+@WebServlet(urlPatterns = { "/home", "/", "/index"})
 public class HomeServlet extends HttpServlet {
    private static final long serialVersionUID = 1L;
  
