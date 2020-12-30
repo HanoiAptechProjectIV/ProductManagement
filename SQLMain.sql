@@ -17,7 +17,7 @@ create table Category (
 create table Brand (
 	id int not null identity(1,1) primary key, 
 	name nvarchar(50) unique, 
-	logo varchar(50),
+	logo varchar(50) default 'brand.png',
 	manufacturer nvarchar(50),
 	description ntext,
 	disable bit default 0
@@ -29,7 +29,7 @@ create table Product (
 	description ntext,
 	price int, 
 	quantity int,
-	image varchar(50),
+	image varchar(50) default 'product.png',
 	date_added datetime DEFAULT CURRENT_TIMESTAMP, 
 	category_id int,
 	brand_id int,
@@ -70,11 +70,11 @@ create table OrderDetail (
 
 insert into Category(name, description) values(N'category 1', N'description')
 
-insert into Brand (name, logo, manufacturer, description) values(N'brand 1', 'brand/tesla.png', 'made in china', N'description')
+insert into Brand (name, logo, manufacturer, description) values(N'brand 1', 'tesla.png', 'made in china', N'description')
 
 insert into Product(name, price, quantity, image, description, date_added, category_id, brand_id)
-values(N'product 1', 100000, 50, 'product/product.png', N'good quality', '2020/12/27 12:30:00', 1, 1)
-, (N'product 2', 200000, 30, 'product/product.png', N'good quality', '2020/12/27 12:15:00', 1, 1)					   
+values(N'product 1', 100000, 50, 'product.png', N'good quality', '2020/12/27 12:30:00', 1, 1)
+, (N'product 2', 200000, 30, 'product.png', N'good quality', '2020/12/27 12:15:00', 1, 1)					   
 
 insert into [User](username, password, name, gender, phone, email, address)
 values('customer', '123', 'John Doe', 1, '098 765 4321', 'johndoe@customer.com', N'Hà Nội')
