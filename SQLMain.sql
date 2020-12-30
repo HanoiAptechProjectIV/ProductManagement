@@ -70,11 +70,11 @@ create table OrderDetail (
 
 insert into Category(name, description) values(N'danh mục 1', N'mô tả')
 
-insert into Brand (name, manufacturer, description) values(N'thương hiệu 1', 'made in china', N'mô tả')
+insert into Brand (name, logo, manufacturer, description) values(N'thương hiệu 1', 'brand/tesla.png', 'made in china', N'mô tả')
 
-insert into Product(name, price, quantity, description, date_added, category_id, brand_id)
-values(N'sản phẩm 1', 100000, 50, N'sản phẩm chất lượnng', '2020/12/27 12:30:00', 1, 1)
-, (N'sản phẩm 2', 200000, 30, N'sản phẩm chất lượnng', '2020/12/27 12:15:00', 1, 1)					   
+insert into Product(name, price, quantity, image, description, date_added, category_id, brand_id)
+values(N'sản phẩm 1', 100000, 50, 'product/product.png', N'sản phẩm chất lượnng', '2020/12/27 12:30:00', 1, 1)
+, (N'sản phẩm 2', 200000, 30, 'product/product.png', N'sản phẩm chất lượnng', '2020/12/27 12:15:00', 1, 1)					   
 
 insert into [User](username, password, name, gender, phone, email, address)
 values('customer', '123', 'John Doe', 1, '098 765 4321', 'johndoe@customer.com', N'Hà Nội')
