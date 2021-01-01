@@ -23,7 +23,7 @@
        
       <p style="color: red;">${errorString}</p>
        
-      <form method="POST" action="${pageContext.request.contextPath}/createProduct">
+      <form method="POST" action="${pageContext.request.contextPath}/createProduct" enctype="multipart/form-data">
          <table border="0">
             <tr>
                <td>Name</td>
@@ -35,7 +35,7 @@
             </tr>
             <tr>
                <td>Image</td>
-               <td><input type="text" name="image" value="${product.image}" /></td>
+               <td><input type="file" name="image" value="" /></td>
             </tr>
             <tr>
                <td>Quantity</td>

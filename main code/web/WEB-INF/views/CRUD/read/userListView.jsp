@@ -5,69 +5,62 @@
 --%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
- pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
- <head>
-    <meta charset="UTF-8">
-    <title>User Info</title>
- </head>
- <body>
- 
-    <jsp:include page="../../_header.jsp"></jsp:include>
-    <jsp:include page="../../_menu.jsp"></jsp:include>
- 
-    <h3>User List</h3>
- 
-    <p style="color: red;">${errorString}</p>
-        <table border="0" cellpadding="5" cellspacing="1" >
-            <tr>
-                <td>Search User Name</td>
-                <td>
-                    <form method="POST" action="${pageContext.request.contextPath}/userList">
-                        <input type="text" name="search"/>
-                        <input type="submit" value="Search"/>
-                    </form>
-                </td>
-            </tr>             
+    <head>
+        <meta charset="UTF-8">
+        <title>User Info</title>
+    </head>
+    <body>
+
+        <jsp:include page="../../_header.jsp"></jsp:include>
+        <jsp:include page="../../_menu.jsp"></jsp:include>
+
+            <h3>User List Page ${page}</h3>
+
+            <p style="color: red;">${errorString}</p>
+        <jsp:include page="../../_search.jsp"></jsp:include>
+            <table border="1" cellpadding="5" cellspacing="1" >
+                <tr>
+                    <th>Id</th>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>Name</th>
+                    <th>Gender</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                </tr>
+            <c:forEach items="${userList}" var="user" >
+                <c:if test="${user != null}">
+                <tr>
+                    <td>${user.id}</td>
+                    <td>${user.username}</td>
+                    <td>${user.password}</td>
+                    <td>${user.name}</td>
+                    <td>
+                        <c:choose>
+                            <c:when test="${user.gender == true}">
+                                Female
+                            </c:when>
+                            <c:when test="${user.gender == false}">
+                                Male
+                            </c:when>
+                        </c:choose>
+
+                    </td>
+                    <td>${user.phone}</td>
+                    <td>${user.email}</td>
+                    <td>${user.address}</td>
+                </tr>
+                </c:if>
+            </c:forEach>
         </table>
-                        <br/> 
-    <table border="1" cellpadding="5" cellspacing="1" >
-       <tr>
-          <th>Id</th>
-          <th>Username</th>
-          <th>Password</th>
-          <th>Name</th>
-          <th>Gender</th>
-          <th>Phone</th>
-          <th>Email</th>
-          <th>Address</th>
-       </tr>
-       <c:forEach items="${userList}" var="user" >
-          <tr>
-              <td>${user.id}</td>
-             <td>${user.username}</td>
-             <td>${user.password}</td>
-             <td>${user.name}</td>
-             <td>
-                 <c:choose>
-                     <c:when test="${user.gender == true}">
-                         Nữ
-                     </c:when>
-                     <c:otherwise>Nam</c:otherwise>
-                 </c:choose>
-                 
-             </td>
-             <td>${user.phone}</td>
-             <td>${user.email}</td>
-             <td>${user.address}</td>
-          </tr>
-       </c:forEach>
-    </table>
- 
- 
-    <jsp:include page="../../_footer.jsp"></jsp:include>
- 
- </body>
+
+        <jsp:include page="../../_pagination.jsp"></jsp:include>
+        <jsp:include page="../../_footer.jsp"></jsp:include>
+
+    </body>
 </html>

@@ -23,7 +23,7 @@
       <p style="color: red;">${errorString}</p>
  
       <c:if test="${not empty product}">
-         <form method="POST" action="${pageContext.request.contextPath}/editProduct">
+         <form method="POST" action="${pageContext.request.contextPath}/editProduct" enctype="multipart/form-data">
             <input type="hidden" name="id" value="${product.id}" />
             <table border="0">
             <tr>
@@ -35,9 +35,15 @@
                <td><input type="text" name="price" value="${product.price}" /></td>
             </tr>
             <tr>
-               <td>Image</td>
-               <td><input type="text" name="image" value="${product.image}" /></td>
+               <td>Old image</td>
+               <td><img src="${pageContext.request.contextPath}/images/product/${product.image}"
+                        height="100" alt="${product.name} image"/></td>
+                <input type="hidden" name="oldImage" value="${product.image}"/>
             </tr>
+            <tr>
+               <td>New image</td>
+               <td><input type="file" name="image" value="" /></td>
+            </tr>            
             <tr>
                <td>Quantity</td>
                <td><input type="text" name="quantity" value="${product.quantity}" /></td>

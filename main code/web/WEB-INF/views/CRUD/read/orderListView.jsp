@@ -18,42 +18,39 @@
         <jsp:include page="../../_header.jsp"></jsp:include>
         <jsp:include page="../../_menu.jsp"></jsp:include>
 
-            <h3>Order List</h3>
+            <h3>Order List Page ${page}</h3>
 
-            <p style="color: red;">${errorString}</p>
+        <p style="color: red;">${errorString}</p>
 
-        <table border="0" cellpadding="5" cellspacing="1" >
-            <tr>
-                <td>Search User Id</td>
-                <td>
-                    <form method="POST" action="${pageContext.request.contextPath}/orderList">
-                        <input type="text" name="search"/>
-                        <input type="submit" value="Search"/>
-                    </form>
-                </td>
-            </tr>             
-        </table>
-                        <br/>
-        <table border="1" cellpadding="5" cellspacing="1" >
-            <tr>
-                <th>Id</th>
-                <th>User id</th>
-                <th>Product id</th>
-                <th>Amount</th>
-                <th>Purchase quantity</th>
-                <th>Created time</th>
-                <th>Payment time</th>
-                <th>Status</th>
-                <th>Edit</th>
-            </tr>
-            <c:forEach items="${orderList}" var="order" >  
+        <jsp:include page="../../_search.jsp"></jsp:include>
+            <table border="1" cellpadding="5" cellspacing="1" >
+                <tr>
+                    <th>Id</th>
+                    <th>User name</th>
+                    <th>Product name</th>
+                    <th>Amount</th>
+                    <th>Purchase quantity</th>
+                    <th>Created time</th>
+                    <th>Payment time</th>
+                    <th>Status</th>
+                    <th>Edit</th>
+                </tr>
+            <c:forEach items="${orderList}" var="order" >
                 <tr>
                     <td>${order.id}</td>
-                    <td>${order.userId}</td>
+                    <c:forEach items="${userList}" step="10" var="user">
+                        <c:if test="${user.id == order.userId}">
+                            <td><a href="userList?search=${user.name}">${user.name}</a><br></td>
+                        </c:if>
+                    </c:forEach>
                     <td>
                         <c:forEach items="${orderDetailList}" var="orderDetail" >
                             <c:if test="${order.id == orderDetail.orderId}">
-                                ${orderDetail.productId}<hr>
+                                <c:forEach items="${productList}" var="product" >
+                                    <c:if test="${product.id == orderDetail.productId}">
+                                          <a href="productList?search=${product.name}">${product.name}</a><br>
+                                    </c:if>
+                                </c:forEach>                                
                             </c:if>
                         </c:forEach>
                     </td>
@@ -75,14 +72,14 @@
                         </c:forEach>
                     </td>
                     <td>
-                        
+
                         <a href="editOrder?id=${order.id}">Edit</a>
                     </td>                              
                 </tr>
             </c:forEach>
         </table>
 
-
+        <jsp:include page="../../_pagination.jsp"></jsp:include>
         <jsp:include page="../../_footer.jsp"></jsp:include>
 
     </body>

@@ -23,7 +23,7 @@
        
       <p style="color: red;">${errorString}</p>
        
-      <form method="POST" action="${pageContext.request.contextPath}/createBrand">
+      <form method="POST" action="${pageContext.request.contextPath}/createBrand" enctype="multipart/form-data">
          <table border="0">
             <tr>
                <td>Name</td>
@@ -31,8 +31,8 @@
             </tr>
             <tr>
                <td>Logo</td>
-               <td><input type="text" name="logo" value="${brand.logo}" /></td>
-            </tr>
+               <td><input type="file" name="logo" value="" /></td>
+            </tr>           
             <tr>
                <td>Manufacturer</td>
                <td><input type="text" name="manufacturer" value="${brand.manufacturer}" /></td>

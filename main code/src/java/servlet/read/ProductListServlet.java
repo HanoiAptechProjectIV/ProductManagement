@@ -9,7 +9,8 @@ package servlet.read;
  *
  * @author Hung
  */
-import beans.Admin;
+import beans.Brand;
+import beans.Category;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -24,7 +25,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import beans.Product;
 import java.util.ArrayList;
-import javax.servlet.http.HttpSession;
+import utils.BrandDAO;
+import utils.CategoryDAO;
 import utils.ProductDAO;
 import utils.MyUtils;
 
@@ -45,24 +47,73 @@ public class ProductListServlet extends HttpServlet {
         String errorString = null;
         String name = request.getParameter("search");
         List<Product> list = new ArrayList<Product>();
+        List<Brand> listBrand = new ArrayList<Brand>();
+        List<Category> listCategory = new ArrayList<Category>();
+        
         try {
+            int rowInTable = 0;
+            int rowInPage = 2;
+            int pageQuantity = 1;
+            int pageNum = (request.getParameter("page") != null)
+                    ? Integer.parseInt(request.getParameter("page"))
+                    : 1;
+            pageNum = (pageNum < 1) ? 1 : pageNum;
+
             if (name != null) {
-                list.add(ProductDAO.findProductByName(conn, name));
+                Product product = ProductDAO.findProductByName(conn, name);
+                if (product != null) {
+                    list.add(product);
+                }
+                if (list.size() > 0) {
+                    for (Product prod : list) {
+                        listBrand.add(BrandDAO.findBrand(conn, prod.getBrandId()));
+                    }
+                    for (Product prod : list) {
+                        listCategory.add(CategoryDAO.findCategory(conn, prod.getCategoryId()));
+                    }
+                }
             } else {
-                list = ProductDAO.queryProduct(conn);
+                rowInTable = ProductDAO.countRows(conn);
+                pageQuantity = (rowInTable % 2 == 0) ? rowInTable / 2 : rowInTable / 2 + 1;
+                pageNum = (pageNum > pageQuantity) ? pageQuantity : pageNum;
+                int offset = (pageNum - 1) * rowInPage;
+
+                list = ProductDAO.queryProduct(conn, offset, rowInPage);
+                System.out.println("1 "+list.get(0).getCategoryId()+" "+list.get(0).getBrandId());
+                for (Product prod : list) {
+                    listBrand.add(BrandDAO.findBrand(conn, prod.getBrandId()));
+                    System.out.println("2 "+listBrand.get(0).getId());
+                }
+                for (Product prod : list) {
+                    listCategory.add(CategoryDAO.findCategory(conn, prod.getCategoryId()));
+                    System.out.println("2 "+listCategory.get(0).getId());
+                }
+
+                request.setAttribute("pageQuantity", pageQuantity);
+                request.setAttribute("page", pageNum);
             }
         } catch (SQLException e) {
             e.printStackTrace();
             errorString = e.getMessage();
-        }
-        // Lưu thông tin vào request attribute trước khi forward sang views.
-        request.setAttribute("errorString", errorString);
-        request.setAttribute("productList", list);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            errorString = e.getMessage();
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            errorString = e.getMessage();
+        } finally {
 
-        // Forward sang /WEB-INF/views/productListView.jsp
-        RequestDispatcher dispatcher = request.getServletContext()
-                .getRequestDispatcher("/WEB-INF/views/CRUD/read/productListView.jsp");
-        dispatcher.forward(request, response);
+            // Lưu thông tin vào request attribute trước khi forward sang views.
+            request.setAttribute("errorString", errorString);
+            request.setAttribute("productList", list);
+            request.setAttribute("categoryList", listCategory);
+            request.setAttribute("brandList", listBrand);
+
+            // Forward sang /WEB-INF/views/productListView.jsp
+            RequestDispatcher dispatcher = request.getServletContext()
+                    .getRequestDispatcher("/WEB-INF/views/CRUD/read/productListView.jsp");
+            dispatcher.forward(request, response);
+        }
     }
 
     @Override

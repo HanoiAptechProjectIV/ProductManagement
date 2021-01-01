@@ -9,7 +9,7 @@ package servlet.create;
  *
  * @author Hung
  */
-import java.io.IOException;
+
 import java.sql.Connection;
 import java.sql.SQLException;
  
@@ -24,10 +24,20 @@ import beans.Product;
 import java.time.LocalDate;
 import utils.ProductDAO;
 import utils.MyUtils;
+
+import java.io.IOException;
+import javax.servlet.annotation.MultipartConfig;
+import utils.UploadFile;
  
 @WebServlet(urlPatterns = { "/createProduct" })
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024 * 10,
+        maxFileSize = 1024 * 1024 * 50,
+        maxRequestSize = 1024 * 1024 * 100
+)
 public class CreateProductServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
+    private static final String  UPLOAD_DIR = "\\images\\product\\";
  
     public CreateProductServlet() {
         super();
@@ -42,7 +52,7 @@ public class CreateProductServlet extends HttpServlet {
                 .getRequestDispatcher("/WEB-INF/views/CRUD/create/createProductView.jsp");
         dispatcher.forward(request, response);
     }
- 
+    
     // Khi người dùng nhập các thông tin sản phẩm, và nhấn Submit.
     // Phương thức này sẽ được gọi.
     @Override
@@ -54,13 +64,12 @@ public class CreateProductServlet extends HttpServlet {
         String name = (String) request.getParameter("name");
         String priceStr = request.getParameter("price");
         int price = 0;
-        try {
-            price = Integer.parseInt(priceStr);
-        } catch (Exception e) {
-        }
-        String image = request.getParameter("image");
-        int quantity = Integer.parseInt(request.getParameter("quantity"));;
-      
+        price = Integer.parseInt(priceStr);
+        
+        UploadFile upload = new UploadFile();
+        String image = upload.uploadFile(request, UPLOAD_DIR, "image");
+        
+        int quantity = Integer.parseInt(request.getParameter("quantity"));;   
         String description = request.getParameter("description");
         LocalDate dateAdded = LocalDate.parse(request.getParameter("dateAdded"));
         int categoryId = Integer.parseInt(request.getParameter("categoryId"));
@@ -93,6 +102,5 @@ public class CreateProductServlet extends HttpServlet {
         else {
             response.sendRedirect(request.getContextPath() + "/productList");
         }
-    }
- 
+    } 
 }

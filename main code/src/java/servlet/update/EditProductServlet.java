@@ -22,12 +22,20 @@ import javax.servlet.http.HttpServletResponse;
  
 import beans.Product;
 import java.time.LocalDate;
+import javax.servlet.annotation.MultipartConfig;
 import utils.ProductDAO;
 import utils.MyUtils;
+import utils.UploadFile;
  
 @WebServlet(urlPatterns = { "/editProduct" })
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024 * 10,
+        maxFileSize = 1024 * 1024 * 50,
+        maxRequestSize = 1024 * 1024 * 100
+)
 public class EditProductServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
+    private static final String  UPLOAD_DIR = "\\images\\product\\";
  
     public EditProductServlet() {
         super();
@@ -85,7 +93,11 @@ public class EditProductServlet extends HttpServlet {
             price = Integer.parseInt(priceStr);
         } catch (Exception e) {
         }
-        String image = request.getParameter("image");
+        
+        UploadFile upload = new UploadFile();
+        String image = upload.uploadFile(request, UPLOAD_DIR, "image");
+        image = (image.length() > 0) ? image : request.getParameter("oldImage");
+        
         int quantity = Integer.parseInt(request.getParameter("quantity"));;
       
         String description = request.getParameter("description");

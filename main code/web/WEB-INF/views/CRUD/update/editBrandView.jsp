@@ -23,7 +23,7 @@
       <p style="color: red;">${errorString}</p>
  
       <c:if test="${not empty brand}">
-         <form method="POST" action="${pageContext.request.contextPath}/editBrand">
+         <form method="POST" action="${pageContext.request.contextPath}/editBrand" enctype="multipart/form-data">
             <input type="hidden" name="id" value="${brand.id}" />
             <table border="0">
             <tr>
@@ -31,9 +31,15 @@
                <td><input type="text" name="name" value="${brand.name}" /></td>
             </tr>
             <tr>
-               <td>Logo</td>
-               <td><input type="text" name="logo" value="${brand.logo}" /></td>
+               <td>Old logo</td>
+               <td><img src="${pageContext.request.contextPath}/images/brand/${brand.logo}"
+                        height="100" alt="${brand.name} logo"/></td>
+               <input type="hidden" name="oldLogo" value="${brand.logo}"/>
             </tr>
+            <tr>
+               <td>New logo</td>
+               <td><input type="file" name="logo" value="" /></td>
+            </tr>            
             <tr>
                <td>Manufacturer</td>
                <td><input type="text" name="manufacturer" value="${brand.manufacturer}" /></td>

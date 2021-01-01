@@ -19,8 +19,20 @@ import java.util.ArrayList;
 import java.util.List;
 public class ProductDAO {
     
-    public static List<Product> queryProduct(Connection conn) throws SQLException {
-        String sql = "Select * from Product a ";
+    public static int countRows(Connection conn) throws SQLException {
+        String sql = "SELECT COUNT(*) As [rowcount] FROM Product";
+        PreparedStatement pstm = conn.prepareStatement(sql);
+        ResultSet rs = pstm.executeQuery();
+        
+        int row = 0;
+        while(rs.next()){
+            row = rs.getInt("rowcount");
+        }
+        return row;
+    }
+    
+    public static List<Product> queryProduct(Connection conn, int offset, int total) throws SQLException {
+        String sql = "Select * from Product order by id offset "+offset+" rows fetch next "+total+" rows only";
  
         PreparedStatement pstm = conn.prepareStatement(sql);
  

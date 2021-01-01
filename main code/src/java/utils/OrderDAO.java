@@ -22,9 +22,20 @@ import java.util.List;
  * @author Hung
  */
 public class OrderDAO {
-
-    public static List<Order> queryOrder(Connection conn) throws SQLException {
-        String sql = "Select * from [Order] a ";
+    public static int countRows(Connection conn) throws SQLException {
+        String sql = "SELECT COUNT(*) As [rowcount] FROM [Order]";
+        PreparedStatement pstm = conn.prepareStatement(sql);
+        ResultSet rs = pstm.executeQuery();
+        
+        int row = 0;
+        while(rs.next()){
+            row = rs.getInt("rowcount");
+        }
+        return row;
+    }
+    
+    public static List<Order> queryOrder(Connection conn, int offset, int total) throws SQLException {
+        String sql = "Select * from [Order] order by [user_id] ASC, id ASC offset "+offset+" rows fetch next "+total+" rows only";
 
         PreparedStatement pstm = conn.prepareStatement(sql);
 

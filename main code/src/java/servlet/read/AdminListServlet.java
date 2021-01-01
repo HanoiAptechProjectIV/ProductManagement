@@ -9,7 +9,6 @@ package servlet.read;
  *
  * @author Hung
  */
-import beans.Admin;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -23,7 +22,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import beans.Admin;
-import javax.servlet.http.HttpSession;
 import utils.AdminDAO;
 import utils.MyUtils;
 

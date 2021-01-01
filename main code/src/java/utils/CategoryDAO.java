@@ -18,8 +18,20 @@ import java.util.List;
  * @author Hung
  */
 public class CategoryDAO {
-    public static List<Category> queryCategory(Connection conn) throws SQLException {
-        String sql = "Select * from Category a ";
+    public static int countRows(Connection conn) throws SQLException {
+        String sql = "SELECT COUNT(*) As [rowcount] FROM Category";
+        PreparedStatement pstm = conn.prepareStatement(sql);
+        ResultSet rs = pstm.executeQuery();
+        
+        int row = 0;
+        while(rs.next()){
+            row = rs.getInt("rowcount");
+        }
+        return row;
+    }
+    
+    public static List<Category> queryCategory(Connection conn, int offset, int total) throws SQLException {
+        String sql = "Select * from Category order by id offset "+offset+" rows fetch next "+total+" rows only";
  
         PreparedStatement pstm = conn.prepareStatement(sql);
  

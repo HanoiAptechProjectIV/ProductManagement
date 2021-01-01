@@ -21,12 +21,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
  
 import beans.Brand;
+import javax.servlet.annotation.MultipartConfig;
 import utils.BrandDAO;
 import utils.MyUtils;
+import utils.UploadFile;
  
 @WebServlet(urlPatterns = { "/editBrand" })
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024 * 10,
+        maxFileSize = 1024 * 1024 * 50,
+        maxRequestSize = 1024 * 1024 * 100
+)
 public class EditBrandServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
+    private static final String  UPLOAD_DIR = "\\images\\brand\\";
  
     public EditBrandServlet() {
         super();
@@ -78,7 +86,11 @@ public class EditBrandServlet extends HttpServlet {
  
         int id = Integer.parseInt( request.getParameter("id"));
         String name = (String) request.getParameter("name");
-        String logo = request.getParameter("logo");
+        
+        UploadFile upload = new UploadFile();
+        String logo = upload.uploadFile(request, UPLOAD_DIR, "logo");
+        logo = (logo.length() > 0) ? logo : request.getParameter("oldLogo");
+        
         String manufacturer = request.getParameter("manufacturer");
         String description = request.getParameter("description");
         boolean disable = Boolean.parseBoolean(request.getParameter("disable"));

@@ -21,12 +21,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
  
 import beans.Brand;
+import javax.servlet.annotation.MultipartConfig;
 import utils.BrandDAO;
 import utils.MyUtils;
+import utils.UploadFile;
  
 @WebServlet(urlPatterns = { "/createBrand" })
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024 * 10,
+        maxFileSize = 1024 * 1024 * 50,
+        maxRequestSize = 1024 * 1024 * 100
+)
 public class CreateBrandServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
+    private static final String  UPLOAD_DIR = "\\images\\brand\\";
  
     public CreateBrandServlet() {
         super();
@@ -51,7 +59,10 @@ public class CreateBrandServlet extends HttpServlet {
         
         int id = 0;
         String name = (String) request.getParameter("name");
-        String logo = request.getParameter("logo");
+        
+        UploadFile upload = new UploadFile();
+        String logo = upload.uploadFile(request, UPLOAD_DIR, "logo");
+        
         String manufacturer = request.getParameter("manufacturer");
         String description = request.getParameter("description");
         
