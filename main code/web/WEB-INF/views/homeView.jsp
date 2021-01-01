@@ -20,9 +20,10 @@
       <h3>Home Page</h3>
       
       This is home page<br><br>
-      <b>It includes the following functions:</b>
+      <b>It includes the following functions for tables:</b>
       <ul>
          <li>View list</li>
+         <li>Search</li>
          <li>Create</li>
          <li>Edit</li>
       </ul>

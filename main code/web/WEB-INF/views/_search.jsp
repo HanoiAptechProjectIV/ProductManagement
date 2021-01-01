@@ -26,7 +26,7 @@
                 </td>
             </tr>
             <tr></tr>
-            <% if(search == null){%>
+            <% if(search == null && !typeEntity.equals("Order") && !typeEntity.equals("User")){%>
             <tr>
                 <td><a href="create<%=typeEntity%>" >Create <%=typeEntity%></a></td>
             </tr>

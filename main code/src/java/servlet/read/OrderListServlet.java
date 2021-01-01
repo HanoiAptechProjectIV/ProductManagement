@@ -23,13 +23,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import beans.Order;
 import beans.OrderDetail;
-import beans.Product;
 import beans.User;
 import java.util.ArrayList;
 import utils.OrderDAO;
 import utils.MyUtils;
 import utils.OrderDetailDAO;
-import utils.ProductDAO;
 import utils.UserDAO;
 
 @WebServlet(urlPatterns = {"/orderList"})
@@ -50,11 +48,13 @@ public class OrderListServlet extends HttpServlet {
         String errorString = null;
         List<Order> list = new ArrayList<Order>();;
         List<OrderDetail> listDetail = new ArrayList<OrderDetail>();
-        List<Product> listProduct = new ArrayList<Product>();
         List<User> listUser = new ArrayList<User>();
 
         try {
-            String name = request.getParameter("search");
+            String userName = request.getParameter("search");
+            String id = request.getParameter("id");
+            int orderId = Integer.MAX_VALUE;
+            orderId = (id!= null) ? Integer.parseInt(id) : orderId;
 
             int rowInTable = 0;
             int rowInPage = 2;
@@ -64,8 +64,19 @@ public class OrderListServlet extends HttpServlet {
                     : 1;
             pageNum = (pageNum < 1) ? 1 : pageNum;
 
-            if (name != null) {
-                User user = UserDAO.findUserByName(conn, name);
+            if (orderId != Integer.MAX_VALUE){
+                list.add(OrderDAO.findOrder(conn, orderId));
+                if (list.size() > 0) {
+                    for (Order order : list) {
+                        listDetail.addAll(OrderDetailDAO.findOrderDetailList(conn, order.getId()));
+                        
+                        User user = UserDAO.findUser(conn, order.getUserId());
+                        listUser.add(user);                        
+                    }
+                }                
+            }            
+            else if (userName != null) {
+                User user = UserDAO.findUserByName(conn, userName);
                 if (user != null) {
                     list = OrderDAO.findOrderByUserId(conn, user.getId());
                     listUser.add(user);
@@ -75,16 +86,10 @@ public class OrderListServlet extends HttpServlet {
                     for (Order order : list) {
                         listDetail.addAll(OrderDetailDAO.findOrderDetailList(conn, order.getId()));
                     }
-                    if (listDetail.size() > 0) {
-                        for (OrderDetail detail : listDetail) {
-                            Product product = ProductDAO.findProduct(conn, detail.getProductId());
-                            if (product != null) {
-                                listProduct.add(product);
-                            }
-                        }
-                    }
                 }
-            } else {
+            } 
+            
+            else {
                 rowInTable = OrderDAO.countRows(conn);
                 pageQuantity = (rowInTable % 2 == 0) ? rowInTable / 2 : rowInTable / 2 + 1;
                 pageNum = (pageNum > pageQuantity) ? pageQuantity : pageNum;
@@ -101,38 +106,9 @@ public class OrderListServlet extends HttpServlet {
                         User user = UserDAO.findUser(conn, order.getUserId());
                         listUser.add(user);
                     }
-
-                    if (listDetail.size() > 0) {
-                        for (OrderDetail detail : listDetail) {
-                            Product product = ProductDAO.findProduct(conn, detail.getProductId());
-                            if (product != null) {
-                                listProduct.add(product);
-                            }
-                        }
-                    }
-                }
-                System.out.println("listDetail " + listDetail.size());
-                System.out.println("list " + list.size());
-                System.out.println("listUser " + listUser.size());
-                System.out.println("listProduct " + listProduct.size());
-                for (Order order : list) {
-                    for (OrderDetail detail : listDetail) {
-                        if(order.getId() == detail.getOrderId())
-                        for (Product prod : listProduct) {
-                            if (prod.getId() == detail.getProductId()) {
-                                System.out.println("product " + prod.getName());
-                            }
-                        }
-                    }
                 }
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            errorString = e.getMessage();
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-            errorString = e.getMessage();
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             errorString = e.getMessage();
         } finally {
@@ -141,7 +117,6 @@ public class OrderListServlet extends HttpServlet {
             request.setAttribute("orderList", list);
             request.setAttribute("orderDetailList", listDetail);
             request.setAttribute("userList", listUser);
-            request.setAttribute("productList", listProduct);
 
             // Forward sang /WEB-INF/views/orderListView.jsp
             RequestDispatcher dispatcher = request.getServletContext()

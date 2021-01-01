@@ -79,26 +79,17 @@ public class ProductListServlet extends HttpServlet {
                 int offset = (pageNum - 1) * rowInPage;
 
                 list = ProductDAO.queryProduct(conn, offset, rowInPage);
-                System.out.println("1 "+list.get(0).getCategoryId()+" "+list.get(0).getBrandId());
                 for (Product prod : list) {
                     listBrand.add(BrandDAO.findBrand(conn, prod.getBrandId()));
-                    System.out.println("2 "+listBrand.get(0).getId());
                 }
                 for (Product prod : list) {
                     listCategory.add(CategoryDAO.findCategory(conn, prod.getCategoryId()));
-                    System.out.println("2 "+listCategory.get(0).getId());
                 }
 
                 request.setAttribute("pageQuantity", pageQuantity);
                 request.setAttribute("page", pageNum);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            errorString = e.getMessage();
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-            errorString = e.getMessage();
-        } catch (NumberFormatException e) {
+        } catch (Exception e){
             e.printStackTrace();
             errorString = e.getMessage();
         } finally {

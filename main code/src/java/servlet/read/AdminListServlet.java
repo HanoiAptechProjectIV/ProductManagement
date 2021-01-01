@@ -44,20 +44,20 @@ public class AdminListServlet extends HttpServlet {
         List<Admin> list = null;
         try {
             list = AdminDAO.queryAdmin(conn);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            errorString = ex.getMessage();
+        } catch (Exception e) {
+            e.printStackTrace();
+            errorString = e.getMessage();
+        } finally {
+
+            // Lưu thông tin vào request attribute trước khi forward sang views.
+            request.setAttribute("errorString", errorString);
+            request.setAttribute("adminList", list);
+
+            // Forward sang /WEB-INF/views/adminListView.jsp
+            RequestDispatcher dispatcher = request.getServletContext()
+                    .getRequestDispatcher("/WEB-INF/views/CRUD/read/adminListView.jsp");
+            dispatcher.forward(request, response);
         }
-
-
-        // Lưu thông tin vào request attribute trước khi forward sang views.
-        request.setAttribute("errorString", errorString);
-        request.setAttribute("adminList", list);
-
-        // Forward sang /WEB-INF/views/adminListView.jsp
-        RequestDispatcher dispatcher = request.getServletContext()
-                .getRequestDispatcher("/WEB-INF/views/CRUD/read/adminListView.jsp");
-        dispatcher.forward(request, response);
     }
 
     @Override

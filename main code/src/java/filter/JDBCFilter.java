@@ -45,7 +45,6 @@ public class JDBCFilter implements Filter {
  
     // Kiểm tra mục tiêu của request hiện tại là 1 Servlet?
     private boolean needJDBC(HttpServletRequest request) {
-        System.out.println("JDBC Filter");
         // 
         // Servlet Url-pattern: /spath/*
         // 

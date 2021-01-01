@@ -44,37 +44,36 @@ public class EditOrderServlet extends HttpServlet {
             throws ServletException, IOException {
         Connection conn = MyUtils.getStoredConnection(request);
 
-        int id = Integer.parseInt(request.getParameter("id"));
-
         Order order = null;
         List<OrderDetail> listDetail = new ArrayList<OrderDetail>();
         String errorString = null;
 
         try {
+            int id = Integer.parseInt(request.getParameter("id"));
             order = OrderDAO.findOrder(conn, id);
             listDetail = OrderDetailDAO.findOrderDetailList(conn, id);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             errorString = e.getMessage();
+        } finally {
+
+            // Không có lỗi.
+            // Sản phẩm không tồn tại để edit.
+            // Redirect sang trang danh sách sản phẩm.
+            if (errorString != null && order == null) {
+                response.sendRedirect(request.getServletPath() + "/orderList");
+                return;
+            }
+
+            // Lưu thông tin vào request attribute trước khi forward sang views.
+            request.setAttribute("errorString", errorString);
+            request.setAttribute("order", order);
+            request.setAttribute("orderDetail", listDetail);
+
+            RequestDispatcher dispatcher = request.getServletContext()
+                    .getRequestDispatcher("/WEB-INF/views/CRUD/update/editOrderView.jsp");
+            dispatcher.forward(request, response);
         }
-
-        // Không có lỗi.
-        // Sản phẩm không tồn tại để edit.
-        // Redirect sang trang danh sách sản phẩm.
-        if (errorString != null && order == null) {
-            response.sendRedirect(request.getServletPath() + "/orderList");
-            return;
-        }
-
-        // Lưu thông tin vào request attribute trước khi forward sang views.
-        request.setAttribute("errorString", errorString);
-        request.setAttribute("order", order);
-        request.setAttribute("orderDetail", listDetail);
-
-        RequestDispatcher dispatcher = request.getServletContext()
-                .getRequestDispatcher("/WEB-INF/views/CRUD/update/editOrderView.jsp");
-        dispatcher.forward(request, response);
-
     }
 
     // Sau khi người dùng sửa đổi thông tin sản phẩm, và nhấn Submit.
@@ -83,48 +82,48 @@ public class EditOrderServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Connection conn = MyUtils.getStoredConnection(request);
-
-        int id = Integer.parseInt(request.getParameter("id"));
-        int userId = Integer.parseInt(request.getParameter("userId"));
-        int amount = Integer.parseInt(request.getParameter("amount"));
-        LocalDateTime createdTime = LocalDateTime.parse(request.getParameter("createdTime"));
-        LocalDateTime paymentTime = LocalDateTime.parse(request.getParameter("paymentTime"));
-
-        Order order = new Order(id, createdTime, paymentTime, amount, userId);
-        OrderDetail orderDetail = null;
         String errorString = null;
-        
+        Order order = null;
+        OrderDetail orderDetail = null;
         try {
+            int id = Integer.parseInt(request.getParameter("id"));
+            int userId = Integer.parseInt(request.getParameter("userId"));
+            int amount = Integer.parseInt(request.getParameter("amount"));
+            LocalDateTime createdTime = LocalDateTime.parse(request.getParameter("createdTime"));
+            LocalDateTime paymentTime = LocalDateTime.parse(request.getParameter("paymentTime"));
+
+            order = new Order(id, createdTime, paymentTime, amount, userId);
             OrderDAO.updateOrder(conn, order);
-            
+
             List<OrderDetail> listDetail = OrderDetailDAO.findOrderDetailList(conn, id);
-            for(OrderDetail detail : listDetail){
-                int idOrderDetail = Integer.parseInt(request.getParameter("idOrderDetail"+detail.getId())); 
-                int productId = Integer.parseInt(request.getParameter("productId"+detail.getId()));
-                int purchasedQuantity = Integer.parseInt(request.getParameter("purchasedQuantity"+detail.getId()));
-                String status = request.getParameter("status"+detail.getId());
+            for (OrderDetail detail : listDetail) {
+                int idOrderDetail = Integer.parseInt(request.getParameter("idOrderDetail" + detail.getId()));
+                int productId = Integer.parseInt(request.getParameter("productId" + detail.getId()));
+                int purchasedQuantity = Integer.parseInt(request.getParameter("purchasedQuantity" + detail.getId()));
+                String status = request.getParameter("status" + detail.getId());
                 orderDetail = new OrderDetail(idOrderDetail, id, productId, purchasedQuantity, status);
                 OrderDetailDAO.updateOrderDetail(conn, orderDetail);
             }
-            
-        } catch (SQLException e) {
+
+        } catch (Exception e) {
             e.printStackTrace();
             errorString = e.getMessage();
-        }
-        // Lưu thông tin vào request attribute trước khi forward sang views.
-        request.setAttribute("errorString", errorString);
-        request.setAttribute("order", order);
-        request.setAttribute("orderDetail", orderDetail);
+        } finally {
+            // Lưu thông tin vào request attribute trước khi forward sang views.
+            request.setAttribute("errorString", errorString);
+            request.setAttribute("order", order);
+            request.setAttribute("orderDetail", orderDetail);
 
-        // Nếu có lỗi forward sang trang edit.
-        if (errorString != null) {
-            RequestDispatcher dispatcher = request.getServletContext()
-                    .getRequestDispatcher("/WEB-INF/views/CRUD/update/editOrderView.jsp");
-            dispatcher.forward(request, response);
-        } // Nếu mọi thứ tốt đẹp.
-        // Redirect sang trang danh sách sản phẩm.
-        else {
-            response.sendRedirect(request.getContextPath() + "/orderList");
+            // Nếu có lỗi forward sang trang edit.
+            if (errorString != null) {
+                RequestDispatcher dispatcher = request.getServletContext()
+                        .getRequestDispatcher("/WEB-INF/views/CRUD/update/editOrderView.jsp");
+                dispatcher.forward(request, response);
+            } // Nếu mọi thứ tốt đẹp.
+            // Redirect sang trang danh sách sản phẩm.
+            else {
+                response.sendRedirect(request.getContextPath() + "/orderList?id=" + order.getId());
+            }
         }
     }
 

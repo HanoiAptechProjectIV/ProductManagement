@@ -64,13 +64,7 @@ public class UserListServlet extends HttpServlet {
                 request.setAttribute("pageQuantity", pageQuantity);
                 request.setAttribute("page", pageNum);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            errorString = e.getMessage();
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-            errorString = e.getMessage();
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             errorString = e.getMessage();
         } finally {

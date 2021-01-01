@@ -21,8 +21,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import beans.Admin;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import utils.AdminDAO;
 import utils.MyUtils;
 
@@ -51,7 +49,7 @@ public class CreateAdminServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Connection conn = MyUtils.getStoredConnection(request);
-        
+
         String username = (String) request.getParameter("username");
         String password = request.getParameter("password");
 
@@ -60,24 +58,25 @@ public class CreateAdminServlet extends HttpServlet {
 
         try {
             AdminDAO.insertAdmin(conn, admin);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            errorString = ex.getMessage();
-        }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            errorString = e.getMessage();
+        } finally {
 
-        // Lưu thông tin vào request attribute trước khi forward sang views.
-        request.setAttribute("errorString", errorString);
-        request.setAttribute("admin", admin);
+            // Lưu thông tin vào request attribute trước khi forward sang views.
+            request.setAttribute("errorString", errorString);
+            request.setAttribute("admin", admin);
 
-        // Nếu có lỗi forward (chuyển tiếp) sang trang 'edit'.
-        if (errorString != null) {
-            RequestDispatcher dispatcher = request.getServletContext()
-                    .getRequestDispatcher("/WEB-INF/views/CRUD/create/createAdminView.jsp");
-            dispatcher.forward(request, response);
-        } // Nếu mọi thứ tốt đẹp.
-        // Redirect (chuyển hướng) sang trang danh sách sản phẩm.
-        else {
-            response.sendRedirect(request.getContextPath() + "/adminList");
+            // Nếu có lỗi forward (chuyển tiếp) sang trang 'edit'.
+            if (errorString != null) {
+                RequestDispatcher dispatcher = request.getServletContext()
+                        .getRequestDispatcher("/WEB-INF/views/CRUD/create/createAdminView.jsp");
+                dispatcher.forward(request, response);
+            } // Nếu mọi thứ tốt đẹp.
+            // Redirect (chuyển hướng) sang trang danh sách sản phẩm.
+            else {
+                response.sendRedirect(request.getContextPath() + "/adminList");
+            }
         }
     }
 

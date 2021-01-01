@@ -25,9 +25,9 @@
             <table border="1" cellpadding="5" cellspacing="1" >
                 <tr>
                     <th>Id</th>
+                    <th>Name</th>
                     <th>Username</th>
                     <th>Password</th>
-                    <th>Name</th>
                     <th>Gender</th>
                     <th>Phone</th>
                     <th>Email</th>
@@ -37,9 +37,9 @@
                 <c:if test="${user != null}">
                 <tr>
                     <td>${user.id}</td>
+                    <td>${user.name}</td>
                     <td>${user.username}</td>
                     <td>${user.password}</td>
-                    <td>${user.name}</td>
                     <td>
                         <c:choose>
                             <c:when test="${user.gender == true}">

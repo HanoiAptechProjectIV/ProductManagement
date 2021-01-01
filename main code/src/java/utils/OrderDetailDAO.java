@@ -18,6 +18,19 @@ import java.util.List;
  * @author Hung
  */
 public class OrderDetailDAO {
+    public static int countRowsByOrderId(Connection conn, int orderId) throws SQLException {
+        String sql = "SELECT COUNT(*) As [rowcount] FROM OrderDetail where order_id =?";
+        PreparedStatement pstm = conn.prepareStatement(sql);
+        pstm.setInt(1, orderId);
+        ResultSet rs = pstm.executeQuery();
+        
+        int row = 0;
+        while(rs.next()){
+            row = rs.getInt("rowcount");
+        }
+        return row;
+    }    
+    
     public static List<OrderDetail> queryOrderDetail(Connection conn) throws SQLException {
         String sql = "Select * from OrderDetail a ";
  

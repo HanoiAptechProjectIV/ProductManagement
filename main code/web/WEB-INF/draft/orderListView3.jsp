@@ -4,14 +4,6 @@
     Author     : Hung
 --%>
 
-<%@page import="utils.ProductDAO"%>
-<%@page import="beans.Product"%>
-<%@page import="java.sql.Connection"%>
-<%@page import="utils.MyUtils"%>
-<%@page import="utils.OrderDetailDAO"%>
-<%@page import="beans.Order"%>
-<%@page import="beans.OrderDetail"%>
-<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
@@ -35,12 +27,12 @@
                 <tr>
                     <th>Id</th>
                     <th>User name</th>
-                    <th>Amount</th>
                     <th>Product name</th>
+                    <th>Amount</th>
                     <th>Purchase quantity</th>
-                    <th>Status</th>
                     <th>Created time</th>
                     <th>Payment time</th>
+                    <th>Status</th>
                     <th>Edit</th>
                 </tr>
             <c:forEach items="${orderList}" var="order" >
@@ -49,36 +41,29 @@
                     <c:forEach items="${userList}" step="10" var="user">
                         <c:if test="${user.id == order.userId}">
                             <td><a href="userList?search=${user.name}">${user.name}</a><br></td>
+                        </c:if>
+                    </c:forEach>
+                    <td>
+                        <c:forEach items="${orderDetailList}" var="orderDetail" >
+                            <c:if test="${order.id == orderDetail.orderId}">
+                                <c:forEach items="${productList}" var="product" >
+                                    <c:if test="${product.id == orderDetail.productId}">
+                                          <a href="productList?search=${product.name}">${product.name}</a><br>
+                                    </c:if>
+                                </c:forEach>                                
                             </c:if>
                         </c:forEach>
-                    <td>${order.amount}</td>
-                    <td>
-                        <c:set var="orderObj" value="${order}"/>
-                        <%
-                            List<OrderDetail> listDetail = (List<OrderDetail>) request.getAttribute("orderDetailList");
-                            Order orderObj = (Order) pageContext.getAttribute("orderObj");
-                            Connection conn = MyUtils.getStoredConnection(request);
-                            Product prod = new Product();
-
-                            for (OrderDetail detail : listDetail) {
-                                if (orderObj.getId() == detail.getOrderId()) {
-                                    prod = ProductDAO.findProduct(conn, detail.getProductId());
-                                    if (prod != null) {
-                        %>
-                                    <a href="productList?search=<%=prod.getName()%>"><%=prod.getName()%></a><hr>
-                        <%
-                                    }
-                                }
-                            }
-                        %>
                     </td>
+                    <td>${order.amount}</td>
                     <td>
                         <c:forEach items="${orderDetailList}" var="orderDetail" >
                             <c:if test="${order.id == orderDetail.orderId}">
                                 ${orderDetail.purchasedQuantity}<hr>
                             </c:if>
                         </c:forEach>
-                    </td>
+                    </td></td>
+                    <td>${order.createdTime}</td>
+                    <td>${order.paymentTime}</td>
                     <td>
                         <c:forEach items="${orderDetailList}" var="orderDetail" >
                             <c:if test="${order.id == orderDetail.orderId}">
@@ -86,8 +71,6 @@
                             </c:if>
                         </c:forEach>
                     </td>
-                    <td>${order.createdTime}</td>
-                    <td>${order.paymentTime}</td>
                     <td>
 
                         <a href="editOrder?id=${order.id}">Edit</a>

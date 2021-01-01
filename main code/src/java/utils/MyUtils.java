@@ -46,6 +46,7 @@ public class MyUtils {
  
     // Lấy thông tin người dùng lưu trữ trong Session.
     public static Admin getLoginedAdmin(HttpSession session) {
+        System.out.println("Store admin in session");
         Admin loginedAdmin = (Admin) session.getAttribute("loginedAdmin");
         return loginedAdmin;
     }
