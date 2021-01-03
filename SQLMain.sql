@@ -52,7 +52,7 @@ create table [User] (
 create table [Order] (
 	id int not null identity(1,1) primary key,
 	created_time DateTime DEFAULT CURRENT_TIMESTAMP,
-	payment_time DateTime,
+	payment_time DateTime DEFAULT '01/01/1970 00:00:00',
 	amount int,
 	[user_id] int, 	
 	foreign key ([user_id]) references [User](id)	
