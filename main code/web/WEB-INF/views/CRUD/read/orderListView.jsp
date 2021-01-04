@@ -36,9 +36,9 @@
                 <tr>
                     <th>Id</th>
                     <th>User name</th>
-                    <th>Price</th>
                     <th>Amount</th>
                     <th>Product name</th>
+                    <th>Price</th>
                     <th>Purchase quantity</th>
                     <th>Status</th>
                     <th>Created time</th>
