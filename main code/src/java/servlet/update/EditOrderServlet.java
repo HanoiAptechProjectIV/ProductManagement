@@ -90,9 +90,15 @@ public class EditOrderServlet extends HttpServlet {
             int userId = Integer.parseInt(request.getParameter("userId"));
             int amount = Integer.parseInt(request.getParameter("amount"));
             LocalDateTime createdTime = LocalDateTime.parse(request.getParameter("createdTime"));
-            LocalDateTime paymentTime = LocalDateTime.parse(request.getParameter("paymentTime"));
+            LocalDateTime paymentTime = null;
+            if(!request.getParameter("paymentTime").equals("")){
+                paymentTime = LocalDateTime.parse(request.getParameter("paymentTime"));
 
-            order = new Order(id, createdTime, paymentTime, amount, userId);
+                order = new Order(id, createdTime, paymentTime, amount, userId);
+            } else {
+                order = new Order(id, createdTime, amount, userId);
+            }
+            System.out.println("ptime "+(order.getPaymentTime().equals(LocalDateTime.MIN)));
             OrderDAO.updateOrder(conn, order);
 
             List<OrderDetail> listDetail = OrderDetailDAO.findOrderDetailList(conn, id);

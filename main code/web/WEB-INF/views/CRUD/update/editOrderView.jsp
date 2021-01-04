@@ -4,6 +4,8 @@
     Author     : Hung
 --%>
 
+<%@page import="beans.Order"%>
+<%@page import="java.time.LocalDateTime"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -35,15 +37,21 @@
                     </tr>
                     <tr>
                         <td>Amount</td>
-                        <td><input type="text" name="amount" value="${order.amount}" /></td>
+                        <td><input type="text" readonly name="amount" value="${order.amount}" /></td>
                     </tr>
                     <tr>
                         <td>Created time</td>
-                        <td><input type="text" name="createdTime" value="${order.createdTime}" /></td>
+                        <td><input type="text" readonly name="createdTime" value="${order.createdTime}" /></td>
                     </tr>
                     <tr>
                         <td>Payment time</td>
-                        <td><input type="text" name="paymentTime" value="${order.paymentTime}" /></td>
+                        <td><input id="paymentTimeInput" type="text" name="paymentTime" value="<%
+                        LocalDateTime ldt = LocalDateTime.of(1970, 1, 1, 0, 0, 0);
+                        Order order = (Order) request.getAttribute("order");
+                        if(!order.getPaymentTime().equals(ldt)){
+                            %><%=order.getPaymentTime()%><%}%>" /><br>
+                    <input type="button" onclick="getCurrentTime()" value="Get Current Time"/>
+                        </td>
                     </tr>
                     <tr>
                     </tr>
@@ -74,6 +82,16 @@
         </c:if>
 
         <jsp:include page="../../_footer.jsp"></jsp:include>
+        <script>
+            getCurrentTime = () => {
+                var date = new Date();
+                date.setTime(date.getTime()+25200000);
+                var nowStr = date.toISOString();
+                var paymentTime = document.getElementById("paymentTimeInput");
+                nowStr = nowStr.substring(0, nowStr.lastIndexOf(":")+3);
+                paymentTime.value = nowStr;
+            };
+        </script>
 
     </body>
 </html>

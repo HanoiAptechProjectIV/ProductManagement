@@ -46,7 +46,6 @@ public class MyUtils {
  
     // Lấy thông tin người dùng lưu trữ trong Session.
     public static Admin getLoginedAdmin(HttpSession session) {
-        System.out.println("Store admin in session");
         Admin loginedAdmin = (Admin) session.getAttribute("loginedAdmin");
         return loginedAdmin;
     }
@@ -57,7 +56,6 @@ public class MyUtils {
  
     // Lưu thông tin người dùng vào Cookie.
     public static void storeAdminCookie(HttpServletResponse response, Admin admin) {
-        System.out.println("Store admin cookie");
         Cookie cookieUsername = new Cookie(ATT_NAME_USER_NAME, admin.getUsername());
         // 1 ngày (Đã đổi ra giây)
         cookieUsername.setMaxAge(60*60*24);

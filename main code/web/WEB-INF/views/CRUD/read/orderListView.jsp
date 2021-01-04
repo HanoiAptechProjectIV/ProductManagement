@@ -4,6 +4,7 @@
     Author     : Hung
 --%>
 
+<%@page import="java.time.LocalDateTime"%>
 <%@page import="utils.ProductDAO"%>
 <%@page import="beans.Product"%>
 <%@page import="java.sql.Connection"%>
@@ -35,6 +36,7 @@
                 <tr>
                     <th>Id</th>
                     <th>User name</th>
+                    <th>Price</th>
                     <th>Amount</th>
                     <th>Product name</th>
                     <th>Purchase quantity</th>
@@ -52,25 +54,42 @@
                             </c:if>
                         </c:forEach>
                     <td>${order.amount}</td>
-                    <td>
-                        <c:set var="orderObj" value="${order}"/>
-                        <%
-                            List<OrderDetail> listDetail = (List<OrderDetail>) request.getAttribute("orderDetailList");
-                            Order orderObj = (Order) pageContext.getAttribute("orderObj");
-                            Connection conn = MyUtils.getStoredConnection(request);
-                            Product prod = new Product();
 
-                            for (OrderDetail detail : listDetail) {
-                                if (orderObj.getId() == detail.getOrderId()) {
-                                    prod = ProductDAO.findProduct(conn, detail.getProductId());
-                                    if (prod != null) {
-                        %>
-                                    <a href="productList?search=<%=prod.getName()%>"><%=prod.getName()%></a><hr>
-                        <%
-                                    }
+                    <c:set var="orderObj" value="${order}"/>
+                    <%
+                        List<OrderDetail> listDetail = (List<OrderDetail>) request.getAttribute("orderDetailList");
+                        Order orderObj = (Order) pageContext.getAttribute("orderObj");
+                        Connection conn = MyUtils.getStoredConnection(request);
+                        Product prod = new Product();
+                    %>
+                    <td>
+                    <%
+                        for (OrderDetail detail : listDetail) {
+                            if (orderObj.getId() == detail.getOrderId()) {
+                                prod = ProductDAO.findProduct(conn, detail.getProductId());
+                                if (prod != null) {
+                    %>
+                    <a href="productList?search=<%=prod.getName()%>"><%=prod.getName()%></a><hr>
+                    
+                    <%
                                 }
                             }
-                        %>
+                        }
+                    %>
+                    </td>
+                    <td>
+                    <%
+                        for (OrderDetail detail : listDetail) {
+                            if (orderObj.getId() == detail.getOrderId()) {
+                                prod = ProductDAO.findProduct(conn, detail.getProductId());
+                                if (prod != null) {
+                    %>
+                    <%=prod.getPrice()%><hr>
+                    <%
+                                }
+                            }
+                        }
+                    %>
                     </td>
                     <td>
                         <c:forEach items="${orderDetailList}" var="orderDetail" >
@@ -87,7 +106,14 @@
                         </c:forEach>
                     </td>
                     <td>${order.createdTime}</td>
-                    <td>${order.paymentTime}</td>
+                    <td><%
+                        LocalDateTime ldt = LocalDateTime.of(1970, 1, 1, 0, 0, 0);
+                        if(!orderObj.getPaymentTime().equals(ldt)){
+                        %>
+                            <%=orderObj.getPaymentTime()%>
+                        <%   
+                        }
+                        %></td>
                     <td>
 
                         <a href="editOrder?id=${order.id}">Edit</a>

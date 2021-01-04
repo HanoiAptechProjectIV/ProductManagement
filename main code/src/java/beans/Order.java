@@ -28,6 +28,14 @@ public class Order {
         this.userId = userId;
     }
 
+    public Order(int id, LocalDateTime createdTime, int amount, int userId) {
+        this.id = id;
+        this.createdTime = createdTime;
+        this.paymentTime = LocalDateTime.of(1970, 1, 1, 0, 0, 0);
+        this.amount = amount;
+        this.userId = userId;
+    }
+    
     @Override
     public String toString() {
         return "Order{" + "id=" + id + ", createdTime=" + createdTime + ", paymentTime=" + paymentTime + ", amount=" + amount + ", userId=" + userId + '}';
