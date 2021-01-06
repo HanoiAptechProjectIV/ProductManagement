@@ -8,29 +8,6 @@
          pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
 
-<script>
-    function executeEllipsis(atag) {
-        "use strict";
-        var arr = document.getElementsByClassName("displayNone");
-        Array.prototype.filter.call(arr, function (a) {
-            var href = a.href;
-            if (href[href.length - 1] < ${page}
-            && atag.id == "firstEllipsis") {
-                a.style.display = "inline-block";
-                var previous = document.getElementById("previous");
-                previous.textContent = "${page-1}";
-            }
-            if (href[href.length - 1] > ${page}
-            && atag.id == "secondEllipsis") {
-                a.style.display = "inline-block";
-                var next = document.getElementById("next");
-                next.textContent = "${page+1}";
-            }
-        });
-        atag.style.display = "none";
-    }
-</script>
-
 <c:set value="${requestScope['javax.servlet.forward.servlet_path']}" var="servletPath"/>
 <%
     String servletPath =pageContext.getAttribute("servletPath").toString().replace("/", "");
@@ -89,3 +66,26 @@
     <input type="submit" value="Go">
 </form>
 </c:if>
+
+<script>
+    function executeEllipsis(atag) {
+        "use strict";
+        var arr = document.getElementsByClassName("displayNone");
+        Array.prototype.filter.call(arr, function (a) {
+            var href = a.href;
+            if (href[href.length - 1] < ${page}
+            && atag.id == "firstEllipsis") {
+                a.style.display = "inline-block";
+                var previous = document.getElementById("previous");
+                previous.textContent = "${page-1}";
+            }
+            if (href[href.length - 1] > ${page}
+            && atag.id == "secondEllipsis") {
+                a.style.display = "inline-block";
+                var next = document.getElementById("next");
+                next.textContent = "${page+1}";
+            }
+        });
+        atag.style.display = "none";
+    }
+</script>

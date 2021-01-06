@@ -86,9 +86,9 @@ public class EditBrandServlet extends HttpServlet {
 
         String errorString = null;
         Brand brand = null;
+        String name = (String) request.getParameter("name");
         try {
             int id = Integer.parseInt(request.getParameter("id"));
-            String name = (String) request.getParameter("name");
 
             UploadFile upload = new UploadFile();
             String logo = upload.uploadFile(request, UPLOAD_DIR, "logo");
@@ -96,7 +96,7 @@ public class EditBrandServlet extends HttpServlet {
 
             String manufacturer = request.getParameter("manufacturer");
             String description = request.getParameter("description");
-            boolean disable = Boolean.parseBoolean(request.getParameter("disable"));
+            boolean disable = Boolean.parseBoolean(request.getParameter("disableOption"));
 
             brand = new Brand(id, name, logo, manufacturer, description, disable);
 
@@ -117,7 +117,7 @@ public class EditBrandServlet extends HttpServlet {
             } // Nếu mọi thứ tốt đẹp.
             // Redirect sang trang danh sách sản phẩm.
             else {
-                response.sendRedirect(request.getContextPath() + "/brandList");
+                response.sendRedirect(request.getContextPath() + "/brandList?search="+name);
             }
         }
     }

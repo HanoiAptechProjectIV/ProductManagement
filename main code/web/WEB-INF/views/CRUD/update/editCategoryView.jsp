@@ -13,7 +13,7 @@
       <meta charset="UTF-8">
       <title>Edit Category</title>
    </head>
-   <body>
+   <body onload="selectedDisableOption();">
  
       <jsp:include page="../../_header.jsp"></jsp:include>
       <jsp:include page="../../_menu.jsp"></jsp:include>
@@ -36,7 +36,13 @@
             </tr>
             <tr>
                <td>Disable</td>
-               <td><input type="text" name="disable" value="${category.disable}" /></td>
+               <td><input type="text" id="disableTxt" readonly name="disable" value="${category.disable}" />
+                    <select id="disableOption" name="disableOption" 
+                            onchange="changeDisableTxt();">
+                        <option value="true">True</option>  
+                        <option value="false">False</option>  
+                    </select> 
+               </td>
             </tr>            
             <tr>
                <td colspan = "2">
@@ -49,6 +55,20 @@
       </c:if>
  
       <jsp:include page="../../_footer.jsp"></jsp:include>
- 
+             <script>
+                var disable = document.getElementById("disableOption"),
+                    disableTxt = document.getElementById("disableTxt");
+                function selectedDisableOption() {
+                    Array.prototype.filter.call(disable.options, function (option) {
+                        if (option.value == "${category.disable}") {
+                            option.selected = true;
+                        }
+                    });
+                }
+
+                function changeDisableTxt() {
+                    disableTxt.value = disable.value;
+                }
+        </script>
    </body>
 </html>

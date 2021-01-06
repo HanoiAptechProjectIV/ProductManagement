@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class AdminDAO {
     public static List<Admin> queryAdmin(Connection conn) throws SQLException {
-        String sql = "Select * from Admin a ";
+        String sql = "Select * from Admin order by username";
  
         PreparedStatement pstm = conn.prepareStatement(sql);
  

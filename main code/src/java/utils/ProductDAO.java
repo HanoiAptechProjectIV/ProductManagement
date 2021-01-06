@@ -30,9 +30,44 @@ public class ProductDAO {
         }
         return row;
     }
+
+    public static List<Product> queryProduct(Connection conn) throws SQLException {
+        String sql = "Select * from Product order by name, price, quantity";
+ 
+        PreparedStatement pstm = conn.prepareStatement(sql);
+ 
+        ResultSet rs = pstm.executeQuery();
+        List<Product> list = new ArrayList<Product>();
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String name = rs.getString("name");
+            String description = rs.getString("description");
+            int price = rs.getInt("price");
+            int quantity = rs.getInt("quantity");
+            String image = rs.getString("image");
+            LocalDate dateAdded = rs.getDate("date_added").toLocalDate();
+            int categoryId = rs.getInt("category_id");
+            int brandId = rs.getInt("brand_id");
+            boolean disable = rs.getBoolean("disable");
+            
+            Product product = new Product();
+            product.setId(id);
+            product.setName(name);
+            product.setDescription(description);
+            product.setPrice(price);
+            product.setQuantity(quantity);
+            product.setImage(image);
+            product.setDateAdded(dateAdded);
+            product.setCategoryId(categoryId);
+            product.setBrandId(brandId);
+            product.setDisable(disable);
+            list.add(product);
+        }
+        return list;
+    }
     
     public static List<Product> queryProduct(Connection conn, int offset, int total) throws SQLException {
-        String sql = "Select * from Product order by id offset "+offset+" rows fetch next "+total+" rows only";
+        String sql = "Select * from Product order by name offset "+offset+" rows fetch next "+total+" rows only";
  
         PreparedStatement pstm = conn.prepareStatement(sql);
  

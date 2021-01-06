@@ -9,6 +9,8 @@ package servlet.create;
  *
  * @author Hung
  */
+import beans.Brand;
+import beans.Category;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -25,7 +27,11 @@ import utils.ProductDAO;
 import utils.MyUtils;
 
 import java.io.IOException;
+import java.time.ZoneId;
+import java.util.HashMap;
 import javax.servlet.annotation.MultipartConfig;
+import utils.BrandDAO;
+import utils.CategoryDAO;
 import utils.UploadFile;
 
 @WebServlet(urlPatterns = {"/createProduct"})
@@ -70,15 +76,31 @@ public class CreateProductServlet extends HttpServlet {
 
             UploadFile upload = new UploadFile();
             String image = upload.uploadFile(request, UPLOAD_DIR, "image");
+            image = (image.length() > 0) ? image : "product.png";
 
             int quantity = Integer.parseInt(request.getParameter("quantity"));;
             String description = request.getParameter("description");
             LocalDate dateAdded = LocalDate.parse(request.getParameter("dateAdded"));
-            int categoryId = Integer.parseInt(request.getParameter("categoryId"));
-            int brandId = Integer.parseInt(request.getParameter("brandId"));
-            product = new Product(id, price, quantity, categoryId, brandId, name, description, image, dateAdded, false);
-
-            if (errorString == null) {
+            
+            String categoryName = request.getParameter("categoryNameOption");
+            String brandName = request.getParameter("brandNameOption");
+            Brand brand = BrandDAO.findBrandByName(conn, brandName);
+            Category category = CategoryDAO.findCategoryByName(conn, categoryName);
+            int categoryId = category.getId();
+            int brandId = brand.getId();
+            
+            HashMap<String, String> aliasMap = new HashMap<>();
+            aliasMap.put("VST", "Asia/Ho_Chi_Minh");             
+            if(price < 1000)
+                errorString = "Price must be larger or equal than 1000 VND";
+            else if (quantity < 1)
+                errorString = "Quantity must be larger or equal than 1";
+            else if (dateAdded.isBefore(LocalDate.now(ZoneId.of("VST", aliasMap)).minusDays(7))
+                    || dateAdded.isAfter(LocalDate.now(ZoneId.of("VST", aliasMap)).plusDays(7))){
+                errorString = "The added date must be up to 1 week from the current date";
+            }
+            else{
+                product = new Product(id, price, quantity, categoryId, brandId, name, description, image, dateAdded, false);                
                 ProductDAO.insertProduct(conn, product);
             }
         } catch (Exception e) {

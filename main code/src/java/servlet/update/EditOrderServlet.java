@@ -22,12 +22,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import beans.Order;
 import beans.OrderDetail;
+import beans.Product;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import utils.OrderDAO;
 import utils.MyUtils;
 import utils.OrderDetailDAO;
+import utils.ProductDAO;
 
 @WebServlet(urlPatterns = {"/editOrder"})
 public class EditOrderServlet extends HttpServlet {
@@ -91,24 +93,37 @@ public class EditOrderServlet extends HttpServlet {
             int amount = Integer.parseInt(request.getParameter("amount"));
             LocalDateTime createdTime = LocalDateTime.parse(request.getParameter("createdTime"));
             LocalDateTime paymentTime = null;
-            if(!request.getParameter("paymentTime").equals("")){
+            if (!request.getParameter("paymentTime").equals("")) {
                 paymentTime = LocalDateTime.parse(request.getParameter("paymentTime"));
 
                 order = new Order(id, createdTime, paymentTime, amount, userId);
             } else {
                 order = new Order(id, createdTime, amount, userId);
             }
-            System.out.println("ptime "+(order.getPaymentTime().equals(LocalDateTime.MIN)));
             OrderDAO.updateOrder(conn, order);
 
             List<OrderDetail> listDetail = OrderDetailDAO.findOrderDetailList(conn, id);
             for (OrderDetail detail : listDetail) {
                 int idOrderDetail = Integer.parseInt(request.getParameter("idOrderDetail" + detail.getId()));
-                int productId = Integer.parseInt(request.getParameter("productId" + detail.getId()));
-                int purchasedQuantity = Integer.parseInt(request.getParameter("purchasedQuantity" + detail.getId()));
-                String status = request.getParameter("status" + detail.getId());
-                orderDetail = new OrderDetail(idOrderDetail, id, productId, purchasedQuantity, status);
-                OrderDetailDAO.updateOrderDetail(conn, orderDetail);
+
+                String productName = request.getParameter("productNameOption" + detail.getId());
+                Product product = ProductDAO.findProductByName(conn, productName);
+                int productId = 0;
+                if (product != null) {
+                    productId = product.getId();
+                    int purchasedQuantity = Integer.parseInt(request.getParameter("purchasedQuantity" + detail.getId()));
+                    String status = request.getParameter("statusOption" + detail.getId());
+
+                    if(!status.equals("Refund") && !status.equals("Canceled")){
+                        product.setQuantity(product.getQuantity() - (purchasedQuantity - detail.getPurchasedQuantity()));
+                        ProductDAO.updateProduct(conn, product);
+                    }
+                    
+                    orderDetail = new OrderDetail(idOrderDetail, id, productId, purchasedQuantity, status);
+                    OrderDetailDAO.updateOrderDetail(conn, orderDetail);
+                } else {
+                    errorString = "Can not find product";
+                }
             }
 
         } catch (Exception e) {

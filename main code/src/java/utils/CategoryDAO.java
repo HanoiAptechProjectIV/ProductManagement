@@ -30,8 +30,31 @@ public class CategoryDAO {
         return row;
     }
     
+    public static List<Category> queryCategory(Connection conn) throws SQLException {
+        String sql = "Select * from Category order by name";
+ 
+        PreparedStatement pstm = conn.prepareStatement(sql);
+ 
+        ResultSet rs = pstm.executeQuery();
+        List<Category> list = new ArrayList<Category>();
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String name = rs.getString("name");
+            String description = rs.getString("description");
+            boolean disable = rs.getBoolean("disable");
+            
+            Category category = new Category();
+            category.setId(id);
+            category.setName(name);
+            category.setDescription(description);
+            category.setDisable(disable);
+            list.add(category);
+        }
+        return list;
+    } 
+    
     public static List<Category> queryCategory(Connection conn, int offset, int total) throws SQLException {
-        String sql = "Select * from Category order by id offset "+offset+" rows fetch next "+total+" rows only";
+        String sql = "Select * from Category order by name offset "+offset+" rows fetch next "+total+" rows only";
  
         PreparedStatement pstm = conn.prepareStatement(sql);
  

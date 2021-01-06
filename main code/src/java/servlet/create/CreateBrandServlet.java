@@ -65,7 +65,8 @@ public class CreateBrandServlet extends HttpServlet {
 
             UploadFile upload = new UploadFile();
             String logo = upload.uploadFile(request, UPLOAD_DIR, "logo");
-
+            logo = (logo.length() > 0) ? logo : "brand.png";
+            
             String manufacturer = request.getParameter("manufacturer");
             String description = request.getParameter("description");
 

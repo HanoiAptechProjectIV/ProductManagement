@@ -31,7 +31,7 @@ public class UserDAO {
     }
     
     public static List<User> queryUser(Connection conn, int offset, int total) throws SQLException {
-        String sql = "Select * from [User] order by id offset "+offset+" rows fetch next "+total+" rows only";
+        String sql = "Select * from [User] order by name offset "+offset+" rows fetch next "+total+" rows only";
  
         PreparedStatement pstm = conn.prepareStatement(sql);
  

@@ -62,7 +62,7 @@ public class OrderDAO {
     }
 
     public static Order findOrder(Connection conn, int id) throws SQLException {
-        String sql = "Select * from [Order] a where a.id=?";
+        String sql = "Select * from [Order] a where a.id=? ";
 
         PreparedStatement pstm = conn.prepareStatement(sql);
         pstm.setInt(1, id);
@@ -87,7 +87,7 @@ public class OrderDAO {
     }
 
     public static List<Order> findOrderByUserId(Connection conn, int userId) throws SQLException {
-        String sql = "Select * from [Order] a where a.user_id=?";
+        String sql = "Select * from [Order] a where a.[user_id]=? order by id ASC";
 
         PreparedStatement pstm = conn.prepareStatement(sql);
         pstm.setInt(1, userId);

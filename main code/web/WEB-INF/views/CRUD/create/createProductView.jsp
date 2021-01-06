@@ -4,6 +4,13 @@
     Author     : Hung
 --%>
 
+<%@page import="utils.BrandDAO"%>
+<%@page import="utils.CategoryDAO"%>
+<%@page import="utils.MyUtils"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="java.util.List"%>
+<%@page import="beans.Brand"%>
+<%@page import="beans.Category"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -14,7 +21,7 @@
       <meta charset="UTF-8">
       <title>Create Product</title>
    </head>
-   <body>
+   <body onload="changeCategoryNameAnchor();changeBrandNameAnchor();">
     
       <jsp:include page="../../_header.jsp"></jsp:include>
       <jsp:include page="../../_menu.jsp"></jsp:include>
@@ -22,7 +29,11 @@
       <h3>Create Product</h3>
        
       <p style="color: red;">${errorString}</p>
-       
+      <%
+          Connection conn = MyUtils.getStoredConnection(request);
+          List<Category> listCategory = CategoryDAO.queryCategory(conn);
+          List<Brand> listBrand = BrandDAO.queryBrand(conn);
+      %>       
       <form method="POST" action="${pageContext.request.contextPath}/createProduct" enctype="multipart/form-data">
          <table border="0">
             <tr>
@@ -47,15 +58,33 @@
             </tr>
             <tr>
                <td>Date added</td>
-               <td><input type="text" name="dateAdded" value="${product.dateAdded}" /></td>
+               <td><input type="text" id="dateAddedInput" name="dateAdded" value="${product.dateAdded}" />
+                   <input type="button" onclick="getCurrentTime();" value="Get Current Time"/>
+               </td>
             </tr>
             <tr>
-               <td>Category id</td>
-               <td><input type="text" name="categoryId" value="${product.categoryId}" /></td>
+               <td>Category name</td>
+               <td>
+                   <a id="categoryNameAnchor" href="categoryList?search="></a>
+                   <select id="categoryNameOption" name="categoryNameOption"
+                            onchange="changeCategoryNameAnchor();">
+               <%for(Category category : listCategory){%>
+                        <option value="<%=category.getName()%>"><%=category.getName()%></option>  
+               <%}%>
+                   </select>                
+               </td>
             </tr>
             <tr>
-               <td>Brand id</td>
-               <td><input type="text" name="brandId" value="${product.brandId}" /></td>
+               <td>Brand name</td>
+               <td>
+                   <a id="brandNameAnchor" href="brandList?search="></a>
+                   <select id="brandNameOption" name="brandNameOption"
+                            onchange="changeBrandNameAnchor();">
+               <%for(Brand brand : listBrand){%>
+                        <option value="<%=brand.getName()%>"><%=brand.getName()%></option>  
+               <%}%>
+                   </select>                 
+               </td>
             </tr>
             <tr>
                <td colspan="2">                   
@@ -67,6 +96,37 @@
       </form>
        
       <jsp:include page="../../_footer.jsp"></jsp:include>
+      <script>
+            function getCurrentTime() {
+                var d = new Date(),
+                    month = '' + (d.getMonth() + 1),
+                    day = '' + d.getDate(),
+                    year = d.getFullYear();
+
+                if (month.length < 2) 
+                    month = '0' + month;
+                if (day.length < 2) 
+                    day = '0' + day;
+
+                var today = [year, month, day].join('-'),                 
+                    dateAdded = document.getElementById("dateAddedInput");
+                dateAdded.value = today;
+            }  
+            
+            function changeCategoryNameAnchor(){
+                var categoryOption = document.getElementById("categoryNameOption"),
+                    categoryAnchor = document.getElementById("categoryNameAnchor");
+                categoryAnchor.href = "categoryList?search="+categoryOption.value;
+                categoryAnchor.text = categoryOption.value;
+            }
+            
+            function changeBrandNameAnchor(){
+                var brandOption = document.getElementById("brandNameOption"),
+                    brandAnchor = document.getElementById("brandNameAnchor");
+                brandAnchor.href = "brandList?search="+brandOption.value;
+                brandAnchor.text = brandOption.value;
+            }             
+      </script>
        
    </body>
 </html>

@@ -30,7 +30,7 @@
                     <th>Logo</th>
                     <th>Manufacturer</th>
                     <th>Description</th>
-                    <th>Display</th>
+                    <th>Display (or disable)</th>
                     <th>Edit</th>
                 </tr>
             
@@ -46,7 +46,7 @@
                     <td>
                         <c:choose>
                             <c:when test="${brand.disable == true}">
-                                Not displayed
+                                Disabled
                             </c:when>
                             <c:when test="${brand.disable == false}">
                                 Displayed

@@ -30,8 +30,35 @@ public class BrandDAO {
         return row;
     }
     
+    public static List<Brand> queryBrand(Connection conn) throws SQLException {
+        String sql = "Select * from Brand order by name";
+ 
+        PreparedStatement pstm = conn.prepareStatement(sql);
+ 
+        ResultSet rs = pstm.executeQuery();
+        List<Brand> list = new ArrayList<Brand>();
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String name = rs.getString("name");
+            String description = rs.getString("description");
+            String logo = rs.getString("logo");
+            String manufacturer= rs.getString("manufacturer");
+            boolean disable = rs.getBoolean("disable");
+            
+            Brand brand = new Brand();
+            brand.setId(id);
+            brand.setName(name);
+            brand.setDescription(description);
+            brand.setLogo(logo);
+            brand.setManufacturer(manufacturer);
+            brand.setDisable(disable);
+            list.add(brand);
+        }
+        return list;
+    } 
+    
     public static List<Brand> queryBrand(Connection conn, int offset, int total) throws SQLException {
-        String sql = "Select * from Brand order by id offset "+offset+" rows fetch next "+total+" rows only";
+        String sql = "Select * from Brand order by name offset "+offset+" rows fetch next "+total+" rows only";
  
         PreparedStatement pstm = conn.prepareStatement(sql);
  

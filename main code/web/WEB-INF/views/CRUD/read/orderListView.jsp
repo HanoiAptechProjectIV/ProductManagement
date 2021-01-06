@@ -4,6 +4,8 @@
     Author     : Hung
 --%>
 
+<%@page import="beans.User"%>
+<%@page import="utils.UserDAO"%>
 <%@page import="java.time.LocalDateTime"%>
 <%@page import="utils.ProductDAO"%>
 <%@page import="beans.Product"%>
@@ -48,69 +50,53 @@
             <c:forEach items="${orderList}" var="order" >
                 <tr>
                     <td>${order.id}</td>
-                    <c:forEach items="${userList}" step="10" var="user">
-                        <c:if test="${user.id == order.userId}">
-                            <td><a href="userList?search=${user.name}">${user.name}</a><br></td>
-                            </c:if>
-                        </c:forEach>
-                    <td>${order.amount}</td>
-
-                    <c:set var="orderObj" value="${order}"/>
                     <%
-                        List<OrderDetail> listDetail = (List<OrderDetail>) request.getAttribute("orderDetailList");
-                        Order orderObj = (Order) pageContext.getAttribute("orderObj");
                         Connection conn = MyUtils.getStoredConnection(request);
+                        Order order = (Order) pageContext.getAttribute("order");
+                        List<OrderDetail> listDetail = OrderDetailDAO.findOrderDetailList(conn, order.getId());
+                        User user = UserDAO.findUser(conn, order.getUserId());
                         Product prod = new Product();
-                    %>
+                    %>    
+                    <td><a href="userList?search=<%=user.getName()%>"><%=user.getName()%></a><br></td>
+                    <td>${order.amount}</td>
                     <td>
                     <%
                         for (OrderDetail detail : listDetail) {
-                            if (orderObj.getId() == detail.getOrderId()) {
-                                prod = ProductDAO.findProduct(conn, detail.getProductId());
-                                if (prod != null) {
+                            prod = ProductDAO.findProduct(conn, detail.getProductId());
+                            if (prod != null) {
                     %>
-                    <a href="productList?search=<%=prod.getName()%>"><%=prod.getName()%></a><hr>
-                    
-                    <%
-                                }
-                            }
-                        }
-                    %>
+                        <a href="productList?search=<%=prod.getName()%>"><%=prod.getName()%></a><hr>
+                    <%}}%>
                     </td>
                     <td>
                     <%
                         for (OrderDetail detail : listDetail) {
-                            if (orderObj.getId() == detail.getOrderId()) {
-                                prod = ProductDAO.findProduct(conn, detail.getProductId());
-                                if (prod != null) {
-                    %>
-                    <%=prod.getPrice()%><hr>
+                            prod = ProductDAO.findProduct(conn, detail.getProductId());
+                            if (prod != null) {
+                    %>                        
+                        <%=prod.getPrice()%><hr>
+                    <%}}%>
+                    </td>
+                    <td>
                     <%
-                                }
-                            }
-                        }
+                        for (OrderDetail detail : listDetail) {
                     %>
+                        <%=detail.getPurchasedQuantity()%><hr>
+                    <%}%>
                     </td>
                     <td>
-                        <c:forEach items="${orderDetailList}" var="orderDetail" >
-                            <c:if test="${order.id == orderDetail.orderId}">
-                                ${orderDetail.purchasedQuantity}<hr>
-                            </c:if>
-                        </c:forEach>
-                    </td>
-                    <td>
-                        <c:forEach items="${orderDetailList}" var="orderDetail" >
-                            <c:if test="${order.id == orderDetail.orderId}">
-                                ${orderDetail.status}<hr>
-                            </c:if>
-                        </c:forEach>
+                    <%
+                        for (OrderDetail detail : listDetail) {
+                    %>                        
+                        <%=detail.getStatus()%><hr>
+                    <%}%>
                     </td>
                     <td>${order.createdTime}</td>
                     <td><%
                         LocalDateTime ldt = LocalDateTime.of(1970, 1, 1, 0, 0, 0);
-                        if(!orderObj.getPaymentTime().equals(ldt)){
+                        if(!order.getPaymentTime().equals(ldt)){
                         %>
-                            <%=orderObj.getPaymentTime()%>
+                            <%=order.getPaymentTime()%>
                         <%   
                         }
                         %></td>

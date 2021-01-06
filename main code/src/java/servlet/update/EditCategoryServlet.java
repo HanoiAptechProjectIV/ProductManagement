@@ -78,11 +78,11 @@ public class EditCategoryServlet extends HttpServlet {
         Connection conn = MyUtils.getStoredConnection(request);
         String errorString = null;
         Category category = null;
+        String name = (String) request.getParameter("name");
         try {
             int id = Integer.parseInt(request.getParameter("id"));
-            String name = (String) request.getParameter("name");
             String description = request.getParameter("description");
-            boolean disable = Boolean.parseBoolean(request.getParameter("disable"));
+            boolean disable = Boolean.parseBoolean(request.getParameter("disableOption"));
 
             category = new Category(id, name, description, disable);
 
@@ -103,7 +103,7 @@ public class EditCategoryServlet extends HttpServlet {
             } // Nếu mọi thứ tốt đẹp.
             // Redirect sang trang danh sách sản phẩm.
             else {
-                response.sendRedirect(request.getContextPath() + "/categoryList");
+                response.sendRedirect(request.getContextPath() + "/categoryList?search="+name);
             }
         }
     }

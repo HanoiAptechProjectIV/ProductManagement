@@ -4,6 +4,13 @@
     Author     : Hung
 --%>
 
+<%@page import="utils.BrandDAO"%>
+<%@page import="beans.Brand"%>
+<%@page import="beans.Category"%>
+<%@page import="utils.CategoryDAO"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="utils.MyUtils"%>
+<%@page import="beans.Product"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
@@ -35,7 +42,7 @@
                 <th>Date added</th>
                 <th>Category id</th>
                 <th>Brand id</th>
-                <th>Display</th>
+                <th>Display (or disable)</th>
                 <th>Edit</th>
             </tr>
             <c:forEach items="${productList}" var="product" >
@@ -48,20 +55,22 @@
                     <td>${product.quantity}</td>
                     <td>${product.description}</td>
                     <td>${product.dateAdded}</td>
+                        <%
+                            Connection conn = MyUtils.getStoredConnection(request);
+                            Product product = (Product)pageContext.getAttribute("product");
+                            Category cate = CategoryDAO.findCategory(conn, product.getCategoryId());
+                            Brand bra = BrandDAO.findBrand(conn, product.getBrandId());
+                        %>
                     <td>
-                        <c:forEach items="${categoryList}" step="2" var="category">
-                            <a href="categoryList?search=${category.name}" >${category.name}</a>
-                        </c:forEach>
+                            <a href="categoryList?search=<%=cate.getName()%>" ><%=cate.getName()%></a>
                     </td>
                     <td>
-                        <c:forEach items="${brandList}" step="2" var="brand">
-                            <a href="brandList?search=${brand.name}">${brand.name}</a>
-                        </c:forEach>
+                            <a href="brandList?search=<%=bra.getName()%>"><%=bra.getName()%></a>
                     </td>
                     <td>
                         <c:choose>
                             <c:when test="${product.disable == true}">
-                                Not displayed
+                                Disabled
                             </c:when>
                             <c:when test="${product.disable == false}">Displayed</c:when>
                         </c:choose>

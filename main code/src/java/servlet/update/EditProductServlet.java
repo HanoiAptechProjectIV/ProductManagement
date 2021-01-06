@@ -9,6 +9,8 @@ package servlet.update;
  *
  * @author Hung
  */
+import beans.Brand;
+import beans.Category;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -22,7 +24,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import beans.Product;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.HashMap;
 import javax.servlet.annotation.MultipartConfig;
+import utils.BrandDAO;
+import utils.CategoryDAO;
 import utils.ProductDAO;
 import utils.MyUtils;
 import utils.UploadFile;
@@ -84,9 +90,9 @@ public class EditProductServlet extends HttpServlet {
         Connection conn = MyUtils.getStoredConnection(request);
         String errorString = null;
         Product product = null;
+        String name = (String) request.getParameter("name");
         try {
             int id = Integer.parseInt(request.getParameter("id"));
-            String name = (String) request.getParameter("name");
             int price = Integer.parseInt(request.getParameter("price"));
 
             UploadFile upload = new UploadFile();
@@ -97,13 +103,30 @@ public class EditProductServlet extends HttpServlet {
 
             String description = request.getParameter("description");
             LocalDate dateAdded = LocalDate.parse(request.getParameter("dateAdded"));
-            int categoryId = Integer.parseInt(request.getParameter("categoryId"));
-            int brandId = Integer.parseInt(request.getParameter("brandId"));
-            boolean disable = Boolean.parseBoolean(request.getParameter("disable"));
+            
+            String categoryName = request.getParameter("categoryNameOption");
+            String brandName = request.getParameter("brandNameOption");
+            Brand brand = BrandDAO.findBrandByName(conn, brandName);
+            Category category = CategoryDAO.findCategoryByName(conn, categoryName);
+            int categoryId = category.getId();
+            int brandId = brand.getId();
+            
+            boolean disable = Boolean.parseBoolean(request.getParameter("disableOption"));
 
+            HashMap<String, String> aliasMap = new HashMap<>();
+            aliasMap.put("VST", "Asia/Ho_Chi_Minh");             
+            if(price < 1000)
+                errorString = "Price must be larger or equal than 1000 VND";
+            else if (quantity < 1)
+                errorString = "Quantity must be larger or equal than 1";
+            else if (dateAdded.isBefore(LocalDate.now(ZoneId.of("VST", aliasMap)).minusDays(7))
+                    || dateAdded.isAfter(LocalDate.now(ZoneId.of("VST", aliasMap)).plusDays(7))){
+                errorString = "The added date must be up to 1 week from the current date";
+            }
+            else{
             product = new Product(id, price, quantity, categoryId, brandId, name, description, image, dateAdded, disable);
-
             ProductDAO.updateProduct(conn, product);
+            }
         } catch (Exception e){
             e.printStackTrace();
             errorString = e.getMessage();
@@ -120,7 +143,7 @@ public class EditProductServlet extends HttpServlet {
             } // Nếu mọi thứ tốt đẹp.
             // Redirect sang trang danh sách sản phẩm.
             else {
-                response.sendRedirect(request.getContextPath() + "/productList");
+                response.sendRedirect(request.getContextPath() + "/productList?search="+name);
             }
         }
     }

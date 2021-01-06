@@ -47,8 +47,6 @@ public class ProductListServlet extends HttpServlet {
         String errorString = null;
         String name = request.getParameter("search");
         List<Product> list = new ArrayList<Product>();
-        List<Brand> listBrand = new ArrayList<Brand>();
-        List<Category> listCategory = new ArrayList<Category>();
         
         try {
             int rowInTable = 0;
@@ -64,14 +62,6 @@ public class ProductListServlet extends HttpServlet {
                 if (product != null) {
                     list.add(product);
                 }
-                if (list.size() > 0) {
-                    for (Product prod : list) {
-                        listBrand.add(BrandDAO.findBrand(conn, prod.getBrandId()));
-                    }
-                    for (Product prod : list) {
-                        listCategory.add(CategoryDAO.findCategory(conn, prod.getCategoryId()));
-                    }
-                }
             } else {
                 rowInTable = ProductDAO.countRows(conn);
                 pageQuantity = (rowInTable % 2 == 0) ? rowInTable / 2 : rowInTable / 2 + 1;
@@ -79,13 +69,6 @@ public class ProductListServlet extends HttpServlet {
                 int offset = (pageNum - 1) * rowInPage;
 
                 list = ProductDAO.queryProduct(conn, offset, rowInPage);
-                for (Product prod : list) {
-                    listBrand.add(BrandDAO.findBrand(conn, prod.getBrandId()));
-                }
-                for (Product prod : list) {
-                    listCategory.add(CategoryDAO.findCategory(conn, prod.getCategoryId()));
-                }
-
                 request.setAttribute("pageQuantity", pageQuantity);
                 request.setAttribute("page", pageNum);
             }
@@ -97,8 +80,6 @@ public class ProductListServlet extends HttpServlet {
             // Lưu thông tin vào request attribute trước khi forward sang views.
             request.setAttribute("errorString", errorString);
             request.setAttribute("productList", list);
-            request.setAttribute("categoryList", listCategory);
-            request.setAttribute("brandList", listBrand);
 
             // Forward sang /WEB-INF/views/productListView.jsp
             RequestDispatcher dispatcher = request.getServletContext()

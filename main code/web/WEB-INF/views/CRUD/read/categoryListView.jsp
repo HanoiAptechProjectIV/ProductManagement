@@ -28,7 +28,7 @@
                     <th>Id</th>
                     <th>Name</th>
                     <th>Description</th>
-                    <th>Display</th>
+                    <th>Display (or disable)</th>
                     <th>Edit</th>
                 </tr>
             <c:forEach items="${categoryList}" var="category" >
@@ -40,7 +40,7 @@
                     <td>
                         <c:choose>
                             <c:when test="${category.disable == true}">
-                                Not displayed
+                                Disabled
                             </c:when>
                                 <c:when test="${category.disable == false}">Displayed</c:when>
                         </c:choose>                 
