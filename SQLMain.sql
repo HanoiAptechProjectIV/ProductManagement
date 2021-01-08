@@ -18,7 +18,7 @@ create table Brand (
 	id int not null identity(1,1) primary key, 
 	name nvarchar(50) unique, 
 	logo varchar(50) default 'brand.png',
-	manufacturer nvarchar(50),
+	manufacturer nvarchar(50) default 'unknown',
 	description ntext,
 	disable bit default 0
 )
@@ -27,12 +27,12 @@ create table Product (
 	id int not null identity(1,1) primary key,
 	name nvarchar(50) unique,
 	description ntext,
-	price int, 
-	quantity int,
+	price int not null, 
+	quantity int not null,
 	image varchar(50) default 'product.png',
 	date_added datetime DEFAULT CURRENT_TIMESTAMP, 
-	category_id int,
-	brand_id int,
+	category_id int not null,
+	brand_id int not null,
 	disable bit default 0,
 	foreign key (category_id) references Category(id),
 	foreign key (brand_id) references Brand(id)
@@ -41,7 +41,7 @@ create table Product (
 create table [User] (
 	id int not null identity(1,1) primary key,
 	username varchar(30) unique,
-	[password] varchar(30),
+	[password] varchar(30) not null,
 	name nvarchar(50),
 	gender bit,
 	phone varchar(20),
@@ -53,17 +53,17 @@ create table [Order] (
 	id int not null identity(1,1) primary key,
 	created_time DateTime DEFAULT CURRENT_TIMESTAMP,
 	payment_time DateTime DEFAULT '01/01/1970 00:00:00',
-	amount int,
-	[user_id] int, 	
+	amount int not null,
+	[user_id] int not null, 	
 	foreign key ([user_id]) references [User](id)	
 )
 
 create table OrderDetail (
 	id int not null identity(1,1) primary key,
-	[status] varchar(50),
-	product_id int, 
-	order_id int, 
-	purchased_quantity int,
+	[status] varchar(50) not null,
+	product_id int not null, 
+	order_id int not null, 
+	purchased_quantity int not null,
 	foreign key (product_id) references Product(id),
 	foreign key (order_id) references [Order](id),
 )
