@@ -95,8 +95,8 @@ public class CreateProductServlet extends HttpServlet {
                 errorString = "Price must be larger or equal than 1000 VND";
             else if (quantity < 1)
                 errorString = "Quantity must be larger or equal than 1";
-            else if (dateAdded.isBefore(LocalDate.now(ZoneId.of("VST", aliasMap)).minusDays(7))
-                    || dateAdded.isAfter(LocalDate.now(ZoneId.of("VST", aliasMap)).plusDays(7))){
+            else if (dateAdded.isBefore(LocalDate.now(ZoneId.of("VST", aliasMap)).minusDays(30))
+                    || dateAdded.isAfter(LocalDate.now(ZoneId.of("VST", aliasMap)).plusDays(30))){
                 errorString = "The added date must be up to 1 week from the current date";
             }
             else{

@@ -68,19 +68,20 @@
 </c:if>
 
 <script>
+    <c:if test="${page != null}">
     function executeEllipsis(atag) {
         "use strict";
         var arr = document.getElementsByClassName("displayNone");
         Array.prototype.filter.call(arr, function (a) {
             var href = a.href;
             if (href[href.length - 1] < ${page}
-            && atag.id == "firstEllipsis") {
+            && atag.id === "firstEllipsis") {
                 a.style.display = "inline-block";
                 var previous = document.getElementById("previous");
                 previous.textContent = "${page-1}";
             }
             if (href[href.length - 1] > ${page}
-            && atag.id == "secondEllipsis") {
+            && atag.id === "secondEllipsis") {
                 a.style.display = "inline-block";
                 var next = document.getElementById("next");
                 next.textContent = "${page+1}";
@@ -88,4 +89,5 @@
         });
         atag.style.display = "none";
     }
+    </c:if>
 </script>

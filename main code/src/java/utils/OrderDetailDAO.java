@@ -83,7 +83,7 @@ public class OrderDetailDAO {
     
     public static List<OrderDetail> findOrderDetailList(Connection conn, int orderId) throws SQLException {
         String sql = "Select * from OrderDetail a where a.order_id=? "
-                + "order by product_id ASC, purchased_quantity ASC, [status] ASC";
+                + "order by id ASC, purchased_quantity ASC, [status] ASC";
  
         PreparedStatement pstm = conn.prepareStatement(sql);
         pstm.setInt(1, orderId);

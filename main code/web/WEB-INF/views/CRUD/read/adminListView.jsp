@@ -29,6 +29,7 @@
           <th>Edit</th>
           <th>Delete</th>
        </tr>
+       <c:if test="${adminList.size() > 0}">
        <c:forEach items="${adminList}" var="admin" >
           <tr>
              <td>${admin.username}</td>
@@ -41,6 +42,7 @@
              </td>
           </tr>
        </c:forEach>
+       </c:if>
     </table>
  
     <a href="createAdmin" >Create Admin</a>

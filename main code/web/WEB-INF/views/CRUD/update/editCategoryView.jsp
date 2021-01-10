@@ -22,13 +22,13 @@
  
       <p style="color: red;">${errorString}</p>
  
-      <c:if test="${not empty category}">
+      <c:if test="${category != null}">
          <form method="POST" action="${pageContext.request.contextPath}/editCategory">
             <input type="hidden" name="id" value="${category.id}" />
             <table border="0">
             <tr>
                <td>Name</td>
-               <td><input type="text" name="name" value="${category.name}" /></td>
+               <td><input type="text" required name="name" value="${category.name}" /></td>
             </tr>
             <tr>
                <td>Description</td>

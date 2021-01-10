@@ -59,7 +59,7 @@ public class EditProductServlet extends HttpServlet {
         try {
             int id = Integer.parseInt(request.getParameter("id"));
             product = ProductDAO.findProduct(conn, id);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             errorString = e.getMessage();
         } finally {
@@ -103,31 +103,30 @@ public class EditProductServlet extends HttpServlet {
 
             String description = request.getParameter("description");
             LocalDate dateAdded = LocalDate.parse(request.getParameter("dateAdded"));
-            
+
             String categoryName = request.getParameter("categoryNameOption");
             String brandName = request.getParameter("brandNameOption");
             Brand brand = BrandDAO.findBrandByName(conn, brandName);
             Category category = CategoryDAO.findCategoryByName(conn, categoryName);
             int categoryId = category.getId();
             int brandId = brand.getId();
-            
+
             boolean disable = Boolean.parseBoolean(request.getParameter("disableOption"));
 
             HashMap<String, String> aliasMap = new HashMap<>();
-            aliasMap.put("VST", "Asia/Ho_Chi_Minh");             
-            if(price < 1000)
+            aliasMap.put("VST", "Asia/Ho_Chi_Minh");
+            if (price < 1000) {
                 errorString = "Price must be larger or equal than 1000 VND";
-            else if (quantity < 1)
+            } else if (quantity < 1) {
                 errorString = "Quantity must be larger or equal than 1";
-            else if (dateAdded.isBefore(LocalDate.now(ZoneId.of("VST", aliasMap)).minusDays(7))
-                    || dateAdded.isAfter(LocalDate.now(ZoneId.of("VST", aliasMap)).plusDays(7))){
+            } else if (dateAdded.isBefore(LocalDate.now(ZoneId.of("VST", aliasMap)).minusDays(30))
+                    || dateAdded.isAfter(LocalDate.now(ZoneId.of("VST", aliasMap)).plusDays(30))) {
                 errorString = "The added date must be up to 1 week from the current date";
+            } else {
+                product = new Product(id, price, quantity, categoryId, brandId, name, description, image, dateAdded, disable);
+                ProductDAO.updateProduct(conn, product);
             }
-            else{
-            product = new Product(id, price, quantity, categoryId, brandId, name, description, image, dateAdded, disable);
-            ProductDAO.updateProduct(conn, product);
-            }
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             errorString = e.getMessage();
         } finally {
@@ -143,7 +142,7 @@ public class EditProductServlet extends HttpServlet {
             } // Nếu mọi thứ tốt đẹp.
             // Redirect sang trang danh sách sản phẩm.
             else {
-                response.sendRedirect(request.getContextPath() + "/productList?search="+name);
+                response.sendRedirect(request.getContextPath() + "/productList?search=" + name);
             }
         }
     }

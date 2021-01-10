@@ -22,16 +22,23 @@
  
       <p style="color: red;">${errorString}</p>
  
-      <c:if test="${not empty admin}">
+      <c:if test="${admin != null}">
          <form method="POST" action="${pageContext.request.contextPath}/editAdmin">
             <table border="0">
             <tr>             
                <td>Username</td>
-               <td><input type="text" readonly name="username" value="${admin.username}" /></td>
+               <td>
+                   <c:if test="${oldUsername == null}">
+                   <input type="text" hidden name="oldUsername" value="${admin.username}" />
+                   </c:if>
+                   <c:if test="${oldUsername != null}">
+                   <input type="text" hidden name="oldUsername" value="${oldUsername}" />
+                   </c:if>
+                   <input type="text" required name="username" value="${admin.username}" /></td>
             </tr>
             <tr>
                <td>Password</td>
-               <td><input type="text" name="password" value="${admin.password}" /></td>
+               <td><input type="text" required name="password" value="${admin.password}" /></td>
             </tr>
             <tr>
                <td colspan = "2">

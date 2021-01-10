@@ -23,9 +23,14 @@ import javax.servlet.http.HttpServletResponse;
 import beans.Order;
 import beans.OrderDetail;
 import beans.Product;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import utils.OrderDAO;
 import utils.MyUtils;
 import utils.OrderDetailDAO;
@@ -86,7 +91,7 @@ public class EditOrderServlet extends HttpServlet {
         Connection conn = MyUtils.getStoredConnection(request);
         String errorString = null;
         Order order = null;
-        OrderDetail orderDetail = null;
+        List<OrderDetail> listDetail = new ArrayList<OrderDetail>();
         try {
             int id = Integer.parseInt(request.getParameter("id"));
             int userId = Integer.parseInt(request.getParameter("userId"));
@@ -95,34 +100,82 @@ public class EditOrderServlet extends HttpServlet {
             LocalDateTime paymentTime = null;
             if (!request.getParameter("paymentTime").equals("")) {
                 paymentTime = LocalDateTime.parse(request.getParameter("paymentTime"));
+                HashMap<String, String> aliasMap = new HashMap<>();
+                aliasMap.put("VST", "Asia/Ho_Chi_Minh");
 
-                order = new Order(id, createdTime, paymentTime, amount, userId);
+                if (paymentTime.isBefore(LocalDateTime.now(ZoneId.of("VST", aliasMap)).minusDays(30))
+                        || paymentTime.isAfter(LocalDateTime.now(ZoneId.of("VST", aliasMap)))) {
+                    errorString = "The payment time must at most 1 month before and must not be after the current date";
+                } else {
+                    order = new Order(id, createdTime, paymentTime, amount, userId);
+                    OrderDAO.updateOrder(conn, order);
+                }
             } else {
                 order = new Order(id, createdTime, amount, userId);
+                OrderDAO.updateOrder(conn, order);
             }
-            OrderDAO.updateOrder(conn, order);
 
-            List<OrderDetail> listDetail = OrderDetailDAO.findOrderDetailList(conn, id);
-            for (OrderDetail detail : listDetail) {
-                int idOrderDetail = Integer.parseInt(request.getParameter("idOrderDetail" + detail.getId()));
+            if (errorString == null) {
+                List<OrderDetail> listAddedDetail = new ArrayList<>();
+                int countRow = Integer.parseInt(request.getParameter("countRow"));
+                for(int i=1;i<=countRow;i++){
+                    String productAdded = request.getParameter("productNameOptionAdded"+i);
+                    int purchasedQuantityAdded = Integer.parseInt(request.getParameter("purchasedQuantityAdded"+i));
+                    String statusAdded = request.getParameter("statusOptionAdded"+i);
 
-                String productName = request.getParameter("productNameOption" + detail.getId());
-                Product product = ProductDAO.findProductByName(conn, productName);
-                int productId = 0;
-                if (product != null) {
-                    productId = product.getId();
-                    int purchasedQuantity = Integer.parseInt(request.getParameter("purchasedQuantity" + detail.getId()));
-                    String status = request.getParameter("statusOption" + detail.getId());
-
-                    if(!status.equals("Refund") && !status.equals("Canceled")){
-                        product.setQuantity(product.getQuantity() - (purchasedQuantity - detail.getPurchasedQuantity()));
-                        ProductDAO.updateProduct(conn, product);
+                    Product product = ProductDAO.findProductByName(conn, productAdded);
+                    if(product != null){
+                        int productId = product.getId();
+                        OrderDetail detail = new OrderDetail(id, productId, purchasedQuantityAdded, statusAdded);
+                        listAddedDetail.add(detail);
+                    } else {
+                        errorString = "Can not find product";
                     }
-                    
-                    orderDetail = new OrderDetail(idOrderDetail, id, productId, purchasedQuantity, status);
-                    OrderDetailDAO.updateOrderDetail(conn, orderDetail);
-                } else {
-                    errorString = "Can not find product";
+                } 
+                
+                listDetail = OrderDetailDAO.findOrderDetailList(conn, id);
+                for (OrderDetail detail : listDetail) {
+                    int idOrderDetail = Integer.parseInt(request.getParameter("idOrderDetail" + detail.getId()));
+                    String productName = request.getParameter("productNameOptionId" + detail.getId());
+                    Product product = ProductDAO.findProductByName(conn, productName);
+                    if (product != null) {
+                        int productId = product.getId();
+                        int purchasedQuantity = Integer.parseInt(request.getParameter("purchasedQuantityId" + detail.getId()));
+                        String status = request.getParameter("statusOptionId" + detail.getId());
+
+                        List<OrderDetail> deleteAddedDetail = new ArrayList<>();
+                        for(OrderDetail addedDetail : listAddedDetail){
+                            if(addedDetail.getProductId() == productId 
+                                    && addedDetail.getStatus().equals(status)){
+                                purchasedQuantity += addedDetail.getPurchasedQuantity();
+                                deleteAddedDetail.add(addedDetail);
+                            }
+                        }
+                        deleteAddedDetail.forEach((deleteDetail) -> {
+                            listAddedDetail.remove(deleteDetail);
+                        });
+                        
+                        OrderDetail orderDetail = new OrderDetail(idOrderDetail, id, productId, purchasedQuantity, status);
+                        OrderDetailDAO.updateOrderDetail(conn, orderDetail);
+
+                        if (!status.equals("Refund") && !status.equals("Canceled")) {
+                            product.setQuantity(product.getQuantity() - (purchasedQuantity - detail.getPurchasedQuantity()));
+                            ProductDAO.updateProduct(conn, product);
+                        }
+                    } else {
+                        errorString = "Can not find product";
+                    }
+                }
+                
+                for(OrderDetail addedDetail : listAddedDetail){
+                        OrderDetailDAO.insertOrderDetail(conn, addedDetail);
+                        Product product = ProductDAO.findProduct(conn, addedDetail.getProductId());
+                        
+                        if (!addedDetail.getStatus().equals("Refund") 
+                                && !addedDetail.getStatus().equals("Canceled")) {
+                            product.setQuantity(product.getQuantity() - addedDetail.getPurchasedQuantity());
+                            ProductDAO.updateProduct(conn, product);
+                        } 
                 }
             }
 
@@ -133,7 +186,7 @@ public class EditOrderServlet extends HttpServlet {
             // Lưu thông tin vào request attribute trước khi forward sang views.
             request.setAttribute("errorString", errorString);
             request.setAttribute("order", order);
-            request.setAttribute("orderDetail", orderDetail);
+            request.setAttribute("orderDetail", listDetail);
 
             // Nếu có lỗi forward sang trang edit.
             if (errorString != null) {

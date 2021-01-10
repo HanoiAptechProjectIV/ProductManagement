@@ -38,11 +38,11 @@
          <table border="0">
             <tr>
                <td>Name</td>
-               <td><input type="text" name="name" value="${product.name}" /></td>
+               <td><input type="text" required name="name" value="${product.name}" /></td>
             </tr>
             <tr>
                <td>Price</td>
-               <td><input type="text" name="price" value="${product.price}" /></td>
+               <td><input type="text" required name="price" value="${product.price}" /></td>
             </tr>
             <tr>
                <td>Image</td>
@@ -50,7 +50,7 @@
             </tr>
             <tr>
                <td>Quantity</td>
-               <td><input type="text" name="quantity" value="${product.quantity}" /></td>
+               <td><input type="text" required name="quantity" value="${product.quantity}" /></td>
             </tr>
             <tr>
                <td>Description</td>
@@ -67,7 +67,7 @@
                <td>
                    <a id="categoryNameAnchor" href="categoryList?search="></a>
                    <select id="categoryNameOption" name="categoryNameOption"
-                            onchange="changeCategoryNameAnchor();">
+                            required onchange="changeCategoryNameAnchor();">
                <%for(Category category : listCategory){%>
                         <option value="<%=category.getName()%>"><%=category.getName()%></option>  
                <%}%>
@@ -79,7 +79,7 @@
                <td>
                    <a id="brandNameAnchor" href="brandList?search="></a>
                    <select id="brandNameOption" name="brandNameOption"
-                            onchange="changeBrandNameAnchor();">
+                            required onchange="changeBrandNameAnchor();">
                <%for(Brand brand : listBrand){%>
                         <option value="<%=brand.getName()%>"><%=brand.getName()%></option>  
                <%}%>

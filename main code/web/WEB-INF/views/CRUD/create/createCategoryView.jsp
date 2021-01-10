@@ -27,7 +27,7 @@
          <table border="0">
             <tr>
                <td>Name</td>
-               <td><input type="text" name="name" value="${category.name}" /></td>
+               <td><input type="text" required name="name" value="${category.name}" /></td>
             </tr>
             <tr>
                <td>Description</td>

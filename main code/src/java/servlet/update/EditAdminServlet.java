@@ -75,13 +75,14 @@ public class EditAdminServlet extends HttpServlet {
             throws ServletException, IOException {
         Connection conn = MyUtils.getStoredConnection(request);
 
-        String username = (String) request.getParameter("username");
+        String oldUsername = request.getParameter("oldUsername");
+        String username = request.getParameter("username");
         String password = request.getParameter("password");
 
         Admin admin = new Admin(username, password);
         String errorString = null;
         try {
-            AdminDAO.updateAdmin(conn, admin);
+            AdminDAO.updateAdmin(conn, admin, oldUsername);
         } catch (Exception e) {
             e.printStackTrace();
             errorString = e.getMessage();
@@ -90,6 +91,7 @@ public class EditAdminServlet extends HttpServlet {
             // Lưu thông tin vào request attribute trước khi forward sang views.
             request.setAttribute("errorString", errorString);
             request.setAttribute("admin", admin);
+            request.setAttribute("oldUsername", oldUsername);
 
             // Nếu có lỗi forward sang trang edit.
             if (errorString != null) {

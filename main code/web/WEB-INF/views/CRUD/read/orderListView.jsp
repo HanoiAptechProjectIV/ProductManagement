@@ -47,6 +47,7 @@
                     <th>Payment time</th>
                     <th>Edit</th>
                 </tr>
+            <c:if test="${orderList.size() > 0}">
             <c:forEach items="${orderList}" var="order" >
                 <tr>
                     <td>${order.id}</td>
@@ -106,6 +107,7 @@
                     </td>                              
                 </tr>
             </c:forEach>
+            </c:if>
         </table>
 
         <jsp:include page="../../_pagination.jsp"></jsp:include>

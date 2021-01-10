@@ -33,6 +33,7 @@
                     <th>Email</th>
                     <th>Address</th>
                 </tr>
+                <c:if test="${userList.size()>0}">
             <c:forEach items="${userList}" var="user" >
                 <c:if test="${user != null}">
                 <tr>
@@ -57,6 +58,7 @@
                 </tr>
                 </c:if>
             </c:forEach>
+                </c:if>
         </table>
 
         <jsp:include page="../../_pagination.jsp"></jsp:include>

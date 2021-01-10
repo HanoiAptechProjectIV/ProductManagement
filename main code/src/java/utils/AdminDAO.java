@@ -85,13 +85,14 @@ public class AdminDAO {
         pstm.executeUpdate();
     }    
     
-    public static void updateAdmin(Connection conn, Admin admin) throws SQLException {
-        String sql = "Update Admin set password =? where username=? ";
+    public static void updateAdmin(Connection conn, Admin admin, String oldUsername) throws SQLException {
+        String sql = "Update Admin set username =?, password =? where username=? ";
  
         PreparedStatement pstm = conn.prepareStatement(sql);
  
-        pstm.setString(1, admin.getPassword());
-        pstm.setString(2, admin.getUsername());
+        pstm.setString(1, admin.getUsername());
+        pstm.setString(2, admin.getPassword());
+        pstm.setString(3, oldUsername);
         
         pstm.executeUpdate();
     }    

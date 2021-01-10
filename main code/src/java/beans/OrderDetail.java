@@ -24,6 +24,13 @@ public class OrderDetail {
         this.status = status;
     }
 
+    public OrderDetail(int orderId, int productId, int purchasedQuantity, String status) {
+        this.orderId = orderId;
+        this.productId = productId;
+        this.purchasedQuantity = purchasedQuantity;
+        this.status = status;
+    }
+    
     @Override
     public String toString() {
         return "OrderDetail{" + "id=" + id + ", orderId=" + orderId + ", productId=" + productId + ", purchasedQuantity=" + purchasedQuantity + ", status=" + status + '}';

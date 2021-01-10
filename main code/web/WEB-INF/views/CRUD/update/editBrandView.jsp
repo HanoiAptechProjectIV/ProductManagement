@@ -22,13 +22,13 @@
 
             <p style="color: red;">${errorString}</p>
 
-        <c:if test="${not empty brand}">
+        <c:if test="${brand != null}">
             <form method="POST" action="${pageContext.request.contextPath}/editBrand" enctype="multipart/form-data">
                 <input type="hidden" name="id" value="${brand.id}" />
                 <table border="0">
                     <tr>
                         <td>Name</td>
-                        <td><input type="text" name="name" value="${brand.name}" /></td>
+                        <td><input type="text" required name="name" value="${brand.name}" /></td>
                     </tr>
                     <tr>
                         <td>Old logo</td>

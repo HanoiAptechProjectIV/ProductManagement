@@ -22,12 +22,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import beans.Order;
-import beans.OrderDetail;
 import beans.User;
 import java.util.ArrayList;
 import utils.OrderDAO;
 import utils.MyUtils;
-import utils.OrderDetailDAO;
 import utils.UserDAO;
 
 @WebServlet(urlPatterns = {"/orderList"})

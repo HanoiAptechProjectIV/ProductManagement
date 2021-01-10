@@ -45,6 +45,7 @@
                 <th>Display (or disable)</th>
                 <th>Edit</th>
             </tr>
+            <c:if test="${productList.size() > 0}">
             <c:forEach items="${productList}" var="product" >
                 <tr>
                     <td>${product.id}</td>
@@ -81,6 +82,7 @@
                     </td>
                 </tr>
             </c:forEach>
+            </c:if>
         </table>
 
         <jsp:include page="../../_pagination.jsp"></jsp:include>

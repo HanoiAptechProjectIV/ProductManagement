@@ -27,7 +27,7 @@
          <table border="0">
             <tr>
                <td>Name</td>
-               <td><input type="text" name="name" value="${brand.name}" /></td>
+               <td><input type="text" required name="name" value="${brand.name}" /></td>
             </tr>
             <tr>
                <td>Logo</td>
