@@ -50,7 +50,16 @@
                 <tr>
                     <td>User Name</td>
                     <td><input type="hidden" name="userId" value="${order.userId}"/>
-                        <a href="userList?search=<%=user.getName()%>"><%=user.getName()%></a></td>
+                        <div id="userAnchor">
+                            <a href="userList?search=<%=user.getName()%>"><%=user.getName()%></a>
+                        </div>
+                        <div id="userDiv">
+                            <p>Gender: <%=(user.isGender()) ? "Female" : "Male"%></p>
+                            <p> | Phone: <%=user.getPhone()%></p>
+                            <p> | Email: <%=user.getEmail()%></p>
+                            <p> | Address: <%=user.getAddress()%></p>
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td>Amount</td>
@@ -91,8 +100,15 @@
                         <td><input type="text" readonly name="idOrderDetail${orderDetail.id}" 
                                    value="${orderDetail.id}" /></td>
                         <td>
-                            <a class="productNameAnchor" href="productList?search=<%=prod.getName()%>"
-                               ><%=prod.getName()%></a>
+                            <div id="productAnchor">
+                                <a class="productNameAnchor" href="productList?search=<%=prod.getName()%>"
+                                   ><%=prod.getName()%></a>
+                            </div>
+                            <div id="productDiv">
+                                <img src="${pageContext.request.contextPath}/images/product/<%=prod.getImage()%>" 
+                                     height="30" alt="<%=prod.getName()%> image"/>
+                                <p> | Quantity: <%=prod.getQuantity()%></p>
+                            </div>
                             <select class="productNameOption" required name="productNameOptionId${orderDetail.id}"
                                     onchange="findMaxValueQuantity();changeProductNameAnchor();calculateAmount();">
                                 <%for (Product product : listProduct) {%>
@@ -150,6 +166,19 @@
         </form>
 
         <jsp:include page="../../_footer.jsp"></jsp:include>
+        <style>
+            #productAnchor, #userAnchor{
+                width: fit-content;
+                display: inline;
+            }
+            #userDiv, #productDiv{display:none}
+            #userAnchor:hover + #userDiv, #productAnchor:hover + #productDiv{display: block; margin: 0px}
+            #userDiv p, #productDiv p, #productDiv img{ display: inline; }
+            #userNameOption, #productNameOption{display: inline; margin-top: 5px;}
+            #productDiv img{
+                margin-bottom: -8px;
+            }
+        </style>         
             <script>
                 let i = 0,
                         countAddedRow = 0,

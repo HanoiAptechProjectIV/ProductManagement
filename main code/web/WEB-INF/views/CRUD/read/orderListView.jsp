@@ -58,16 +58,34 @@
                         User user = UserDAO.findUser(conn, order.getUserId());
                         Product prod = new Product();
                     %>    
-                    <td><a href="userList?search=<%=user.getName()%>"><%=user.getName()%></a><br></td>
+                    <td>
+                        <div id="userAnchor">
+                            <a href="userList?search=<%=user.getName()%>"><%=user.getName()%></a>
+                        </div>
+                        <div id="userDiv">
+                            <p>Gender: <%=(user.isGender()) ? "Female" : "Male"%></p>
+                            <p>Phone: <%=user.getPhone()%></p>
+                            <p>Email: <%=user.getEmail()%></p>
+                            <p>Address: <%=user.getAddress()%></p>
+                        </div>
+                    </td>
                     <td>${order.amount}</td>
                     <td>
-                    <%
-                        for (OrderDetail detail : listDetail) {
-                            prod = ProductDAO.findProduct(conn, detail.getProductId());
-                            if (prod != null) {
-                    %>
-                        <a href="productList?search=<%=prod.getName()%>"><%=prod.getName()%></a><hr>
-                    <%}}%>
+                        <%
+                            for (OrderDetail detail : listDetail) {
+                                prod = ProductDAO.findProduct(conn, detail.getProductId());
+                                if (prod != null) {
+                        %>
+                        <div id="productAnchor">
+                            <a href="productList?search=<%=prod.getName()%>"><%=prod.getName()%></a>
+                        </div>
+                        <div id="productDiv">
+                            <img src="${pageContext.request.contextPath}/images/product/<%=prod.getImage()%>" 
+                                 height="30" alt="<%=prod.getName()%> image"/>
+                            <p> | Quantity: <%=prod.getQuantity()%></p>
+                        </div>
+                        <hr>
+                        <%}}%>
                     </td>
                     <td>
                     <%
@@ -112,6 +130,24 @@
 
         <jsp:include page="../../_pagination.jsp"></jsp:include>
         <jsp:include page="../../_footer.jsp"></jsp:include>
+        <style>
+            #productAnchor{
+                margin-left: 23px;
+                width: fit-content;
+            }
+            #userAnchor{
+                height: 50px;
+                width: fit-content;
+                padding-top: 23px;
+            }
+            #userDiv, #productDiv{display:none}
+            #userAnchor:hover + #userDiv, #productAnchor:hover + #productDiv{display: block; margin: 0px}
+            #userDiv p, #productDiv p{ height: fit-content; width: fit-content; margin: 0px; padding: 0px}
+            #productDiv img{
+                height: 30px; margin-bottom: -8px;
+            }
+            #productDiv p, #product img{display:inline;}
+        </style>          
 
     </body>
 </html>

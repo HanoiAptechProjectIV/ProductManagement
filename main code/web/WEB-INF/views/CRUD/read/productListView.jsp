@@ -63,10 +63,25 @@
                             Brand bra = BrandDAO.findBrand(conn, product.getBrandId());
                         %>
                     <td>
-                            <a href="categoryList?search=<%=cate.getName()%>" ><%=cate.getName()%></a>
+                        <div id="categoryAnchor">
+                            <a href="categoryList?search=<%=cate.getName()%>"><%=cate.getName()%></a>
+                        </div>
+                            <div id="categoryDiv">
+                                <p><%=cate.getDescription()%></p>
+                                <p><%=(cate.isDisable()) ? "disabled": "displayed"%></p>
+                            </div>
                     </td>
                     <td>
+                        <div id="brandAnchor">
                             <a href="brandList?search=<%=bra.getName()%>"><%=bra.getName()%></a>
+                        </div>
+                            <div id="brandDiv">
+                                <img src="${pageContext.request.contextPath}/images/brand/<%=bra.getLogo()%>"
+                                     alt="<%=bra.getName()%> Logo" height="30"/>
+                                <p><%=bra.getManufacturer()%></p>
+                                <p><%=bra.getDescription()%></p>
+                                <p><%=(bra.isDisable()) ? "disabled": "displayed"%></p>
+                            </div>
                     </td>
                     <td>
                         <c:choose>
@@ -87,5 +102,16 @@
 
         <jsp:include page="../../_pagination.jsp"></jsp:include>
         <jsp:include page="../../_footer.jsp"></jsp:include>
+        <style>
+            #categoryAnchor, #brandAnchor {
+                height: 39px;
+                padding-top: 10px;
+            }
+            #categoryDiv, #brandDiv{display:none}
+            #categoryAnchor:hover + #categoryDiv{display: block}
+            #brandAnchor:hover + #brandDiv{display: block}
+            #categoryDiv p, #brandDiv p{height: fit-content; width: fit-content; margin: 0px}
+            #brandDiv img{height: 30px; margin: 0px;}
+        </style>
     </body>
 </html>

@@ -77,8 +77,14 @@
                     <tr>
                         <td>Category name</td>
                         <td>
-                            <a id="categoryNameAnchor" href="categoryList?search=<%=cate.getName()%>"
-                               ><%=cate.getName()%></a>
+                            <div id="categoryAnchor">
+                                <a id="categoryNameAnchor" href="categoryList?search=<%=cate.getName()%>"
+                                   ><%=cate.getName()%></a>
+                            </div>    
+                            <div id="categoryDiv">
+                                <p> | <%=cate.getDescription()%></p>
+                                <p> | <%=(cate.isDisable()) ? "disabled": "displayed"%></p>
+                            </div>                            
                             <select id="categoryNameOption" name="categoryNameOption"
                                     required onchange="changeCategoryNameAnchor();">
                                 <%for (Category category : listCategory) {%>
@@ -94,8 +100,17 @@
                     <tr>
                         <td>Brand name</td>
                         <td>
-                            <a id="brandNameAnchor" href="brandList?search=<%=bra.getName()%>"
+                            <div id="brandAnchor">
+                                <a id="brandNameAnchor" href="brandList?search=<%=bra.getName()%>"
                                ><%=bra.getName()%></a>
+                            </div>
+                            <div id="brandDiv">
+                                <img src="${pageContext.request.contextPath}/images/brand/<%=bra.getLogo()%>"
+                                     alt="<%=bra.getName()%> Logo" height="30"/>
+                                <p> | <%=bra.getManufacturer()%> | </p>
+                                <p> | <%=bra.getDescription()%></p>
+                                <p> | <%=(bra.isDisable()) ? "disabled": "displayed"%></p>
+                            </div>                            
                             <select id="brandNameOption" name="brandNameOption"
                                     required onchange="changeBrandNameAnchor();">
                                 <%for (Brand brand : listBrand) {%>
@@ -127,10 +142,20 @@
                 </table>
             </form>
         </c:if>
-
         <jsp:include page="../../_footer.jsp"></jsp:include>
+        <style>
+            #categoryAnchor, #brandAnchor {
+                width: fit-content;
+            }
+            #categoryDiv, #brandDiv{display:none}
+            #categoryAnchor:hover + #categoryDiv, #brandAnchor:hover + #brandDiv{display: inline}
+            #categoryDiv p, #brandDiv p, #brandDiv img, #brandAnchor, #categoryAnchor{ display: inline; }
+            #categoryNameOption, #brandNameOption{display: block; margin-top: 5px;}
+            #brandDiv img{
+                margin-bottom: -9px;
+            }
+        </style>        
             <script>
-
                 var disable = document.getElementById("disableOption"),
                         disableTxt = document.getElementById("disableTxt");
                 function selectedDisableOption() {
