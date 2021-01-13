@@ -66,8 +66,8 @@ public class ProductDAO {
         return list;
     }
     
-    public static List<Product> queryProduct(Connection conn, int offset, int total) throws SQLException {
-        String sql = "Select * from Product order by name offset "+offset+" rows fetch next "+total+" rows only";
+    public static List<Product> queryProduct(Connection conn, int offset, int total, String sortBy, String ordinal) throws SQLException {
+        String sql = "Select * from Product order by "+sortBy+" "+ordinal+" offset "+offset+" rows fetch next "+total+" rows only";
  
         PreparedStatement pstm = conn.prepareStatement(sql);
  

@@ -73,7 +73,7 @@
 //        request.setAttribute("orderDetail", orderDetail);
 //
 //        RequestDispatcher dispatcher = request.getServletContext()
-//                .getRequestDispatcher("/WEB-INF/views/CRUD/update/editOrderView.jsp");
+//                .getRequestDispatcher("/WEB-INF/adminViews/CRUD/update/editOrderView.jsp");
 //        dispatcher.forward(request, response);
 //
 //    }
@@ -113,7 +113,7 @@
 //        // Nếu có lỗi forward sang trang edit.
 //        if (errorString != null) {
 //            RequestDispatcher dispatcher = request.getServletContext()
-//                    .getRequestDispatcher("/WEB-INF/views/CRUD/update/editOrderView.jsp");
+//                    .getRequestDispatcher("/WEB-INF/adminViews/CRUD/update/editOrderView.jsp");
 //            dispatcher.forward(request, response);
 //        } // Nếu mọi thứ tốt đẹp.
 //        // Redirect sang trang danh sách sản phẩm.

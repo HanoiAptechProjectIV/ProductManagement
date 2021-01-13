@@ -36,8 +36,8 @@ public class OrderDAO {
         return row;
     }
 
-    public static List<Order> queryOrder(Connection conn, int offset, int total) throws SQLException {
-        String sql = "Select * from [Order] order by [user_id] ASC, id ASC offset " + offset + " rows fetch next " + total + " rows only";
+    public static List<Order> queryOrder(Connection conn, int offset, int total, String sortBy, String ordinal) throws SQLException {
+        String sql = "Select * from [Order] order by "+sortBy+" "+ordinal+" offset " + offset + " rows fetch next " + total + " rows only";
 
         PreparedStatement pstm = conn.prepareStatement(sql);
 

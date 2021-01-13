@@ -30,8 +30,8 @@ public class UserDAO {
         return row;
     }
     
-    public static List<User> queryUser(Connection conn, int offset, int total) throws SQLException {
-        String sql = "Select * from [User] order by name offset "+offset+" rows fetch next "+total+" rows only";
+    public static List<User> queryUser(Connection conn, int offset, int total, String sortBy, String ordinal) throws SQLException {
+        String sql = "Select * from [User] order by "+sortBy+" "+ordinal+" offset "+offset+" rows fetch next "+total+" rows only";
  
         PreparedStatement pstm = conn.prepareStatement(sql);
  

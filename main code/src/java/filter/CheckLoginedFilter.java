@@ -38,14 +38,14 @@ public class CheckLoginedFilter implements Filter {
         HttpSession session = req.getSession();
 
         String servletPath = req.getServletPath();
-        if (!servletPath.equals("/login") && !servletPath.equals("/logout")) {
+        if (!servletPath.equals("/adminLogin") && !servletPath.equals("/adminLogout")) {
             // Kiểm tra người dùng đã đăng nhập (login) chưa.
             Admin adminLogined = MyUtils.getLoginedAdmin(session);
             String loginedAdmin = MyUtils.getAdminCookie(req);
             // Nếu chưa đăng nhập (login).
             if (adminLogined == null && loginedAdmin == null) {
                 // Redirect (Chuyển hướng) tới trang login.
-                res.sendRedirect(req.getContextPath() + "/login");
+                res.sendRedirect(req.getContextPath() + "/adminLogin");
                 return;
             }
         }

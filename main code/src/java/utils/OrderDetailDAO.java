@@ -81,9 +81,9 @@ public class OrderDetailDAO {
         return null;
     }
     
-    public static List<OrderDetail> findOrderDetailList(Connection conn, int orderId) throws SQLException {
+    public static List<OrderDetail> findOrderDetailList(Connection conn, int orderId, String sortBy, String ordinal) throws SQLException {
         String sql = "Select * from OrderDetail a where a.order_id=? "
-                + "order by id ASC, purchased_quantity ASC, [status] ASC";
+                + "order by "+sortBy+" "+ordinal;
  
         PreparedStatement pstm = conn.prepareStatement(sql);
         pstm.setInt(1, orderId);

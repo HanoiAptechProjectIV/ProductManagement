@@ -53,8 +53,8 @@ public class CategoryDAO {
         return list;
     } 
     
-    public static List<Category> queryCategory(Connection conn, int offset, int total) throws SQLException {
-        String sql = "Select * from Category order by name offset "+offset+" rows fetch next "+total+" rows only";
+    public static List<Category> queryCategory(Connection conn, int offset, int total, String sortBy, String ordinal) throws SQLException {
+        String sql = "Select * from Category order by "+sortBy+" "+ordinal+" offset "+offset+" rows fetch next "+total+" rows only";
  
         PreparedStatement pstm = conn.prepareStatement(sql);
  
