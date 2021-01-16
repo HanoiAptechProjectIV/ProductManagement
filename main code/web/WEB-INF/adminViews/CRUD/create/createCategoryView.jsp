@@ -14,33 +14,46 @@
       <meta charset="UTF-8">
       <title>Create Category</title>
    </head>
+
+   <!-- Latest compiled and minified CSS -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+      <!-- jQuery library -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+      <!-- Popper JS -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+      <!-- Latest compiled JavaScript -->
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
    <body>
     
       <jsp:include page="../../_header.jsp"></jsp:include>
       <jsp:include page="../../_menu.jsp"></jsp:include>
        
-      <h3>Create Category</h3>
+      <h3 style="text-align: center; margin-top: 40px">Create Category</h3>
        
       <p style="color: red;">${errorString}</p>
-       
+
+      <div class="container">
       <form method="POST" action="${pageContext.request.contextPath}/createCategory">
-         <table border="0">
-            <tr>
-               <td>Name</td>
-               <td><input type="text" required name="name" value="${category.name}" /></td>
-            </tr>
-            <tr>
-               <td>Description</td>
-               <td><input type="text" name="description" value="${category.description}" /></td>
-            </tr>
-            <tr>
-               <td colspan="2">                   
-                   <input type="submit" value="Submit" />
-                   <a href="categoryList">Cancel</a>
-               </td>
-            </tr>
-         </table>
+         
+         <div class="form-group w-50">
+            <label for="">Name</label>
+            <input type="text" required name="name" value="${category.name}" class="form-control" />
+         </div>
+         <div class="form-group w-50">
+            <label>Description</label>
+            <input type="text" name="description" value="${category.description}" class="form-control" />
+         </div>
+         <div>                 
+            <button type="submit" class="btn btn-outline-success">Submit</button>
+            <a href="categoryList" class="btn btn-outline-warning">Cancel</a>
+         </div>
+      
       </form>
+      </div>
        
       <jsp:include page="../../_footer.jsp"></jsp:include>
        

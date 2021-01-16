@@ -12,6 +12,19 @@
     <head>
         <meta charset="UTF-8">
         <title>Edit Brand</title>
+        
+        <!-- Latest compiled and minified CSS -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+      <!-- jQuery library -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+      <!-- Popper JS -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+      <!-- Latest compiled JavaScript -->
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
     </head>
     <body onload="selectedDisableOption();">
 
@@ -22,51 +35,52 @@
 
             <p style="color: red;">${errorString}</p>
 
-        <c:if test="${brand != null}">
+        <div class="container">
+            <c:if test="${brand != null}">
             <form method="POST" action="${pageContext.request.contextPath}/editBrand" enctype="multipart/form-data">
                 <input type="hidden" name="id" value="${brand.id}" />
-                <table border="0">
-                    <tr>
-                        <td>Name</td>
-                        <td><input type="text" required name="name" value="${brand.name}" /></td>
-                    </tr>
-                    <tr>
-                        <td>Old logo</td>
-                        <td><img src="${pageContext.request.contextPath}/images/brand/${brand.logo}"
-                                 height="100" alt="${brand.name} logo"/></td>
-                    <input type="hidden" name="oldLogo" value="${brand.logo}"/>
-                    </tr>
-                    <tr>
-                        <td>New logo</td>
-                        <td><input type="file" name="logo" value="" /></td>
-                    </tr>            
-                    <tr>
-                        <td>Manufacturer</td>
-                        <td><input type="text" name="manufacturer" value="${brand.manufacturer}" /></td>
-                    </tr>
-                    <tr>
-                        <td>Description</td>
-                        <td><input type="text" name="description" value="${brand.description}" /></td>
-                    </tr>
-                    <tr>
-                        <td>Disable</td>
-                        <td><input type="text" id="disableTxt" readonly name="disable" value="${brand.disable}" />
-                            <select id="disableOption" name="disableOption" 
-                                    onchange="changeDisableTxt();">
-                                <option value="true">True</option>  
-                                <option value="false">False</option>  
-                            </select>                
-                        </td>
-                    </tr>            
-                    <tr>
-                        <td colspan = "2">
-                            <input type="submit" value="Submit" />
-                            <a href="${pageContext.request.contextPath}/brandList">Cancel</a>
-                        </td>
-                    </tr>
-                </table>
+                    <div class="form-group w-50">
+                        <label>Name</label>
+                        <input type="text" required name="name" value="${brand.name}" class="form-control"/>
+                    </div>
+                    <div class="form-group w-50">
+                        <label>Old logo</label>
+                        <img src="${pageContext.request.contextPath}/images/brand/${brand.logo}"
+                                 height="100" alt="${brand.name} logo"/>
+                    <input type="hidden" name="oldLogo" value="${brand.logo}" class="form-control"/>
+                    </div>
+                    <div class="form-group w-50">
+                        <label>New logo</label>
+                        <input type="file" name="logo" value="" class="form-control"/>
+                    </div>            
+                    <div class="form-group w-50">
+                        <label>Manufacturer</label>
+                        <input type="text" name="manufacturer" value="${brand.manufacturer}" class="form-control"/>
+                    </div>
+                    <div class="form-group w-50">
+                        <label>Description</label>
+                        <input type="text" name="description" value="${brand.description}"class="form-control" />
+                    </div>
+                    <div class="form-group w-50">
+                  <label>Disable</label>
+                  <div class="col-md-12"> 
+                     <div class="row">
+                        <input type="text" id="disableTxt" readonly name="disable" value="${brand.disable}" class="form-control col-md-6" />
+                        <select id="disableOption" name="disableOption" 
+                              onchange="changeDisableTxt();" class="form-control col-md-6">
+                           <option value="true">True</option>  
+                           <option value="false">False</option>  
+                     </select> 
+                     </div>
+                  </div>
+               </div>         
+                    <div>
+                        <button class="btn btn-outline-success" type="submit">Submit</button>
+                        <a href="${pageContext.request.contextPath}/brandList" class="btn btn-outline-warning">Cancel</a>
+                    </div>
             </form>
         </c:if>
+        </div>
 
         <jsp:include page="../../_footer.jsp"></jsp:include>
             <script>
