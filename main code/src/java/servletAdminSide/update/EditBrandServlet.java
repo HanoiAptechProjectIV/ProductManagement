@@ -26,7 +26,7 @@ import utils.BrandDAO;
 import utils.MyUtils;
 import utils.UploadFile;
 
-@WebServlet(urlPatterns = {"/editBrand"})
+@WebServlet(urlPatterns = {"/admin/editBrand"})
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024 * 10,
         maxFileSize = 1024 * 1024 * 50,
@@ -117,7 +117,7 @@ public class EditBrandServlet extends HttpServlet {
             } // Nếu mọi thứ tốt đẹp.
             // Redirect sang trang danh sách sản phẩm.
             else {
-                response.sendRedirect(request.getContextPath() + "/brandList?search="+name);
+                response.sendRedirect(request.getContextPath() + "/admin/brandList?search="+name);
             }
         }
     }

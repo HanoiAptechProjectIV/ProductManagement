@@ -24,7 +24,7 @@ import beans.Category;
 import utils.CategoryDAO;
 import utils.MyUtils;
 
-@WebServlet(urlPatterns = {"/editCategory"})
+@WebServlet(urlPatterns = {"/admin/editCategory"})
 public class EditCategoryServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -103,7 +103,7 @@ public class EditCategoryServlet extends HttpServlet {
             } // Nếu mọi thứ tốt đẹp.
             // Redirect sang trang danh sách sản phẩm.
             else {
-                response.sendRedirect(request.getContextPath() + "/categoryList?search="+name);
+                response.sendRedirect(request.getContextPath() + "/admin/categoryList?search="+name);
             }
         }
     }

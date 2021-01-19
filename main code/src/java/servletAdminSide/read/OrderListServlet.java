@@ -28,7 +28,7 @@ import utils.OrderDAO;
 import utils.MyUtils;
 import utils.UserDAO;
 
-@WebServlet(urlPatterns = {"/orderList"})
+@WebServlet(urlPatterns = {"/admin/orderList"})
 public class OrderListServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;

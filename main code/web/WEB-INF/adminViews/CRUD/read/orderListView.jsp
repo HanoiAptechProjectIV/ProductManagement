@@ -23,82 +23,67 @@
     <head>
         <meta charset="UTF-8">
         <title>Order List</title>
-
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
-        <!-- jQuery library -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-        <!-- Popper JS -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-
-        <!-- Latest compiled JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
     </head>
     <body>
 
-        <jsp:include page="../../_header.jsp"></jsp:include>
-        <jsp:include page="../../_menu.jsp"></jsp:include>
+        <jsp:include page="../../_header.jsp"/>
+        <jsp:include page="../../_menu.jsp"/>
 
-            <h3 style="text-align: center; margin-top: 40px">Order List Page ${page}</h3>
+            <h3>Order List Page ${page}</h3>
 
         <p style="color: red;">${errorString}</p>
 
-        <jsp:include page="../../_search.jsp"></jsp:include>
-            
-        <div class="container">
-            <table class="table table-bordered table-striped table-hover" border="1" cellpadding="5" cellspacing="1" >
-                <tr class="table-info">
+        <jsp:include page="../../_search.jsp"/>
+            <table border="1" cellpadding="5" cellspacing="1" >
+                <tr>
                     <c:set var="pageNum" value="${(page != null) ? page : 1}"/>
                     <th>Id
-                        <a href="${pageContext.request.contextPath}/orderList?page=${pageNum}&sortBy=idASC"
+                        <a href="${pageContext.request.contextPath}/admin/orderList?page=${pageNum}&sortBy=idASC"
                            ><i class="fa fa-angle-up"></i></a>
-                        <a href="${pageContext.request.contextPath}/orderList?page=${pageNum}&sortBy=idDESC"
+                        <a href="${pageContext.request.contextPath}/admin/orderList?page=${pageNum}&sortBy=idDESC"
                            ><i class="fa fa-angle-down"></i></a>
                     </th>
                     <th>User name
-                        <a href="${pageContext.request.contextPath}/orderList?page=${pageNum}&sortBy=user_idASC"
+                        <a href="${pageContext.request.contextPath}/admin/orderList?page=${pageNum}&sortBy=user_idASC"
                         ><i class="fa fa-angle-up"></i></a>
-                        <a href="${pageContext.request.contextPath}/orderList?page=${pageNum}&sortBy=user_idDESC"
+                        <a href="${pageContext.request.contextPath}/admin/orderList?page=${pageNum}&sortBy=user_idDESC"
                         ><i class="fa fa-angle-down"></i></a>   
                     </th>
                     <th>Amount
-                        <a href="${pageContext.request.contextPath}/orderList?page=${pageNum}&sortBy=amountASC"
+                        <a href="${pageContext.request.contextPath}/admin/orderList?page=${pageNum}&sortBy=amountASC"
                         ><i class="fa fa-angle-up"></i></a>
-                        <a href="${pageContext.request.contextPath}/orderList?page=${pageNum}&sortBy=amountDESC"
+                        <a href="${pageContext.request.contextPath}/admin/orderList?page=${pageNum}&sortBy=amountDESC"
                         ><i class="fa fa-angle-down"></i></a>   
                     </th>
                     <th>Product name
-                        <a href="${pageContext.request.contextPath}/orderList?page=${pageNum}&sortBy=product_idASC"
+                        <a href="${pageContext.request.contextPath}/admin/orderList?page=${pageNum}&sortBy=product_idASC"
                         ><i class="fa fa-angle-up"></i></a>
-                        <a href="${pageContext.request.contextPath}/orderList?page=${pageNum}&sortBy=product_idDESC"
+                        <a href="${pageContext.request.contextPath}/admin/orderList?page=${pageNum}&sortBy=product_idDESC"
                         ><i class="fa fa-angle-down"></i></a>   
                     </th>
                     <th>Price</th>
                     <th>Purchase quantity
-                        <a href="${pageContext.request.contextPath}/orderList?page=${pageNum}&sortBy=purchased_quantityASC"
+                        <a href="${pageContext.request.contextPath}/admin/orderList?page=${pageNum}&sortBy=purchased_quantityASC"
                         ><i class="fa fa-angle-up"></i></a>
-                        <a href="${pageContext.request.contextPath}/orderList?page=${pageNum}&sortBy=purchased_quantityDESC"
+                        <a href="${pageContext.request.contextPath}/admin/orderList?page=${pageNum}&sortBy=purchased_quantityDESC"
                         ><i class="fa fa-angle-down"></i></a>   
                     </th>
                     <th>Status
-                        <a href="${pageContext.request.contextPath}/orderList?page=${pageNum}&sortBy=statusASC"
+                        <a href="${pageContext.request.contextPath}/admin/orderList?page=${pageNum}&sortBy=statusASC"
                         ><i class="fa fa-angle-up"></i></a>
-                        <a href="${pageContext.request.contextPath}/orderList?page=${pageNum}&sortBy=statusDESC"
+                        <a href="${pageContext.request.contextPath}/admin/orderList?page=${pageNum}&sortBy=statusDESC"
                         ><i class="fa fa-angle-down"></i></a>   
                     </th>
                     <th>Created time
-                        <a href="${pageContext.request.contextPath}/orderList?page=${pageNum}&sortBy=created_timeASC"
+                        <a href="${pageContext.request.contextPath}/admin/orderList?page=${pageNum}&sortBy=created_timeASC"
                         ><i class="fa fa-angle-up"></i></a>
-                        <a href="${pageContext.request.contextPath}/orderList?page=${pageNum}&sortBy=created_timeDESC"
+                        <a href="${pageContext.request.contextPath}/admin/orderList?page=${pageNum}&sortBy=created_timeDESC"
                         ><i class="fa fa-angle-down"></i></a>   
                     </th>
                     <th>Payment time
-                        <a href="${pageContext.request.contextPath}/orderList?page=${pageNum}&sortBy=payment_timeASC"
+                        <a href="${pageContext.request.contextPath}/admin/orderList?page=${pageNum}&sortBy=payment_timeASC"
                         ><i class="fa fa-angle-up"></i></a>
-                        <a href="${pageContext.request.contextPath}/orderList?page=${pageNum}&sortBy=payment_timeDESC"
+                        <a href="${pageContext.request.contextPath}/admin/orderList?page=${pageNum}&sortBy=payment_timeDESC"
                         ><i class="fa fa-angle-down"></i></a>   
                     </th>
                     <th>Edit</th>
@@ -196,10 +181,9 @@
             </c:forEach>
             </c:if>
         </table>
-        </div>
 
-        <jsp:include page="../../_pagination.jsp"></jsp:include>
-        <jsp:include page="../../_footer.jsp"></jsp:include>
+        <jsp:include page="../../_pagination.jsp"/>
+        <jsp:include page="../../_footer.jsp"/>
         <style>
             #productAnchor{
                 margin-left: 23px;

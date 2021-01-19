@@ -33,7 +33,7 @@ import utils.ProductDAO;
 import utils.MyUtils;
 import utils.UploadFile;
 
-@WebServlet(urlPatterns = {"/editProduct"})
+@WebServlet(urlPatterns = {"/admin/editProduct"})
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024 * 10,
         maxFileSize = 1024 * 1024 * 50,
@@ -142,7 +142,7 @@ public class EditProductServlet extends HttpServlet {
             } // Nếu mọi thứ tốt đẹp.
             // Redirect sang trang danh sách sản phẩm.
             else {
-                response.sendRedirect(request.getContextPath() + "/productList?search=" + name);
+                response.sendRedirect(request.getContextPath() + "/admin/productList?search=" + name);
             }
         }
     }

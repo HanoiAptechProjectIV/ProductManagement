@@ -1,0 +1,26 @@
+/* logo */
+.logo {
+  display: flex;
+  height: 70px;
+}
+
+.site_logo {
+  height: 60px;
+  width: auto;
+}
+
+.site_text {
+  font-size: 32px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  margin-top: 24px;
+  text-decoration: underline overline;
+  text-transform: uppercase;
+}
+
+/* .main-menu {
+  margin-bottom: 50px;
+} */
+
+.slider-image {
+  max-height: 500px;
+}

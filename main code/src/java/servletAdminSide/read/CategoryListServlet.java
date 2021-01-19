@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import utils.MyUtils;
 import utils.CategoryDAO;
 
-@WebServlet(urlPatterns = {"/categoryList"})
+@WebServlet(urlPatterns = {"/admin/categoryList"})
 public class CategoryListServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;

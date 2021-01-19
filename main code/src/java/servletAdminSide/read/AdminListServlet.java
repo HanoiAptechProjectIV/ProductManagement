@@ -25,7 +25,7 @@ import beans.Admin;
 import utils.AdminDAO;
 import utils.MyUtils;
 
-@WebServlet(urlPatterns = {"/adminList"})
+@WebServlet(urlPatterns = {"/admin/adminList"})
 public class AdminListServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;

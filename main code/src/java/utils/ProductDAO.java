@@ -66,6 +66,76 @@ public class ProductDAO {
         return list;
     }
     
+    public static List<Product> findProductByBrand(Connection conn, int brandId) throws SQLException {
+        String sql = "Select * from Product where brand_id =?";
+ 
+        PreparedStatement pstm = conn.prepareStatement(sql);
+        pstm.setInt(1, brandId);
+        
+        ResultSet rs = pstm.executeQuery();
+        List<Product> list = new ArrayList<Product>();
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String name = rs.getString("name");
+            String description = rs.getString("description");
+            int price = rs.getInt("price");
+            int quantity = rs.getInt("quantity");
+            String image = rs.getString("image");
+            LocalDate dateAdded = rs.getDate("date_added").toLocalDate();
+            int categoryId = rs.getInt("category_id");
+            boolean disable = rs.getBoolean("disable");
+            
+            Product product = new Product();
+            product.setId(id);
+            product.setName(name);
+            product.setDescription(description);
+            product.setPrice(price);
+            product.setQuantity(quantity);
+            product.setImage(image);
+            product.setDateAdded(dateAdded);
+            product.setCategoryId(categoryId);
+            product.setBrandId(brandId);
+            product.setDisable(disable);
+            list.add(product);
+        }
+        return list;
+    } 
+    
+    public static List<Product> findProductByCategory(Connection conn, int categoryId) throws SQLException {
+        String sql = "Select * from Product where category_id =?";
+ 
+        PreparedStatement pstm = conn.prepareStatement(sql);
+        pstm.setInt(1, categoryId);
+        
+        ResultSet rs = pstm.executeQuery();
+        List<Product> list = new ArrayList<Product>();
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String name = rs.getString("name");
+            String description = rs.getString("description");
+            int price = rs.getInt("price");
+            int quantity = rs.getInt("quantity");
+            String image = rs.getString("image");
+            LocalDate dateAdded = rs.getDate("date_added").toLocalDate();
+            int brandId = rs.getInt("brand_id");
+            boolean disable = rs.getBoolean("disable");
+            
+            Product product = new Product();
+            product.setId(id);
+            product.setName(name);
+            product.setDescription(description);
+            product.setPrice(price);
+            product.setQuantity(quantity);
+            product.setImage(image);
+            product.setDateAdded(dateAdded);
+            product.setCategoryId(categoryId);
+            product.setBrandId(brandId);
+            product.setDisable(disable);
+            list.add(product);
+        }
+        return list;
+    } 
+    
     public static List<Product> queryProduct(Connection conn, int offset, int total, String sortBy, String ordinal) throws SQLException {
         String sql = "Select * from Product order by "+sortBy+" "+ordinal+" offset "+offset+" rows fetch next "+total+" rows only";
  

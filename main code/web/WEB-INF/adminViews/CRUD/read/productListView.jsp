@@ -19,83 +19,69 @@
     <head>
         <meta charset="UTF-8">
         <title>Product List</title>
-
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
-        <!-- jQuery library -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-        <!-- Popper JS -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-
-        <!-- Latest compiled JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
     </head>
     <body>
 
-        <jsp:include page="../../_header.jsp"></jsp:include>
-        <jsp:include page="../../_menu.jsp"></jsp:include>
+        <jsp:include page="../../_header.jsp"/>
+        <jsp:include page="../../_menu.jsp"/>
 
-            <h3 style="text-align: center; margin-top: 40px">Product List Page ${page}</h3>
+            <h3>Product List Page ${page}</h3>
 
         <p style="color: red;">${errorString}</p>
 
-        <jsp:include page="../../_search.jsp"></jsp:include>
+        <jsp:include page="../../_search.jsp"/>
 
-            <div class="container">
-                <table border="1" cellpadding="5" cellspacing="1" class="table table-bordered table-striped table-hover">
-                <tr class="table-info">
+            <table border="1" cellpadding="5" cellspacing="1" >
+                <tr>
                 <c:set var="pageNum" value="${(page != null) ? page : 1}"/>
                 <th>Id
-                    <a href="${pageContext.request.contextPath}/productList?page=${pageNum}&sortBy=idASC"
+                    <a href="${pageContext.request.contextPath}/admin/productList?page=${pageNum}&sortBy=idASC"
                        ><i class="fa fa-angle-up"></i></a>
-                    <a href="${pageContext.request.contextPath}/productList?page=${pageNum}&sortBy=idDESC"
+                    <a href="${pageContext.request.contextPath}/admin/productList?page=${pageNum}&sortBy=idDESC"
                        ><i class="fa fa-angle-down"></i></a>
                 </th>
                 <th>Name
-                    <a href="${pageContext.request.contextPath}/productList?page=${pageNum}&sortBy=nameASC"
+                    <a href="${pageContext.request.contextPath}/admin/productList?page=${pageNum}&sortBy=nameASC"
                        ><i class="fa fa-angle-up"></i></a>
-                    <a href="${pageContext.request.contextPath}/productList?page=${pageNum}&sortBy=nameDESC"
+                    <a href="${pageContext.request.contextPath}/admin/productList?page=${pageNum}&sortBy=nameDESC"
                        ><i class="fa fa-angle-down"></i></a>   
                 </th>
                 <th>Price
-                    <a href="${pageContext.request.contextPath}/productList?page=${pageNum}&sortBy=priceASC"
+                    <a href="${pageContext.request.contextPath}/admin/productList?page=${pageNum}&sortBy=priceASC"
                        ><i class="fa fa-angle-up"></i></a>
-                    <a href="${pageContext.request.contextPath}/productList?page=${pageNum}&sortBy=priceDESC"
+                    <a href="${pageContext.request.contextPath}/admin/productList?page=${pageNum}&sortBy=priceDESC"
                        ><i class="fa fa-angle-down"></i></a>   
                 </th>
                 <th>Image</th>
                 <th>Quantity
-                    <a href="${pageContext.request.contextPath}/productList?page=${pageNum}&sortBy=quantityASC"
+                    <a href="${pageContext.request.contextPath}/admin/productList?page=${pageNum}&sortBy=quantityASC"
                        ><i class="fa fa-angle-up"></i></a>
-                    <a href="${pageContext.request.contextPath}/productList?page=${pageNum}&sortBy=quantityDESC"
+                    <a href="${pageContext.request.contextPath}/admin/productList?page=${pageNum}&sortBy=quantityDESC"
                        ><i class="fa fa-angle-down"></i></a>   
                 </th>
                 <th>Description</th>
                 <th>Date added
-                    <a href="${pageContext.request.contextPath}/productList?page=${pageNum}&sortBy=date_addedASC"
+                    <a href="${pageContext.request.contextPath}/admin/productList?page=${pageNum}&sortBy=date_addedASC"
                        ><i class="fa fa-angle-up"></i></a>
-                    <a href="${pageContext.request.contextPath}/productList?page=${pageNum}&sortBy=date_addedDESC"
+                    <a href="${pageContext.request.contextPath}/admin/productList?page=${pageNum}&sortBy=date_addedDESC"
                        ><i class="fa fa-angle-down"></i></a>   
                 </th>
                 <th>Category name
-                    <a href="${pageContext.request.contextPath}/productList?page=${pageNum}&sortBy=category_idASC"
+                    <a href="${pageContext.request.contextPath}/admin/productList?page=${pageNum}&sortBy=category_idASC"
                        ><i class="fa fa-angle-up"></i></a>
-                    <a href="${pageContext.request.contextPath}/productList?page=${pageNum}&sortBy=category_idDESC"
+                    <a href="${pageContext.request.contextPath}/admin/productList?page=${pageNum}&sortBy=category_idDESC"
                        ><i class="fa fa-angle-down"></i></a>   
                 </th>
                 <th>Brand name
-                    <a href="${pageContext.request.contextPath}/productList?page=${pageNum}&sortBy=brand_idASC"
+                    <a href="${pageContext.request.contextPath}/admin/productList?page=${pageNum}&sortBy=brand_idASC"
                        ><i class="fa fa-angle-up"></i></a>
-                    <a href="${pageContext.request.contextPath}/productList?page=${pageNum}&sortBy=brand_idDESC"
+                    <a href="${pageContext.request.contextPath}/admin/productList?page=${pageNum}&sortBy=brand_idDESC"
                        ><i class="fa fa-angle-down"></i></a>   
                 </th>
                 <th>Display (or disable)
-                    <a href="${pageContext.request.contextPath}/productList?page=${pageNum}&sortBy=disableASC"
+                    <a href="${pageContext.request.contextPath}/admin/productList?page=${pageNum}&sortBy=disableASC"
                        ><i class="fa fa-angle-up"></i></a>
-                    <a href="${pageContext.request.contextPath}/productList?page=${pageNum}&sortBy=disableDESC"
+                    <a href="${pageContext.request.contextPath}/admin/productList?page=${pageNum}&sortBy=disableDESC"
                        ><i class="fa fa-angle-down"></i></a>   
                 </th>
                 <th>Edit</th>
@@ -154,10 +140,9 @@
                 </c:forEach>
             </c:if>
         </table>
-            </div>
 
-        <jsp:include page="../../_pagination.jsp"></jsp:include>
-        <jsp:include page="../../_footer.jsp"></jsp:include>
+        <jsp:include page="../../_pagination.jsp"/>
+        <jsp:include page="../../_footer.jsp"/>
         <style>
             #categoryAnchor, #brandAnchor {
                 height: 39px;

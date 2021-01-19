@@ -21,12 +21,12 @@ import beans.Admin;
 import utils.AdminDAO;
 import utils.MyUtils;
 
-@WebServlet(urlPatterns = {"/adminLogin"})
-public class LoginServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/admin/login"})
+public class AdminLoginServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    public LoginServlet() {
+    public AdminLoginServlet() {
         super();
     }
 
@@ -34,18 +34,6 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        // Kiểm tra người dùng đã đăng nhập (login) chưa.
-        String loginedAdmin = MyUtils.getAdminCookie(request);
-        HttpSession session = request.getSession();
-        Admin adminLogined = MyUtils.getLoginedAdmin(session);
-
-        // Nếu đã đăng nhập (login).
-        if (loginedAdmin != null || adminLogined != null) {
-            // Redirect (Chuyển hướng) tới trang login.
-            response.sendRedirect(request.getContextPath() + "/adminHome");
-            return;
-        }
         // Forward tới trang /WEB-INF/adminViews/loginView.jsp
         // (Người dùng không thể truy cập trực tiếp
         // vào các trang JSP đặt trong thư mục WEB-INF).
@@ -121,7 +109,7 @@ public class LoginServlet extends HttpServlet {
             }
 
             // Redirect (Chuyển hướng) sang trang /adminInfo.
-            response.sendRedirect(request.getContextPath() + "/adminHome");
+            response.sendRedirect(request.getContextPath() + "/admin/home");
         }
     }
 

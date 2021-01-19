@@ -30,7 +30,7 @@ import utils.CategoryDAO;
 import utils.ProductDAO;
 import utils.MyUtils;
 
-@WebServlet(urlPatterns = {"/productList"})
+@WebServlet(urlPatterns = {"/admin/productList"})
 public class ProductListServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;

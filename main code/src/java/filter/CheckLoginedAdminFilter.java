@@ -23,8 +23,8 @@ import utils.MyUtils;
  *
  * @author Hung
  */
-@WebFilter(filterName = "checkLoginedFilter", urlPatterns = {"/*"})
-public class CheckLoginedFilter implements Filter {
+@WebFilter(filterName = "checkLoginedAdminFilter", urlPatterns = {"/admin/*"})
+public class CheckLoginedAdminFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -38,14 +38,19 @@ public class CheckLoginedFilter implements Filter {
         HttpSession session = req.getSession();
 
         String servletPath = req.getServletPath();
-        if (!servletPath.equals("/adminLogin") && !servletPath.equals("/adminLogout")) {
+        if (!servletPath.equals("/admin/login") 
+                && !servletPath.equals("/admin/logout")
+                && !servletPath.contains("resources")
+                && !servletPath.contains("images")) {    
             // Kiểm tra người dùng đã đăng nhập (login) chưa.
+//            String checked = (String)session.getAttribute("COOKIE_CHECKED");
+//            if(checked== null || !checked.equals("CHECKED")){
             Admin adminLogined = MyUtils.getLoginedAdmin(session);
             String loginedAdmin = MyUtils.getAdminCookie(req);
             // Nếu chưa đăng nhập (login).
             if (adminLogined == null && loginedAdmin == null) {
                 // Redirect (Chuyển hướng) tới trang login.
-                res.sendRedirect(req.getContextPath() + "/adminLogin");
+                res.sendRedirect(req.getContextPath() + "/admin/login");
                 return;
             }
         }

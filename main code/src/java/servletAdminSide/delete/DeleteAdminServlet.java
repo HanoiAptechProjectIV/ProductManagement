@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import utils.AdminDAO;
 import utils.MyUtils;
  
-@WebServlet(urlPatterns = { "/deleteAdmin" })
+@WebServlet(urlPatterns = {"/admin/deleteAdmin" })
 public class DeleteAdminServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
  
@@ -59,7 +59,7 @@ public class DeleteAdminServlet extends HttpServlet {
         // Nếu mọi thứ tốt đẹp.
         // Redirect (chuyển hướng) sang trang danh sách sản phẩm.
         else {
-            response.sendRedirect(request.getContextPath() + "/adminList");
+            response.sendRedirect(request.getContextPath() + "/admin/adminList");
         }
  
     }

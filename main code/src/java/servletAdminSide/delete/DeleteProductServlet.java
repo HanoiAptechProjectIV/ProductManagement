@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import utils.ProductDAO;
 import utils.MyUtils;
  
-@WebServlet(urlPatterns = { "/deleteProduct" })
+@WebServlet(urlPatterns = {"/admin/deleteProduct" })
 public class DeleteProductServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
  
@@ -59,7 +59,7 @@ public class DeleteProductServlet extends HttpServlet {
         // Nếu mọi thứ tốt đẹp.
         // Redirect (chuyển hướng) sang trang danh sách sản phẩm.
         else {
-            response.sendRedirect(request.getContextPath() + "/productList");
+            response.sendRedirect(request.getContextPath() + "/admin/productList");
         }
  
     }

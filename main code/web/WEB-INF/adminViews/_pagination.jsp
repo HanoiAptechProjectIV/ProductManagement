@@ -10,25 +10,24 @@
 
 <c:set value="${requestScope['javax.servlet.forward.servlet_path']}" var="servletPath"/>
 <%
-    String servletPath =pageContext.getAttribute("servletPath").toString().replace("/", "");
+    String servletPath =pageContext.getAttribute("servletPath").toString();
     Object pageObj = request.getAttribute("page");
 %>
 <c:set var="sortByObj" value="${(sortBy != null) ? sortBy : 'nameASC'}"/>
-<div class="container" style="text-align: center; margin-top: 100px;">
-    <c:forEach begin="1" end="${pageQuantity}" var="i">
+<c:forEach begin="1" end="${pageQuantity}" var="i">
     <c:choose>
         <c:when test="${i == 1 && page != i}">
-            <a href="<%=servletPath%>?page=1&sortBy=${sortByObj}"
+            <a href="${pageContext.request.contextPath}<%=servletPath%>?page=1&sortBy=${sortByObj}"
                style="display: inline-block">First</a>
         </c:when> 
 
         <c:when test="${i == pageQuantity && page != i}">
-            <a href="<%=servletPath%>?page=${pageQuantity}&sortBy=${sortByObj}"
+            <a href="${pageContext.request.contextPath}<%=servletPath%>?page=${pageQuantity}&sortBy=${sortByObj}"
                style="display: inline-block">Last</a>
         </c:when> 
 
         <c:when test="${page < (i-1) || page > (i+1)}">
-            <a href="<%=servletPath%>?page=${i}&sortBy=${sortByObj}"
+            <a href="${pageContext.request.contextPath}<%=servletPath%>?page=${i}&sortBy=${sortByObj}"
                class="displayNone" style="display: none;">${i}</a>
         </c:when>
 
@@ -38,12 +37,12 @@
                    style="display: inline-block"><u><b>...</b></u></a>
                     </c:if>
 
-            <a id="previous"href="<%=servletPath%>?page=${i}&sortBy=${sortByObj}"
+            <a id="previous"href="${pageContext.request.contextPath}<%=servletPath%>?page=${i}&sortBy=${sortByObj}"
                style="display: inline-block;">Prev</a>
         </c:when>
 
         <c:when test="${page == (i-1)}">
-            <a id="next" href="<%=servletPath%>?page=${i}&sortBy=${sortByObj}"
+            <a id="next" href="${pageContext.request.contextPath}<%=servletPath%>?page=${i}&sortBy=${sortByObj}"
                style="display: inline-block;">Next</a>
 
             <c:if test="${page+2 < pageQuantity}">
@@ -53,7 +52,7 @@
                 </c:when> 
 
         <c:otherwise>
-            <a href="<%=servletPath%>?page=${i}&sortBy=${sortByObj}"
+            <a href="${pageContext.request.contextPath}<%=servletPath%>?page=${i}&sortBy=${sortByObj}"
                style="display: inline-block;">${i}</a>
         </c:otherwise> 
     </c:choose>
@@ -61,14 +60,11 @@
 
 <c:if test="<%=pageObj != null%>">
 |    
-<form action="${pageContext.request.contextPath}/<%=servletPath%>" style="display: inline-block;">
-    <div class="form-group" style="display: flex;">
-        <input type="text" size="5" maxlength="3" name="page" placeholder="${page}" >
-        <button class="btn btn-primary" type="submit">Go</button>
-    </div>
+<form action="${pageContext.request.contextPath}<%=servletPath%>" style="display: inline-block;">
+    <input type="text" size="5" maxlength="3" name="page" placeholder="${page}">
+    <input type="submit" value="Go">
 </form>
 </c:if>
-</div>
 
 <script>
     <c:if test="${page != null}">

@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import utils.MyUtils;
 import utils.BrandDAO;
 
-@WebServlet(urlPatterns = {"/brandList"})
+@WebServlet(urlPatterns = {"/admin/brandList"})
 public class BrandListServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;

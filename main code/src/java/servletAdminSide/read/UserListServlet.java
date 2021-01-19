@@ -26,7 +26,7 @@ import java.util.List;
 import utils.MyUtils;
 import utils.UserDAO;
 
-@WebServlet(urlPatterns = {"/userList"})
+@WebServlet(urlPatterns = {"/admin/userList"})
 public class UserListServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;

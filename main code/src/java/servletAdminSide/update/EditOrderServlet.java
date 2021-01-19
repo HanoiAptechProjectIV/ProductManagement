@@ -33,7 +33,7 @@ import utils.MyUtils;
 import utils.OrderDetailDAO;
 import utils.ProductDAO;
 
-@WebServlet(urlPatterns = {"/editOrder"})
+@WebServlet(urlPatterns = {"/admin/editOrder"})
 public class EditOrderServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -158,6 +158,9 @@ public class EditOrderServlet extends HttpServlet {
                         if (!status.equals("Refund") && !status.equals("Canceled")) {
                             product.setQuantity(product.getQuantity() - (purchasedQuantity - detail.getPurchasedQuantity()));
                             ProductDAO.updateProduct(conn, product);
+                        } else {
+                            product.setQuantity(product.getQuantity() + detail.getPurchasedQuantity());
+                            ProductDAO.updateProduct(conn, product);                            
                         }
                     } else {
                         errorString = "Can not find product";
@@ -193,7 +196,7 @@ public class EditOrderServlet extends HttpServlet {
             } // Nếu mọi thứ tốt đẹp.
             // Redirect sang trang danh sách sản phẩm.
             else {
-                response.sendRedirect(request.getContextPath() + "/orderList?id=" + order.getId());
+                response.sendRedirect(request.getContextPath() + "/admin/orderList?id=" + order.getId());
             }
         }
     }

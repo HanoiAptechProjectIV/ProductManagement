@@ -34,7 +34,7 @@ import utils.BrandDAO;
 import utils.CategoryDAO;
 import utils.UploadFile;
 
-@WebServlet(urlPatterns = {"/createProduct"})
+@WebServlet(urlPatterns = {"/admin/createProduct"})
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024 * 10,
         maxFileSize = 1024 * 1024 * 50,
@@ -119,7 +119,7 @@ public class CreateProductServlet extends HttpServlet {
             } // Nếu mọi thứ tốt đẹp.
             // Redirect (chuyển hướng) sang trang danh sách sản phẩm.
             else {
-                response.sendRedirect(request.getContextPath() + "/productList");
+                response.sendRedirect(request.getContextPath() + "/admin/productList");
             }
         }
     }

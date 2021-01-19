@@ -20,7 +20,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
  
  
-@WebFilter(filterName = "encodingFilter", urlPatterns = { "/*" })
+@WebFilter(filterName = "encodingFilter", urlPatterns = {"/*" })
 public class EncodingFilter implements Filter {
  
   public EncodingFilter() {

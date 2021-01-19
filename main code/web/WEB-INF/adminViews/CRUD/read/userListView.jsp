@@ -12,70 +12,55 @@
     <head>
         <meta charset="UTF-8">
         <title>User Info</title>
-
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
-        <!-- jQuery library -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-        <!-- Popper JS -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-
-        <!-- Latest compiled JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
     </head>
     <body>
 
-        <jsp:include page="../../_header.jsp"></jsp:include>
-        <jsp:include page="../../_menu.jsp"></jsp:include>
+        <jsp:include page="../../_header.jsp"/>
+        <jsp:include page="../../_menu.jsp"/>
 
-            <h3 style="text-align: center; margin-top: 40px">User List Page ${page}</h3>
+            <h3>User List Page ${page}</h3>
 
             <p style="color: red;">${errorString}</p>
-        <jsp:include page="../../_search.jsp"></jsp:include>
-            
-        <div class="container">
-            <table class="table table-bordered table-striped table-hover" border="1" cellpadding="5" cellspacing="1" >
-                <tr class="table-info">
+        <jsp:include page="../../_search.jsp"/>
+            <table border="1" cellpadding="5" cellspacing="1" >
+                <tr>
                     <c:set var="pageNum" value="${(page != null) ? page : 1}"/>
                     <th>Id
-                        <a href="${pageContext.request.contextPath}/userList?page=${pageNum}&sortBy=idASC"
+                        <a href="${pageContext.request.contextPath}/admin/userList?page=${pageNum}&sortBy=idASC"
                         ><i class="fa fa-angle-up"></i></a>
-                        <a href="${pageContext.request.contextPath}/userList?page=${pageNum}&sortBy=idDESC"
+                        <a href="${pageContext.request.contextPath}/admin/userList?page=${pageNum}&sortBy=idDESC"
                         ><i class="fa fa-angle-down"></i></a>
                     </th>
                     <th>Name
-                        <a href="${pageContext.request.contextPath}/userList?page=${pageNum}&sortBy=nameASC"
+                        <a href="${pageContext.request.contextPath}/admin/userList?page=${pageNum}&sortBy=nameASC"
                         ><i class="fa fa-angle-up"></i></a>
-                        <a href="${pageContext.request.contextPath}/userList?page=${pageNum}&sortBy=nameDESC"
+                        <a href="${pageContext.request.contextPath}/admin/userList?page=${pageNum}&sortBy=nameDESC"
                         ><i class="fa fa-angle-down"></i></a>   
                     </th>
                     <th>Username</th>
                     <th>Password</th>
                     <th>Gender
-                        <a href="${pageContext.request.contextPath}/userList?page=${pageNum}&sortBy=genderASC"
+                        <a href="${pageContext.request.contextPath}/admin/userList?page=${pageNum}&sortBy=genderASC"
                         ><i class="fa fa-angle-up"></i></a>
-                        <a href="${pageContext.request.contextPath}/userList?page=${pageNum}&sortBy=genderDESC"
+                        <a href="${pageContext.request.contextPath}/admin/userList?page=${pageNum}&sortBy=genderDESC"
                         ><i class="fa fa-angle-down"></i></a>   
                     </th>
                     <th>Phone
-                        <a href="${pageContext.request.contextPath}/userList?page=${pageNum}&sortBy=phoneASC"
+                        <a href="${pageContext.request.contextPath}/admin/userList?page=${pageNum}&sortBy=phoneASC"
                         ><i class="fa fa-angle-up"></i></a>
-                        <a href="${pageContext.request.contextPath}/userList?page=${pageNum}&sortBy=phoneDESC"
+                        <a href="${pageContext.request.contextPath}/admin/userList?page=${pageNum}&sortBy=phoneDESC"
                         ><i class="fa fa-angle-down"></i></a>   
                     </th>
                     <th>Email
-                        <a href="${pageContext.request.contextPath}/userList?page=${pageNum}&sortBy=emailASC"
+                        <a href="${pageContext.request.contextPath}/admin/userList?page=${pageNum}&sortBy=emailASC"
                         ><i class="fa fa-angle-up"></i></a>
-                        <a href="${pageContext.request.contextPath}/userList?page=${pageNum}&sortBy=emailDESC"
+                        <a href="${pageContext.request.contextPath}/admin/userList?page=${pageNum}&sortBy=emailDESC"
                         ><i class="fa fa-angle-down"></i></a>   
                     </th>
                     <th>Address
-                        <a href="${pageContext.request.contextPath}/userList?page=${pageNum}&sortBy=addressASC"
+                        <a href="${pageContext.request.contextPath}/admin/userList?page=${pageNum}&sortBy=addressASC"
                         ><i class="fa fa-angle-up"></i></a>
-                        <a href="${pageContext.request.contextPath}/userList?page=${pageNum}&sortBy=addressDESC"
+                        <a href="${pageContext.request.contextPath}/admin/userList?page=${pageNum}&sortBy=addressDESC"
                         ><i class="fa fa-angle-down"></i></a>   
                     </th>
                 </tr>
@@ -106,10 +91,9 @@
             </c:forEach>
                 </c:if>
         </table>
-        </div>
 
-        <jsp:include page="../../_pagination.jsp"></jsp:include>
-        <jsp:include page="../../_footer.jsp"></jsp:include>
+        <jsp:include page="../../_pagination.jsp"/>
+        <jsp:include page="../../_footer.jsp"/>
 
     </body>
 </html>

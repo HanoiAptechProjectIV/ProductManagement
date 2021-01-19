@@ -22,26 +22,13 @@
     <head>
         <meta charset="UTF-8">
         <title>Edit Order</title>
-
-        <!-- Latest compiled and minified CSS -->
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
-      <!-- jQuery library -->
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-      <!-- Popper JS -->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-
-      <!-- Latest compiled JavaScript -->
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>v
-
     </head>
     <body onload="selectedNameOption();selectedStatusOption();findMaxValueQuantity();calculateAmount();">
 
-        <jsp:include page="../../_header.jsp"></jsp:include>
-        <jsp:include page="../../_menu.jsp"></jsp:include>
+        <jsp:include page="../../_header.jsp"/>
+        <jsp:include page="../../_menu.jsp"/>
 
-            <h3 style="text-align: center; margin-top: 40px">Edit Order</h3>
+            <h3>Edit Order</h3>
 
             <p style="color: red;">${errorString}</p>
         <%
@@ -53,59 +40,49 @@
             if (listDetail.size() > 0 && order != null) {
                 User user = UserDAO.findUser(conn, order.getUserId());
         %>
-        
-        <div class="container">
-            <form method="POST" action="${pageContext.request.contextPath}/editOrder">
-                <strong>Order</strong>
-                <div class="form-group w-50">
-                    <label>Order id</label>
-                    <input class="form-control" type="text" readonly name="id" value="${order.id}"/>
-                </div>
-                <div class="form-group w-50">
-                    <label>User Name</label>
-                    <input class="form-control" type="hidden" name="userId" value="${order.userId}"/>
+        <form method="POST" action="${pageContext.request.contextPath}/admin/editOrder">
+            <table border="1" >
+                <tr><p>Order</p></tr>
+                <tr>
+                    <td>Order id</td>
+                    <td><input type="text" readonly name="id" value="${order.id}"/></td>
+                </tr>
+                <tr>
+                    <td>User Name</td>
+                    <td><input type="hidden" name="userId" value="${order.userId}"/>
                         <div id="userAnchor">
-                            <a class="btn btn-outline-primary" href="userList?search=<%=user.getName()%>"><%=user.getName()%></a>
+                            <a href="userList?search=<%=user.getName()%>"><%=user.getName()%></a>
                         </div>
                         <div id="userDiv">
-                            <!-- <p>Gender: <%=(user.isGender()) ? "Female" : "Male"%></p>
+                            <p>Gender: <%=(user.isGender()) ? "Female" : "Male"%></p>
                             <p> | Phone: <%=user.getPhone()%></p>
                             <p> | Email: <%=user.getEmail()%></p>
-                            <p> | Address: <%=user.getAddress()%></p> -->
-                            <ul>
-                                <li><b>Gender:</b> <%=(user.isGender()) ? "Female" : "Male"%></li>
-                                <li><b>Phone:</b> <%=user.getPhone()%></li>
-                                <li><b>Email:</b> <%=user.getEmail()%></li>
-                                <li><b>Address:</b> <%=user.getAddress()%></li>
-                            </ul>
+                            <p> | Address: <%=user.getAddress()%></p>
                         </div>
-                    
-                </div>
-                <div class="form-group w-50">
-                    <label>Amount</label>
-                    <input class="form-control" id="amountTxt" type="text" readonly name="amount" value="${order.amount}" />
-                </div>
-                <div class="form-group w-50">
-                    <label>Created time</label>
-                    <input class="form-control" type="text" readonly name="createdTime" value="${order.createdTime}" />
-                </div>
-                <div class="form-group w-50">
-                    <label>Payment time</label>
-                    <div class="col-md-12">
-                        <div class="row">
-                            <input class="form-control col-md-9" id="paymentTimeInput" type="text" name="paymentTime" value="<%
-                            LocalDateTime ldt = LocalDateTime.of(1970, 1, 1, 0, 0, 0);
-                            if (!order.getPaymentTime().equals(ldt)) {
-                                %><%=order.getPaymentTime()%><%}%>" /><br>
-                            <input class="btn btn-outline-primary col-md-3" type="button" onclick="getCurrentTime();" value="Get Current Time"/>
-                        </div>
-                    </div>
-                    
-                </div>
-
-                <table class="table table-bordered table-striped table-hover" border="1" cellpadding="5" cellspacing="1" >
-                    <tr><strong>Order detail</strong></tr>
-                    <tr class="table-info">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Amount</td>
+                    <td><input id="amountTxt" type="text" readonly name="amount" value="${order.amount}" /></td>
+                </tr>
+                <tr>
+                    <td>Created time</td>
+                    <td><input type="text" readonly name="createdTime" value="${order.createdTime}" /></td>
+                </tr>
+                <tr>
+                    <td>Payment time</td>
+                    <td><input id="paymentTimeInput" type="text" name="paymentTime" value="<%
+                        LocalDateTime ldt = LocalDateTime.of(1970, 1, 1, 0, 0, 0);
+                        if (!order.getPaymentTime().equals(ldt)) {
+                               %><%=order.getPaymentTime()%><%}%>" /><br>
+                        <input type="button" onclick="getCurrentTime();" value="Get Current Time"/>
+                    </td>
+                </tr>
+                <tr>
+                </tr>
+                <table border="1" cellpadding="5" cellspacing="1" >
+                    <tr><p>Order detail</p></tr>
+                    <tr>
                         <th>Order Detail Id</th>
                         <th>Product name</th>
                         <th>Price</th>
@@ -120,63 +97,43 @@
                                 if (listProduct.size() > 0) {
                     %>
                     <tr>
-                        <td style="width: 10%">
-                            <div class="form-group">
-                                <input class="form-control" type="text" readonly name="idOrderDetail${orderDetail.id}" 
-                                   value="${orderDetail.id}" />
+                        <td><input type="text" readonly name="idOrderDetail${orderDetail.id}" 
+                                   value="${orderDetail.id}" /></td>
+                        <td>
+                            <div id="productAnchor">
+                                <a class="productNameAnchor" href="productList?search=<%=prod.getName()%>"
+                                   ><%=prod.getName()%></a>
                             </div>
-                        </td>
-                        <td style="max-width: 32%">
-                            <div class="col-md-12">
-                            <div class="form-group row">
-                                <div id="productAnchor" class="col-md-5">
-                                    <a class="btn btn-outline-primary" class="productNameAnchor" href="productList?search=<%=prod.getName()%>"
-                                    ><%=prod.getName()%></a>
-                                </div>
-                                <div id="productDiv" class="col-md-2">
-                                    <img src="${pageContext.request.contextPath}/images/product/<%=prod.getImage()%>" 
-                                        height="30" alt="<%=prod.getName()%> image"/>
-                                    <p> | Quantity: <%=prod.getQuantity()%></p>
-                                </div>
-                                <select class="productNameOption form-control col-md-5" required name="productNameOptionId${orderDetail.id}"
-                                        onchange="findMaxValueQuantity();changeProductNameAnchor();calculateAmount();">
-                                    <%for (Product product : listProduct) {%>
-                                    <option value="<%=product.getName()%>"><%=product.getName()%></option>  
-                                    <%}%>
-                                </select>  
+                            <div id="productDiv">
+                                <img src="${pageContext.request.contextPath}/images/product/<%=prod.getImage()%>" 
+                                     height="30" alt="<%=prod.getName()%> image"/>
+                                <p> | Quantity: <%=prod.getQuantity()%></p>
                             </div>
-                            </div>
+                            <select class="productNameOption" required name="productNameOptionId${orderDetail.id}"
+                                    onchange="findMaxValueQuantity();changeProductNameAnchor();calculateAmount();">
+                                <%for (Product product : listProduct) {%>
+                                <option value="<%=product.getName()%>"><%=product.getName()%></option>  
+                                <%}%>
+                            </select>  
                         </td>   
-                        <td style="width: 14%">
-                            <div class="col-md-12">
-                                <div class="form-group row">
-                                <input class="priceTxt form-control col-sm-8" type="text" readonly value="<%=prod.getPrice()%>" size="10"/>
-                                <p class="col-sm-4" style="margin-top: 6px;">VND</p>
-                            </div>
-                            </div>
+                        <td>
+                            <input class="priceTxt" type="text" readonly value="<%=prod.getPrice()%>" size="10"/>
+                            <h6 style="display: inline">VND</h6>
                         </td>
-                        <td style="width: 14%;">
-                            <div class="form-group">
-                                <input class="quantityNumber form-control" required onchange="calculateAmount();" 
+                        <td><input class="quantityNumber" required onchange="calculateAmount();" 
                                    type="number" name="purchasedQuantityId${orderDetail.id}" 
                                    value="${orderDetail.purchasedQuantity}" />
-                            </div>
                         </td>
-                        <td style="max-width: 30%;">
-                            <div class="col-md-12">
-                                <div class="form-group row">
-                                <input class="statusTxt form-control col-md-7" type="text" readonly size="10"
+                        <td><input class="statusTxt" type="text" readonly size="10"
                                    name="status${orderDetail.id}" value="${orderDetail.status}" />
-                                <select class="statusOption form-control col-md-5" required name="statusOptionId${orderDetail.id}" 
+                            <select class="statusOption" required name="statusOptionId${orderDetail.id}" 
                                     onchange="changeStatusText();calculateAmount();">
                                 <option value="Pending">Pending</option>  
                                 <option value="Canceled">Canceled</option>  
                                 <option value="Shipping">Shipping</option>  
                                 <option value="Success">Success</option>  
                                 <option value="Refund">Refund</option>  
-                            </select>
-                            </div>  
-                            </div>
+                            </select>  
                         </td>
                     </tr>
                     <%}
@@ -184,33 +141,31 @@
                         }%>
                 </table>
                 <tr></tr>
-                <table class="table table-bordered table-striped table-hover" id="addProductTable" border="1" cellpadding="5" cellspacing="1">
-                    <tr><strong>Add product</=></strong></tr>
-                    <tr class="table-info">
+                <table id="addProductTable" border="1" cellpadding="5" cellspacing="1">
+                    <tr><p>Add product</p></tr>
+                    <tr>
                         <th>Product name</th>
                         <th>Price</th>
                         <th>Purchased quantity</th>
                         <th>Status</th>
                         <th>Delete</th>
                     </tr>
-                    <tr>
-                        <div class="form-group" style="display: flex; flex-direction: row;">
-                            <input class="btn btn-outline-primary" type="button" onclick="addRow();" value="Add +"/>
-                            <input class="form-control col-sm-6" id="countRowTxt" type="text" value="0" name="countRow"/>
-                        </div>
-                    </tr>
+                    <tr><td>
+                            <input type="button" onclick="addRow();" value="Add +"/>
+                            <input id="countRowTxt" type="text" value="0" name="countRow"/>
+                    </td></tr>
                 </table>
                 <tr><hr></tr>
                 <tr>
                     <td colspan = "2">
-                        <button class="btn btn-outline-success" type="submit">Submit</button>
-                        <a class="btn btn-outline-warning" href="${pageContext.request.contextPath}/orderList">Cancel</a>
-                    
+                        <input type="submit" value="Submit" />
+                        <a href="${pageContext.request.contextPath}/admin/orderList">Cancel</a>
+                    </td>
                 </tr>
+            </table>
         </form>
-        </div>
 
-        <jsp:include page="../../_footer.jsp"></jsp:include>
+        <jsp:include page="../../_footer.jsp"/>
         <style>
             #productAnchor, #userAnchor{
                 width: fit-content;

@@ -18,8 +18,19 @@ public class User {
     }
 
     public User(int id, String username, String password, String name
-            , String address, String phone, String email, boolean gender) {
+            , boolean gender, String phone, String email, String address) {
         this.id = id;
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
+        this.gender = gender;
+    }
+    
+    public User(String username, String password, String name
+            , boolean gender, String phone, String email, String address) {
         this.username = username;
         this.password = password;
         this.name = name;

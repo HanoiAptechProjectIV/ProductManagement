@@ -20,26 +20,13 @@
     <head>
         <meta charset="UTF-8">
         <title>Edit Product</title>
-
-        <!-- Latest compiled and minified CSS -->
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
-      <!-- jQuery library -->
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-      <!-- Popper JS -->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-
-      <!-- Latest compiled JavaScript -->
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
     </head>
     <body onload="selectedDisableOption();">
 
-        <jsp:include page="../../_header.jsp"></jsp:include>
-        <jsp:include page="../../_menu.jsp"></jsp:include>
+        <jsp:include page="../../_header.jsp"/>
+        <jsp:include page="../../_menu.jsp"/>
 
-            <h3 style="text-align: center; margin-top: 40px">Edit Product</h3>
+            <h3>Edit Product</h3>
 
             <p style="color: red;">${errorString}</p>
         <%
@@ -51,52 +38,47 @@
             List<Category> listCategory = CategoryDAO.queryCategory(conn);
             List<Brand> listBrand = BrandDAO.queryBrand(conn);
         %>
-        
-        <div class="container">
-            <c:if test="${product != null}">
-            <form method="POST" action="${pageContext.request.contextPath}/editProduct" enctype="multipart/form-data">
+        <c:if test="${product != null}">
+            <form method="POST" action="${pageContext.request.contextPath}/admin/editProduct" enctype="multipart/form-data">
                 <input type="hidden" name="id" value="${product.id}" />
-                    <div class="form-group w-50">
-                        <label>Name</label>
-                        <input type="text" required name="name" value="${product.name}" class="form-control"/>
-                    </div>
-                    <div class="form-group w-50">
-                        <label>Price</label>
-                        <input type="text" required name="price" value="${product.price}" class="form-control"/>
-                    </div>
-                    <div class="form-group w-50">
-                        <label>Old image</label>
-                        <img src="${pageContext.request.contextPath}/images/product/${product.image}"
-                                 height="100" alt="${product.name} image"/>
-                    <input type="hidden" name="oldImage" value="${product.image}" class="form-control"/>
-                    </div>
-                    <div class="form-group w-50">
-                        <label>New image</label>
-                        <input type="file" name="image" value="" />
-                    </div>            
-                    <div class="form-group w-50">
-                        <label>Quantity</label>
-                        <input type="number" required min="0" name="quantity" value="${product.quantity}" class="form-control"/>
-                    </div>
-                    <div class="form-group w-50">
-                        <label>Description</label>
-                        <input type="text" name="description" value="${product.description}" class="form-control"/>
-                    </div>
-                    <div class="form-group w-50">
-                        <label>Date added</label>
-                        <div class="col-md-12">
-                            <div class="row">
-                            <input type="text" id="dateAddedInput" name="dateAdded" value="${product.dateAdded}" class="form-control col-md-9"/>
-                        <input class="btn btn-outline-primary col-md-3" type="button" onclick="getCurrentTime();" value="Get Current Time"/>
-                        </div>
-                    </div>
-                        
-                    </div>
-                    <div class="form-group w-50">
-                        <label>Category name</label>
-                        
+                <table border="0">
+                    <tr>
+                        <td>Name</td>
+                        <td><input type="text" required name="name" value="${product.name}" /></td>
+                    </tr>
+                    <tr>
+                        <td>Price</td>
+                        <td><input type="text" required name="price" value="${product.price}" /></td>
+                    </tr>
+                    <tr>
+                        <td>Old image</td>
+                        <td><img src="${pageContext.request.contextPath}/images/product/${product.image}"
+                                 height="100" alt="${product.name} image"/></td>
+                    <input type="hidden" name="oldImage" value="${product.image}"/>
+                    </tr>
+                    <tr>
+                        <td>New image</td>
+                        <td><input type="file" name="image" value="" /></td>
+                    </tr>            
+                    <tr>
+                        <td>Quantity</td>
+                        <td><input type="number" required min="0" name="quantity" value="${product.quantity}" /></td>
+                    </tr>
+                    <tr>
+                        <td>Description</td>
+                        <td><input type="text" name="description" value="${product.description}" /></td>
+                    </tr>
+                    <tr>
+                        <td>Date added</td>
+                        <td><input type="text" id="dateAddedInput" name="dateAdded" value="${product.dateAdded}" /><br>
+                            <input type="button" onclick="getCurrentTime();" value="Get Current Time"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Category name</td>
+                        <td>
                             <div id="categoryAnchor">
-                                <a class="btn btn-outline-primary" id="categoryNameAnchor" href="categoryList?search=<%=cate.getName()%>"
+                                <a id="categoryNameAnchor" href="categoryList?search=<%=cate.getName()%>"
                                    ><%=cate.getName()%></a>
                             </div>    
                             <div id="categoryDiv">
@@ -104,7 +86,7 @@
                                 <p> | <%=(cate.isDisable()) ? "disabled": "displayed"%></p>
                             </div>                            
                             <select id="categoryNameOption" name="categoryNameOption"
-                                    required onchange="changeCategoryNameAnchor();" class="form-control">
+                                    required onchange="changeCategoryNameAnchor();">
                                 <%for (Category category : listCategory) {%>
                                 <%if (category.getId() == product.getCategoryId()) {%>
                                 <option value="<%=category.getName()%>" selected><%=category.getName()%></option>
@@ -113,11 +95,13 @@
                                 <%}%>
                                 <%}%>
                             </select>                
-                        </div>
-                    <div class="form-group w-50">
-                        <label>Brand name</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Brand name</td>
+                        <td>
                             <div id="brandAnchor">
-                                <a class="btn btn-outline-primary" id="brandNameAnchor" href="brandList?search=<%=bra.getName()%>"
+                                <a id="brandNameAnchor" href="brandList?search=<%=bra.getName()%>"
                                ><%=bra.getName()%></a>
                             </div>
                             <div id="brandDiv">
@@ -128,7 +112,7 @@
                                 <p> | <%=(bra.isDisable()) ? "disabled": "displayed"%></p>
                             </div>                            
                             <select id="brandNameOption" name="brandNameOption"
-                                    required onchange="changeBrandNameAnchor();" class="form-control">
+                                    required onchange="changeBrandNameAnchor();">
                                 <%for (Brand brand : listBrand) {%>
                                 <%if (brand.getId() == product.getBrandId()) {%>
                                 <option value="<%=brand.getName()%>" selected><%=brand.getName()%></option>
@@ -136,30 +120,29 @@
                                 <option value="<%=brand.getName()%>"><%=brand.getName()%></option>  
                                 <%}%>
                                 <%}%>
+                            </select>                 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Disable</td>
+                        <td><input type="text" id="disableTxt" readonly name="disable" value="${product.disable}" />
+                            <select id="disableOption" name="disableOption" 
+                                    onchange="changeDisableTxt();">
+                                <option value="true">True</option>  
+                                <option value="false">False</option>  
                             </select>  
-                            </div>               
-                    <div class="form-group w-50">
-                  <label>Disable</label>
-                  <div class="col-md-12"> 
-                     <div class="row">
-                        <input type="text" id="disableTxt" readonly name="disable" value="${product.disable}" class="form-control col-md-6" />
-                        <select id="disableOption" name="disableOption" 
-                              onchange="changeDisableTxt();" class="form-control col-md-6">
-                           <option value="true">True</option>  
-                           <option value="false">False</option>  
-                     </select> 
-                     </div>
-                  </div>
-               </div>    
-                    <div>
-                        <button class="btn btn-outline-success" type="submit">Submit</button>
-                        <a class="btn btn-outline-warning" href="${pageContext.request.contextPath}/productList">Cancel</a>
-                    </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan = "2">
+                            <input type="submit" value="Submit" />
+                            <a href="${pageContext.request.contextPath}/admin/productList">Cancel</a>
+                        </td>
+                    </tr>
+                </table>
             </form>
         </c:if>
-        </div>
-
-        <jsp:include page="../../_footer.jsp"></jsp:include>
+        <jsp:include page="../../_footer.jsp"/>
         <style>
             #categoryAnchor, #brandAnchor {
                 width: fit-content;

@@ -15,8 +15,8 @@
     </head>
     <body>
 
-        <jsp:include page="../../_header.jsp"></jsp:include>
-        <jsp:include page="../../_menu.jsp"></jsp:include>
+        <jsp:include page="../../_header.jsp"/>
+        <jsp:include page="../../_menu.jsp"/>
 
             <h3>Order List</h3>
 
@@ -56,7 +56,7 @@
         </table>
 
 
-        <jsp:include page="../../_footer.jsp"></jsp:include>
+        <jsp:include page="../../_footer.jsp"/>
 
     </body>
 </html>

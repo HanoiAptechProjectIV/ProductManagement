@@ -21,10 +21,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import beans.Admin;
+import javax.servlet.http.HttpSession;
 import utils.AdminDAO;
 import utils.MyUtils;
 
-@WebServlet(urlPatterns = {"/editAdmin"})
+@WebServlet(urlPatterns = {"/admin/editAdmin"})
 public class EditAdminServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -49,11 +50,7 @@ public class EditAdminServlet extends HttpServlet {
             e.printStackTrace();
             errorString = e.getMessage();
         } finally {
-
-            // Không có lỗi.
-            // Sản phẩm không tồn tại để edit.
-            // Redirect sang trang danh sách sản phẩm.
-            if (errorString != null && admin == null) {
+            if (errorString != null || admin == null) {
                 response.sendRedirect(request.getServletPath() + "/adminList");
                 return;
             }
@@ -87,7 +84,6 @@ public class EditAdminServlet extends HttpServlet {
             e.printStackTrace();
             errorString = e.getMessage();
         } finally {
-
             // Lưu thông tin vào request attribute trước khi forward sang views.
             request.setAttribute("errorString", errorString);
             request.setAttribute("admin", admin);
@@ -101,7 +97,11 @@ public class EditAdminServlet extends HttpServlet {
             } // Nếu mọi thứ tốt đẹp.
             // Redirect sang trang danh sách sản phẩm.
             else {
-                response.sendRedirect(request.getContextPath() + "/adminList");
+                HttpSession session = request.getSession();
+                Admin adminSession = (Admin)session.getAttribute("loginedAdmin");
+                if(adminSession.getUsername().equals(oldUsername))
+                    MyUtils.storeLoginedAdmin(session, admin);                
+                response.sendRedirect(request.getContextPath() + "/admin/adminList");
             }
         }
     }

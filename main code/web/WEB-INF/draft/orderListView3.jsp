@@ -15,14 +15,14 @@
     </head>
     <body>
 
-        <jsp:include page="../../_header.jsp"></jsp:include>
-        <jsp:include page="../../_menu.jsp"></jsp:include>
+        <jsp:include page="../../_header.jsp"/>
+        <jsp:include page="../../_menu.jsp"/>
 
             <h3>Order List Page ${page}</h3>
 
         <p style="color: red;">${errorString}</p>
 
-        <jsp:include page="../../_search.jsp"></jsp:include>
+        <jsp:include page="../../_search.jsp"/>
             <table border="1" cellpadding="5" cellspacing="1" >
                 <tr>
                     <th>Id</th>
@@ -79,8 +79,8 @@
             </c:forEach>
         </table>
 
-        <jsp:include page="../../_pagination.jsp"></jsp:include>
-        <jsp:include page="../../_footer.jsp"></jsp:include>
+        <jsp:include page="../../_pagination.jsp"/>
+        <jsp:include page="../../_footer.jsp"/>
 
     </body>
 </html>

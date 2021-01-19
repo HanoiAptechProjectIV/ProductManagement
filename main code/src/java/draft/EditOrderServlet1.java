@@ -29,7 +29,7 @@
 //import utils.MyUtils;
 //import utils.OrderDetailDAO;
 //
-//@WebServlet(urlPatterns = {"/editOrder"})
+//@WebServlet(urlPatterns = {"/admin/editOrder"})
 //public class EditOrderServlet extends HttpServlet {
 //
 //    private static final long serialVersionUID = 1L;
@@ -118,7 +118,7 @@
 //        } // Nếu mọi thứ tốt đẹp.
 //        // Redirect sang trang danh sách sản phẩm.
 //        else {
-//            response.sendRedirect(request.getContextPath() + "/orderList");
+//            response.sendRedirect(request.getContextPath() + "/admin/orderList");
 //        }
 //    }
 //

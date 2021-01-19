@@ -15,15 +15,15 @@
     </head>
     <body>
 
-        <jsp:include page="../../_header.jsp"></jsp:include>
-        <jsp:include page="../../_menu.jsp"></jsp:include>
+        <jsp:include page="../../_header.jsp"/>
+        <jsp:include page="../../_menu.jsp"/>
 
             <h3>Edit Order</h3>
 
             <p style="color: red;">${errorString}</p>
 
         <c:if test="${not empty order && not empty orderDetail}">
-            <form method="POST" action="${pageContext.request.contextPath}/editOrder">
+            <form method="POST" action="${pageContext.request.contextPath}/admin/editOrder">
                 <table border="1" >
                     <tr>
                         <td>Order id</td>
@@ -66,14 +66,14 @@
                     <tr>
                         <td colspan = "2">
                             <input type="submit" value="Submit" />
-                            <a href="${pageContext.request.contextPath}/orderList">Cancel</a>
+                            <a href="${pageContext.request.contextPath}/admin/orderList">Cancel</a>
                         </td>
                     </tr>
                 </table>
             </form>
         </c:if>
 
-        <jsp:include page="../../_footer.jsp"></jsp:include>
+        <jsp:include page="../../_footer.jsp"/>
 
     </body>
 </html>

@@ -6,12 +6,16 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
     <filter-mapping>
-        <filter-name>cookieFilter</filter-name>
+        <filter-name>sessionCookieFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
     <filter-mapping>
-        <filter-name>checkLoginedFilter</filter-name>
-        <url-pattern>/*</url-pattern>
+        <filter-name>checkLoginedAdminFilter</filter-name>
+        <url-pattern>/admin/*</url-pattern>
+    </filter-mapping>    
+    <filter-mapping>
+        <filter-name>checkLoginedUserFilter</filter-name>
+        <url-pattern>/profile</url-pattern>
     </filter-mapping>    
     <filter-mapping>
         <filter-name>encodingFilter</filter-name>
@@ -20,7 +24,7 @@
     <welcome-file-list>
         <welcome-file>index</welcome-file>
     </welcome-file-list>
-    <session-config>
+<!--    <session-config>
         <session-timeout>10</session-timeout>
-    </session-config>
+    </session-config>-->
 </web-app>

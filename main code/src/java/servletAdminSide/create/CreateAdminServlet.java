@@ -24,7 +24,7 @@ import beans.Admin;
 import utils.AdminDAO;
 import utils.MyUtils;
 
-@WebServlet(urlPatterns = {"/createAdmin"})
+@WebServlet(urlPatterns = {"/admin/createAdmin"})
 public class CreateAdminServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -75,7 +75,7 @@ public class CreateAdminServlet extends HttpServlet {
             } // Nếu mọi thứ tốt đẹp.
             // Redirect (chuyển hướng) sang trang danh sách sản phẩm.
             else {
-                response.sendRedirect(request.getContextPath() + "/adminList");
+                response.sendRedirect(request.getContextPath() + "/admin/adminList");
             }
         }
     }

@@ -1,0 +1,29 @@
+.register-row {
+  display: flex;
+}
+
+.register-column {
+  /* display: flex;
+  flex-direction: column; */
+  width: 45%;
+  padding: 10px;
+  /* height: 300px; */
+  margin: 10px;
+}
+
+.login-left {
+  margin-right: 40px;
+}
+
+.register-right {
+  margin-left: 40px;
+}
+
+.actions {
+  margin-left: 25px;
+}
+
+.error {
+  font-size: 10px;
+  color: red;
+}

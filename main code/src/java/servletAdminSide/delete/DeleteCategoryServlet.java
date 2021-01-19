@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import utils.CategoryDAO;
 import utils.MyUtils;
  
-@WebServlet(urlPatterns = { "/deleteCategory" })
+@WebServlet(urlPatterns = {"/admin/deleteCategory" })
 public class DeleteCategoryServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
  
@@ -59,7 +59,7 @@ public class DeleteCategoryServlet extends HttpServlet {
         // Nếu mọi thứ tốt đẹp.
         // Redirect (chuyển hướng) sang trang danh sách sản phẩm.
         else {
-            response.sendRedirect(request.getContextPath() + "/categoryList");
+            response.sendRedirect(request.getContextPath() + "/admin/categoryList");
         }
  
     }

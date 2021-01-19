@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
   pageEncoding="UTF-8"%>
-<div style="height: 55px; padding: 5px; margin-bottom: 10px;">
-  <div>
-     <h1 class="text-center" style="text-shadow: 2px 2px dimgray">Titan Game Shop</h1>
+<div style="background: #E0E0E0; height: 55px; padding: 5px;">
+  <div style="float: left">
+     <h1>Admin Site</h1>
   </div>
  
-  <div style="float: left; height: 60px; padding-top: 20px; text-align: right; margin:0 40px 40px;">
+  <div style="float: right; padding: 10px; text-align: right;">
  
      <!-- Admin store in session with attribute: loginedAdmin -->
      Hello <b>${loginedAdmin.username}</b>
@@ -14,3 +14,5 @@
   </div>
  
 </div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">   
+<br><br>

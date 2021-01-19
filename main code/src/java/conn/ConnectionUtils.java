@@ -20,8 +20,8 @@ public class ConnectionUtils {
         String hostName = "localhost";
         String sqlInstanceName = "";
         String database = "ProductManagement";
-        String username = "sa";
-        String password = "sana";
+        String username = "lab";
+        String password = "";
  
         return getConnection(hostName, sqlInstanceName, database, username, password);
     }
@@ -36,7 +36,7 @@ public class ConnectionUtils {
         // Cấu trúc URL Connection dành cho SQLServer
         // Ví dụ:
         // jdbc:sqlserver://ServerIp:1433/SQLEXPRESS;databaseName=simplehr
-        String connectionURL = "jdbc:sqlserver://" + hostName + ":1042" //
+        String connectionURL = "jdbc:sqlserver://" + hostName + ":1433" //
                 + ";instance=" + sqlInstanceName + ";databaseName=" + database;
  
         Connection conn = DriverManager.getConnection(connectionURL, username, password);
