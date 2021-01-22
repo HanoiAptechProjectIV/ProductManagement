@@ -56,7 +56,8 @@
                                                    name="remove<%=i%>" value="false"></td>
                                         <td><a href="products?search=<%=prod.getName()%>"
                                                ><img alt="<%=prod.getName()%> image" 
-                                                  src="images/product/<%=prod.getImage()%>"></a></td>
+                                                  style='min-width: 100px; max-width: 100px; object-fit: cover' 
+                                                  src="<%=prod.getImage()%>"></a></td>
                                         <td><%=prod.getName()%></td>
                                         <td><%=prod.getQuantity()%></td>
                                         <td><input type="number" id="quantity<%=i%>" name="quantity<%=i%>"  min="1"

@@ -49,7 +49,7 @@ public class ProductsServlet extends HttpServlet {
         String sortBy = (request.getParameter("sortBy") != null) ? request.getParameter("sortBy") : "nameASC";
         try {
             int rowInTable = 0;
-            int cellInPage = 9;
+            int cellInPage = 6;
             int pageQuantity = 1;
             int pageNum = (request.getParameter("page") != null)
                     ? Integer.parseInt(request.getParameter("page"))

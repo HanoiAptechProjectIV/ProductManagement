@@ -26,16 +26,19 @@
     </head>
     <body>
 
-        <jsp:include page="../../_header.jsp"/>
-        <jsp:include page="../../_menu.jsp"/>
+        <jsp:include page="../../_header.jsp"></jsp:include>
+        <jsp:include page="../../_menu.jsp"></jsp:include>
 
-            <h3>Order List Page ${page}</h3>
+            <h3 style="text-align: center; margin-top: 40px">Order List Page ${page}</h3>
 
         <p style="color: red;">${errorString}</p>
 
-        <jsp:include page="../../_search.jsp"/>
-            <table border="1" cellpadding="5" cellspacing="1" >
-                <tr>
+        <jsp:include page="../../_search.jsp"></jsp:include>
+            
+        <div class="container">
+            <div class='span12'>
+            <table class="" border="1" cellpadding="5" cellspacing="1" >
+                <tr class="">
                     <c:set var="pageNum" value="${(page != null) ? page : 1}"/>
                     <th>Id
                         <a href="${pageContext.request.contextPath}/admin/orderList?page=${pageNum}&sortBy=idASC"
@@ -134,7 +137,7 @@
                             <a href="productList?search=<%=prod.getName()%>"><%=prod.getName()%></a>
                         </div>
                         <div id="productDiv">
-                            <img src="${pageContext.request.contextPath}/images/product/<%=prod.getImage()%>" 
+                            <img src="<%=prod.getImage()%>" 
                                  height="30" alt="<%=prod.getName()%> image"/>
                             <p> | Quantity: <%=prod.getQuantity()%></p>
                         </div>
@@ -181,16 +184,16 @@
             </c:forEach>
             </c:if>
         </table>
+        </div>
+        </div>
 
         <jsp:include page="../../_pagination.jsp"/>
         <jsp:include page="../../_footer.jsp"/>
         <style>
             #productAnchor{
-                margin-left: 23px;
-                width: fit-content;
             }
             #userAnchor{
-                height: 50px;
+                height: 80px;
                 width: fit-content;
                 padding-top: 23px;
             }
@@ -201,6 +204,10 @@
                 height: 30px; margin-bottom: -8px;
             }
             #productDiv p, #product img{display:inline;}
+            .container{
+                width: 100%;
+                min-width: max-content;
+            }
         </style>          
 
     </body>

@@ -15,15 +15,18 @@
  </head>
  <body>
  
-    <jsp:include page="../../_header.jsp"/>
-    <jsp:include page="../../_menu.jsp"/>
+    <jsp:include page="../../_header.jsp"></jsp:include>
+    <jsp:include page="../../_menu.jsp"></jsp:include>
  
-    <h3>Admin List</h3>
+    <h3 style="text-align: center; margin-top: 40px">Admin List</h3>
  
     <p style="color: red;">${errorString}</p>
- 
-    <table border="1" cellpadding="5" cellspacing="1" >
-       <tr>
+
+    
+    <div class="container">
+    <a class="btn btn-outline-primary" href="createAdmin" style="margin-bottom: 20px;" >Create Admin</a>
+       <table class="table table-bordered table-striped table-hover" border="1" cellpadding="5" cellspacing="1" >
+       <tr class="table-info">
           <th>Username</th>
           <th>Password</th>
           <th>Edit</th>
@@ -44,10 +47,9 @@
        </c:forEach>
        </c:if>
     </table>
- 
-    <a href="createAdmin" >Create Admin</a>
- 
-    <jsp:include page="../../_footer.jsp"/>
+    </div>
+
+    <jsp:include page="../../_footer.jsp"></jsp:include>
  
  </body>
 </html>

@@ -15,42 +15,39 @@
    </head>
    <body>
  
-      <jsp:include page="../../_header.jsp"/>
-      <jsp:include page="../../_menu.jsp"/>
+      <jsp:include page="../../_header.jsp"></jsp:include>
+      <jsp:include page="../../_menu.jsp"></jsp:include>
  
-      <h3>Edit Admin</h3>
+      <h3 style="text-align: center; margin-top: 40px">Edit Admin</h3>
  
       <p style="color: red;">${errorString}</p>
  
-      <c:if test="${admin != null}">
+      <div class="container">
+         <c:if test="${admin != null}">
          <form method="POST" action="${pageContext.request.contextPath}/admin/editAdmin">
-            <table border="0">
-            <tr>             
-               <td>Username</td>
-               <td>
+            <div class="form-group w-50">             
+               <label>Username</label>
                    <c:if test="${oldUsername == null}">
-                   <input type="text" hidden name="oldUsername" value="${admin.username}" />
+                   <input class="form-control" type="hidden" name="oldUsername" value="${admin.username}" />
                    </c:if>
                    <c:if test="${oldUsername != null}">
-                   <input type="text" hidden name="oldUsername" value="${oldUsername}" />
+                   <input class="form-control" type="hidden" name="oldUsername" value="${oldUsername}" />
                    </c:if>
-                   <input type="text" required name="username" value="${admin.username}" /></td>
-            </tr>
-            <tr>
-               <td>Password</td>
-               <td><input type="text" required name="password" value="${admin.password}" /></td>
-            </tr>
-            <tr>
-               <td colspan = "2">
-                   <input type="submit" value="Submit" />
-                   <a href="${pageContext.request.contextPath}/admin/adminList">Cancel</a>
-               </td>
-            </tr>
-            </table>
+                   <input class="form-control" type="text" required name="username" value="${admin.username}" />
+            </div>
+            <div class="form-group w-50">
+               <label>Password</label>
+               <input class="form-control" type="text" required name="password" value="${admin.password}" />
+            </div>
+            <div>
+               <button class="btn btn-outline-success" type="submit">Submit</button>
+               <a href="${pageContext.request.contextPath}/admin/adminList" class="btn btn-outline-warning">Cancel</a>
+            </div>
          </form>
       </c:if>
+      </div>
  
-      <jsp:include page="../../_footer.jsp"/>
+      <jsp:include page="../../_footer.jsp"></jsp:include>
  
    </body>
 </html>

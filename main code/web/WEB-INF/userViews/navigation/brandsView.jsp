@@ -39,7 +39,8 @@
 
                                                         <p><a href="${pageContext.request.contextPath}/brands?search=${brand.name}">
                                                                 <img alt="${brand.name} logo" 
-                                                                     src="${pageContext.request.contextPath}/images/brand/${brand.logo}">
+                                                                     style='min-height: 250px; max-height: 250px; object-fit: scale-down'
+                                                                     src="${brand.logo}">
                                                             </a></p>
                                                         <a href="${pageContext.request.contextPath}/brands?search=${brand.name}"
                                                            class="title">${brand.name}</a><br>

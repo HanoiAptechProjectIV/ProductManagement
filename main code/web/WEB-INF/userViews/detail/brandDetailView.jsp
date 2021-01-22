@@ -28,9 +28,10 @@
                     <div class="span9">
                         <section class="header_text sub">
                             <span class="text"><span class="line"><h4><strong><%=bra.getName()%></strong></h4></span></span><br>							 
-                            <a href="images/brand/<%=bra.getLogo()%>" class="thumbnail" data-fancybox-group="group1" 
+                            <a href="<%=bra.getLogo()%>" class="thumbnail" data-fancybox-group="group1" 
                                title="Brand detail"
-                               ><img alt="<%=bra.getName()%> image" src="images/brand/<%=bra.getLogo()%>"></a><br>
+                               ><img alt="<%=bra.getName()%> image" style='min-height: 300px; max-height: 300px; object-fit: scale-down'
+                                  src="<%=bra.getLogo()%>"></a><br>
                             <span class="text"><span class="line"><h4><strong>Manufacturer</strong></h4></span></span><br>
                             <div class="tab-content">
                                 <div class="tab-pane active" ><%=bra.getManufacturer()%></div>

@@ -154,7 +154,7 @@
                                                         <a href="productList?search=<%=prod.getName()%>"><%=prod.getName()%></a>
                                                     </div>
                                                     <div id="productDiv">
-                                                        <img src="${pageContext.request.contextPath}/images/product/<%=prod.getImage()%>" 
+                                                        <img src="<%=prod.getImage()%>" 
                                                              height="30" alt="<%=prod.getName()%> image"/>
                                                         <p> | Quantity: <%=prod.getQuantity()%></p>
                                                     </div>

@@ -71,7 +71,8 @@
                                                             <tr>
                                                                 <td><a href="products?search=<%=prod.getName()%>"
                                                                        ><img alt="<%=prod.getName()%> image" 
-                                                                          src="images/product/<%=prod.getImage()%>"></a></td>
+                                                                          style='min-width: 100px; max-width: 100px; object-fit: cover'
+                                                                          src="<%=prod.getImage()%>"></a></td>
                                                                 <td><%=prod.getName()%></td>
                                                                 <td><input type="number" readonly name="quantity<%=i%>" class="input-mini" 
                                                                            value="<%=quantity%>"></td>

@@ -16,33 +16,31 @@
    </head>
    <body>
     
-      <jsp:include page="../../_header.jsp"/>
-      <jsp:include page="../../_menu.jsp"/>
+      <jsp:include page="../../_header.jsp"></jsp:include>
+      <jsp:include page="../../_menu.jsp"></jsp:include>
        
-      <h3>Create Admin</h3>
+      <h3 style="text-align: center; margin-top: 40px">Create Admin</h3>
        
       <p style="color: red;">${errorString}</p>
        
-      <form method="POST" action="${pageContext.request.contextPath}/admin/createAdmin">
-         <table border="0">
-            <tr>
-               <td>Username</td>
-               <td><input type="text" required name="username" value="${admin.username}" /></td>
-            </tr>
-            <tr>
-               <td>Password</td>
-               <td><input type="text" required name="password" value="${admin.password}" /></td>
-            </tr>
-            <tr>
-               <td colspan="2">                   
-                   <input type="submit" value="Submit" />
-                   <a href="adminList">Cancel</a>
-               </td>
-            </tr>
-         </table>
+      <div class="container">
+         <form method="POST" action="${pageContext.request.contextPath}/admin/createAdmin">
+            <div class="form-group w-50">
+               <label>Username</label>
+               <input class="form-control" type="text" required name="username" value="${admin.username}" />
+            </div>
+            <div class="form-group w-50">
+               Password
+               <input class="form-control" type="text" required name="password" value="${admin.password}" />
+            </div>
+            <div>                 
+               <button type="submit" class="btn btn-outline-success">Submit</button>
+               <a href="adminList" class="btn btn-outline-warning">Cancel</a>
+            </div>
       </form>
+      </div>
        
-      <jsp:include page="../../_footer.jsp"/>
+      <jsp:include page="../../_footer.jsp"></jsp:include>
        
    </body>
 </html>

@@ -48,9 +48,10 @@
                     <div class="span9">
                         <div class="row">
                             <div class="span4">
-                                <a href="images/product/<%=product.getImage()%>" class="thumbnail" 
+                                <a href="<%=product.getImage()%>" class="thumbnail" 
                                    data-fancybox-group="group1" title="Description 1"
-                                   ><img alt="<%=product.getName()%> image" src="images/product/<%=product.getImage()%>"></a>												
+                                   ><img alt="<%=product.getName()%> image" style='min-height: 300px; max-height: 300px; object-fit: cover'
+                                      src="<%=product.getImage()%>"></a>												
 <!--                                <ul class="thumbnails small">								
                                     <li class="span1">
                                         <a href="themes/images/ladies/2.jpg" class="thumbnail" data-fancybox-group="group1" title="Description 2"><img src="themes/images/ladies/2.jpg" alt=""></a>
@@ -72,7 +73,8 @@
                                     <strong>Name: </strong> <span><%=product.getName()%></span><br>
                                     <strong>Brand: </strong> <a href="brands?search=<%=brand.getName()%>"><span
                                             ><%=brand.getName()%></span><br
-                                            ><img alt="<%=brand.getName()%> image" src="images/brand/<%=brand.getLogo()%>"></a><br>
+                                            ><img alt="<%=brand.getName()%> image" style='min-height: 100px; max-height: 100px; object-fit: scale-down'
+                                            src="<%=brand.getLogo()%>"></a><br>
                                     <strong>Category: </strong> <a href="categories?search=<%=category.getName()%>"><span
                                             ><%=category.getName()%></span></a><br>
                                 </address>									

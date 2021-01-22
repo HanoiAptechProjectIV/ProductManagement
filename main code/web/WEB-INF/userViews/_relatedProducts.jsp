@@ -18,6 +18,12 @@
     Connection conn = MyUtils.getStoredConnection(request);
     Product product = ((List<Product>) request.getAttribute("productList")).get(0);
     List<Product> productList = ProductDAO.findProductByCategory(conn, product.getCategoryId());
+    for(Product prod: productList){
+        if(prod.getId() == product.getId()){
+            productList.remove(prod);
+            break;
+        }
+    }
 %>
 <div class="row">
     <div class="span9">	
@@ -41,7 +47,7 @@
                             <div class="product-box">
                                 <span class="sale_tag"></span>												
                                 <a href="${pageContext.request.contextPath}/products?search=<%=prod.getName()%>"
-                                   ><img src="${pageContext.request.contextPath}/images/product/<%=prod.getImage()%>"
+                                   ><img src="<%=prod.getImage()%>" style='min-height: 200px; max-height: 200px; object-fit: cover'
                                       alt="<%=prod.getName()%> image" /></a><br>
 
                                 <%
@@ -73,7 +79,7 @@
                             <div class="product-box">
                                 <span class="sale_tag"></span>												
                                 <a href="${pageContext.request.contextPath}/products?search=<%=prod.getName()%>"
-                                   ><img src="${pageContext.request.contextPath}/images/product/<%=prod.getImage()%>"
+                                   ><img src="<%=prod.getImage()%>" style='min-height: 200px; max-height: 200px; object-fit: cover'
                                       alt="<%=prod.getName()%> image" /></a><br>
 
                                 <%

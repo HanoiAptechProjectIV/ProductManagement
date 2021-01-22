@@ -60,9 +60,9 @@ public class SearchServlet extends HttpServlet {
         try {
             String name = request.getParameter("name");
             
-            List<Product> prodList = ProductDAO.queryProduct(conn);
-            List<Brand> braList = BrandDAO.queryBrand(conn);
-            List<Category> cateList = CategoryDAO.queryCategory(conn);
+            List<Product> prodList = ProductDAO.queryDisplayProduct(conn);
+            List<Brand> braList = BrandDAO.queryDisplayBrand(conn);
+            List<Category> cateList = CategoryDAO.queryDisplayCategory(conn);
             Product product = null;
             Brand brand = null;
             Category category = null;

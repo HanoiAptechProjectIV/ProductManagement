@@ -22,17 +22,18 @@
     </head>
     <body>
 
-        <jsp:include page="../../_header.jsp"/>
-        <jsp:include page="../../_menu.jsp"/>
+        <jsp:include page="../../_header.jsp"></jsp:include>
+        <jsp:include page="../../_menu.jsp"></jsp:include>
 
-            <h3>Product List Page ${page}</h3>
+            <h3 style="text-align: center; margin-top: 40px">Product List Page ${page}</h3>
 
         <p style="color: red;">${errorString}</p>
 
-        <jsp:include page="../../_search.jsp"/>
+        <jsp:include page="../../_search.jsp"></jsp:include>
 
-            <table border="1" cellpadding="5" cellspacing="1" >
-                <tr>
+            <div class="container">
+                <table border="1" cellpadding="5" cellspacing="1" class="table table-bordered table-striped table-hover">
+                <tr class="table-info">
                 <c:set var="pageNum" value="${(page != null) ? page : 1}"/>
                 <th>Id
                     <a href="${pageContext.request.contextPath}/admin/productList?page=${pageNum}&sortBy=idASC"
@@ -92,7 +93,7 @@
                         <td>${product.id}</td>
                         <td>${product.name}</td>
                         <td>${product.price}</td>
-                        <td><img src="${pageContext.request.contextPath}/images/product/${product.image}"
+                        <td><img src="${product.image}"
                                  height="50" alt="${product.name} image"/></td>
                         <td>${product.quantity}</td>
                         <td>${product.description}</td>
@@ -117,7 +118,7 @@
                                 <a href="brandList?search=<%=bra.getName()%>"><%=bra.getName()%></a>
                             </div>
                             <div id="brandDiv">
-                                <img src="${pageContext.request.contextPath}/images/brand/<%=bra.getLogo()%>"
+                                <img src="<%=bra.getLogo()%>"
                                      alt="<%=bra.getName()%> Logo" height="30"/>
                                 <p><%=bra.getManufacturer()%></p>
                                 <p><%=bra.getDescription()%></p>
@@ -140,9 +141,10 @@
                 </c:forEach>
             </c:if>
         </table>
+            </div>
 
-        <jsp:include page="../../_pagination.jsp"/>
-        <jsp:include page="../../_footer.jsp"/>
+        <jsp:include page="../../_pagination.jsp"></jsp:include>
+        <jsp:include page="../../_footer.jsp"></jsp:include>
         <style>
             #categoryAnchor, #brandAnchor {
                 height: 39px;

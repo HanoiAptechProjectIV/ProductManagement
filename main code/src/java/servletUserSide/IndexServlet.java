@@ -54,10 +54,14 @@ public class IndexServlet extends HttpServlet {
                 count++;
                 if (count == 8) break;
             }
-            lastestProducts = ProductDAO.queryProduct(conn, 0, 8, "date_added", "DESC");
+            lastestProducts = ProductDAO.queryDisplayProduct(conn, 0, 8, "date_added", "DESC");
             
+            if(bestSellers.size()>0){
             returnedListsMap.put("Best seller", bestSellers);
+            }
+            if(lastestProducts.size()>0){
             returnedListsMap.put("Lastest ", lastestProducts);
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
             errorString = ex.getMessage();

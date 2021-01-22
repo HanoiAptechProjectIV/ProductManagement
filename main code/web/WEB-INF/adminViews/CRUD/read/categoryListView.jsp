@@ -15,16 +15,17 @@
     </head>
     <body>
 
-        <jsp:include page="../../_header.jsp"/>
-        <jsp:include page="../../_menu.jsp"/>
+        <jsp:include page="../../_header.jsp"></jsp:include>
+        <jsp:include page="../../_menu.jsp"></jsp:include>
 
-            <h3>Category List Page ${page}</h3>
+            <h3 style="text-align: center; margin-top: 40px">Category List Page ${page}</h3>
 
             <p style="color: red;">${errorString}</p>
 
-        <jsp:include page="../../_search.jsp"/>
-            <table border="1" cellpadding="5" cellspacing="1" >
-                <tr>
+        <jsp:include page="../../_search.jsp"></jsp:include>
+            <div class="container">
+                <table border="1" cellpadding="5" cellspacing="1" class="table table-bordered table-striped table-hover" >
+                <tr class="table-info">
                 <c:set var="pageNum" value="${(page != null) ? page : 1}"/>
                     <th>
                         Id 
@@ -71,9 +72,10 @@
             </c:forEach>
                 </c:if>
         </table>
+            </div>
 
-        <jsp:include page="../../_pagination.jsp"/>
-        <jsp:include page="../../_footer.jsp"/>
+        <jsp:include page="../../_pagination.jsp"></jsp:include>
+        <jsp:include page="../../_footer.jsp"></jsp:include>
         <script>
             
         </script>

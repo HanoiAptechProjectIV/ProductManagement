@@ -56,7 +56,8 @@
                                         <div class="product-box" style="min-height: inherit;">
 
                                             <p><a href="${pageContext.request.contextPath}/products?search=<%=prod.getName()%>"
-                                                  ><img src="${pageContext.request.contextPath}/images/product/<%=prod.getImage()%>"
+                                                  ><img src="<%=prod.getImage()%>"
+                                                      style='min-height: 250px; max-height: 250px; object-fit: cover'
                                                       alt="<%=prod.getName()%> image" /></a>
                                             </p>
                                             <%

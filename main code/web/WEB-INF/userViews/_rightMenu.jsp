@@ -21,9 +21,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     Connection conn = MyUtils.getStoredConnection(request);
-    List<Category> cateList = CategoryDAO.queryCategory(conn, 0, 5, "name", "ASC");
-    List<Brand> braList = BrandDAO.queryBrand(conn, 0, 5, "name", "ASC");
-    List<Product> prodList = ProductDAO.queryProduct(conn);
+    List<Category> cateList = CategoryDAO.queryDisplayCategory(conn, 0, 5, "name", "ASC");
+    List<Brand> braList = BrandDAO.queryDisplayBrand(conn, 0, 5, "name", "ASC");
+    List<Product> prodList = ProductDAO.queryDisplayProduct(conn);
     Map<Product, Integer> bestSellerMap = OrderDetailDAO.bestSellerMap(conn);
     List<Product> top3BestSeller = new ArrayList<Product>();
     int count = 0;
@@ -57,9 +57,6 @@
     <div class="block">
         <h4 class="title">
             <span class="pull-left"><span class="text">Randomize</span></span>
-            <span class="pull-right">
-                <a class="left button" href="#myCarousel" data-slide="prev"></a><a class="right button" href="#myCarousel" data-slide="next"></a>
-            </span>
         </h4>
         <div id="myCarousel" class="carousel slide">
             <div class="carousel-inner">
@@ -77,7 +74,8 @@
                                     Brand bra = BrandDAO.findBrand(conn, prod.getBrandId());
                                 %>                                
                                 <a href="products?search=<%=prod.getName()%>"><img alt="<%=prod.getName()%> image"
-                                                                                   src="images/product/<%=prod.getImage()%>"></a><br/>
+                                                                                   style='min-height: 150px; max-height: 150px; object-fit: cover'
+                                                                                   src="<%=prod.getImage()%>"></a><br/>
                                 <a href="${pageContext.request.contextPath}/products?search=<%=prod.getName()%>"
                                    class="title"><%=prod.getName()%></a><br/>
                                 <a href="${pageContext.request.contextPath}/brands?search=<%=bra.getName()%>"
@@ -100,7 +98,8 @@
             %>
             <li>
                 <a href="products?search=<%=product.getName()%>" title="<%=product.getName()%>">
-                    <img src="images/product/<%=product.getImage()%>" alt="<%=product.getName()%> image">
+                    <img src="<%=product.getImage()%>" 
+                         style='min-height: 120px; max-height: 120px; min-width: 120px; max-width: 120px; object-fit: cover' alt="<%=product.getName()%> image">
                 </a>
                 <a href="products?search=<%=product.getName()%>"><%=product.getName()%></a>
             </li>  
