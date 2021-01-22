@@ -56,7 +56,7 @@
                                                             <tr>
                                                                 <th>Image</th>
                                                                 <th>Product Name</th>
-                                                                <th>Quantity</th>
+                                                                <th>Purchase quan</th>
                                                                 <th>Unit Price</th>
                                                                 <th>Total</th>
                                                             </tr>
@@ -134,20 +134,20 @@
                                                     </c:if>
                                                     <div class="control-group">
                                                         <p>Full name: </p>
-                                                        <input type="text" name="name" value= "" required
-                                                               placeholder="Enter your full name" class="input-large" id="fullname-register">
+                                                        <input type="text" name="name" value= "" required style="width: 250px;"
+                                                               placeholder="fullname: John Doe" class="input-large" id="fullname-register">
                                                         <span class="error" id="fullname-error"></span>
                                                     </div>
                                                     <div class="control-group">
                                                         <p>Email:</p>
-                                                        <input type="text" name="email" value= "" required
-                                                               placeholder="Enter your email" class="input-large" id="email-register">
+                                                        <input type="text" name="email" value= "" required style="width: 250px;"
+                                                               placeholder="email: -_mY.ownsite12@you.me.com" class="input-large" id="email-register">
                                                         <span class="error" id="email-error"></span>
                                                     </div>					  
                                                     <div class="control-group">
                                                         <p>Phone: </p>
-                                                        <input type="text" name="phone" value= "" required
-                                                               placeholder="Enter your phone number" class="input-large" id="phone-register">
+                                                        <input type="text" name="phone" value= "" required style="width: 250px;"
+                                                               placeholder="phone: 0123456789" class="input-large" id="phone-register">
                                                         <span class="error" id="phone-error"></span>
                                                     </div>
                                                 </div>
@@ -186,6 +186,7 @@
             <script>
                 const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
                 const phoneRegex = /(84|0)+([1-9]{1})([0-9]{8})\b/g;
+                const fullNameRegex = /(^[A-Za-z]{3,16})([ ]{0,1})([A-Za-z]{3,16})?([ ]{0,1})?([A-Za-z]{3,16})?([ ]{0,1})?([A-Za-z]{3,16})/;
                 const submitButton = document.querySelector('#submit-button');
                 const phoneError = document.querySelector('#phone-error');
                 const fullNameError = document.querySelector('#fullname-error');
@@ -227,6 +228,8 @@
                     if (fullname.value === '') {
                         fullNameError.textContent = 'Name must not be blank';
                         return false;
+                    } else if(!fullNameRegex.test(fullname.value)){
+                        fullNameError.textContent = 'Invalid full name (full name must has atleast 2 words with 3 characters each word)';
                     } else {
                         fullNameError.textContent = '';
                     }
@@ -235,7 +238,7 @@
                         emailError.textContent = 'Email must not be blank';
                         return false;
                     } else if (!emailRegex.test(String(email.value).toLocaleLowerCase())) {
-                        emailError.textContent = 'Invalid email (valid example: -_mY.ownsite12@you.me.com )';
+                        emailError.textContent = 'Invalid email (valid example: -_mY.ownsite12@you.me.com)';
                         return false;
                     } else {
                         emailError.textContent = '';
@@ -245,7 +248,7 @@
                         phoneError.textContent = 'Phone must not be blank';
                         return false;
                     } else if (!phoneRegex.test(phone.value)) {
-                        phoneError.textContent = 'Invalid phone for Vietnamese countries ( start with 0 or 84, next number by 1->9, last 8 numbers by 0->9)';
+                        phoneError.textContent = 'Invalid phone for Vietnamese countries (start with 0 or 84, next number by 1->9, last 8 numbers by 0->9)';
                         return false;
                     } else {
                         phoneError.textContent = '';

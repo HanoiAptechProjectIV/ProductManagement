@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <section class="navbar main-menu">
     <div class="navbar-form main-menu">				
-        <a href="index.html" class="logo pull-left">
+        <a href="index" class="logo pull-left">
             <div class="logo">
                 <img src="resources/themes/img/logo/fnatic.png" class="site_logo" alt="titan">
                 <p class="site_text">Titan</p>

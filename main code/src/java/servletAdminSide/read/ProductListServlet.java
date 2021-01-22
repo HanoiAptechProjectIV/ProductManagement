@@ -67,7 +67,7 @@ public class ProductListServlet extends HttpServlet {
                 }
             } else {
                 rowInTable = ProductDAO.countRows(conn);
-                pageQuantity = (rowInTable % 2 == 0) ? rowInTable / 2 : rowInTable / 2 + 1;
+                pageQuantity = (rowInTable % rowInPage == 0) ? rowInTable / rowInPage : rowInTable / rowInPage + 1;
                 pageNum = (pageNum > pageQuantity) ? pageQuantity : pageNum;
                 int offset = (pageNum - 1) * rowInPage;
 

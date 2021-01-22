@@ -49,8 +49,8 @@
                                         for (int i = 0; i < entry.getValue().size(); i++) {
                                             Product prod = entry.getValue().get(i);
                                     %>
-                                    <li class="span3">
-                                        <div class="product-box">
+                                    <li class="span3" style="min-height: 300px;">
+                                        <div class="product-box" style="min-height: inherit;">
 
                                             <p><a href="${pageContext.request.contextPath}/products?search=<%=prod.getName()%>"
                                                   ><img src="${pageContext.request.contextPath}/images/product/<%=prod.getImage()%>"
@@ -66,8 +66,15 @@
                                                class="category"><%=bra.getName()%></a><br>
                                             <a href="${pageContext.request.contextPath}/categories?search=<%=cate.getName()%>"
                                                class="brand"><%=cate.getName()%></a><br/>
-                                            <p class="price"><%=prod.getPrice()%> VND</p><br>
+                                            <p><span class="error"><%=prod.getPrice()%> VND</span><br>
+                                            <% if(prod.getQuantity() > 0){%>
+                                            <span class="price"><%=prod.getQuantity()%> left</span><br>
+                                            <%} else {%>
+                                            <span class="price">Out of stock</span><br>
+                                            <%}%>
+                                            </p>
                                             <%
+                                                if(prod.getQuantity() > 0){
                                                 if (cart == null || cart.isEmpty()) {
                                             %>
                                             <a href="cart?action=buy&id=<%=prod.getId()%>"
@@ -80,6 +87,7 @@
                                             %>
                                             <a href="cart?action=remove&id=<%=prod.getId()%>"
                                                ><button id="btnRemove<%=prod.getId()%>" class="btn">Remove from cart</button></a>                                          
+                                            <%}%>
                                             <%}%>
                                             <%}%>
                                             <%}%>
@@ -98,8 +106,8 @@
                                         for (int i = 4; i < entry.getValue().size(); i++) {
                                             Product prod = entry.getValue().get(i);
                                     %>
-                                    <li class="span3">
-                                        <div class="product-box">
+                                    <li class="span3" style="min-height: 300px;">
+                                        <div class="product-box" style="min-height: inherit;">
 
                                             <p><a href="${pageContext.request.contextPath}/products?search=<%=prod.getName()%>"
                                                   ><img src="${pageContext.request.contextPath}/images/product/<%=prod.getImage()%>"
@@ -115,8 +123,15 @@
                                                class="category"><%=bra.getName()%></a><br>
                                             <a href="${pageContext.request.contextPath}/categories?search=<%=cate.getName()%>"
                                                class="brand"><%=cate.getName()%></a><br/>
-                                            <p class="price"><%=prod.getPrice()%> VND</p><br>
+                                            <p><span class="error"><%=prod.getPrice()%> VND</span><br>
+                                            <% if(prod.getQuantity() > 0){%>
+                                            <span class="price"><%=prod.getQuantity()%> left</span><br>
+                                            <%} else {%>
+                                            <span class="price">Out of stock</span><br>
+                                            <%}%>
+                                            </p>
                                             <%
+                                                if(prod.getQuantity() > 0){
                                                 if (cart == null || cart.isEmpty()) {
                                             %>
                                             <a href="cart?action=buy&id=<%=prod.getId()%>"
@@ -129,6 +144,7 @@
                                             %>
                                             <a href="cart?action=remove&id=<%=prod.getId()%>"
                                                ><button id="btnRemove<%=prod.getId()%>" class="btn">Remove from cart</button></a>                                          
+                                            <%}%>
                                             <%}%>
                                             <%}%>
                                             <%}%>

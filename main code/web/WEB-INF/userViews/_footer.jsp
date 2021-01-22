@@ -6,20 +6,21 @@
         <div class="span3">
             <h4>Menu</h4>
             <ul class="nav">
-                <li><a href="./index.html">Homepage</a></li>  
-                <li><a href="./about.html">About Us</a></li>
-                <li><a href="./contact.html">Contact Us</a></li>
-                <li><a href="./cart.html">Your Cart</a></li>
-                <li><a href="./register.html">Login</a></li>							
+                <li><a href="">Homepage</a></li>  
+                <li><a href="faq">FAQ</a></li>
+                <li><a href="contact">Contact Us</a></li>
+                <li><a href="login">Login</a></li>							
+                <li><a href="signup">Sign up</a></li>							
             </ul>					
         </div>
         <div class="span4">
             <h4>My Account</h4>
             <ul class="nav">
-                <li><a href="#">My Account</a></li>
-                <li><a href="#">Order History</a></li>
-                <li><a href="#">Wish List</a></li>
-                <li><a href="#">Newsletter</a></li>
+                <li><a href="profile">Your Account</a></li>
+                <li><a href="cart">Your Cart</a></li>
+                <li><a href="history">Your Order History</a></li>
+<!--                <li><a href="#">Wish List</a></li>
+                <li><a href="#">Newsletter</a></li>-->
             </ul>
         </div>
         <div class="span5">
@@ -37,17 +38,17 @@
             </p>
             <br>
             <span class="social_icons">
-                <a class="facebook" href="#">Facebook</a>
-                <a class="twitter" href="#">Twitter</a>
-                <a class="skype" href="#">Skype</a>
-                <a class="vimeo" href="#">Vimeo</a>
+                <img height="30px" class="facebook" src="resources/themes/img/network/facebook.png">
+                <img height="30px" class="twitter" src="resources/themes/img/network/twitter.png">
+                <img height="30px" class="skype" src="resources/themes/img/network/zalo.png">
+                <img height="30px" class="vimeo" src="resources/themes/img/network/tik-tok.png">
             </span>
         </div>					
     </div>	
 </section>
 
 <section id="copyright">
-    <span>We sell everything in the world!</span>
+    <span>Online distribution and digital copyright management website for video games </span>
 </section>
 
 <!-- scripts -->

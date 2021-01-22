@@ -25,6 +25,8 @@
             <div class="accordion" id="accordion2">
               <div class="accordion-group">
                 <div class="accordion-heading">
+                    <br>
+                    <h4 class="center">Online distribution and digital copyright management website for video games </h4><hr>
                   <a
                     class="accordion-toggle"
                     data-toggle="collapse"
@@ -170,7 +172,7 @@
                     have both a console-linked account (logging in via
                     PlayStation, Xbox, or Nintendo account) and a separate Titan
                     account. If you still encounter issues, please contact
-                    player support <a href="./contact.html">here</a>.
+                    player support <a href="contact">here</a>.
                   </div>
                 </div>
               </div>

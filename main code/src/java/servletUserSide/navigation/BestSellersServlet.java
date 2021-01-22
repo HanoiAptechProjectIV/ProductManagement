@@ -62,11 +62,12 @@ public class BestSellersServlet extends HttpServlet {
             if (name != null) {
                 list.add(ProductDAO.findProductByName(conn, name));
             } else {
-                rowInTable = ProductDAO.countRows(conn);
+                Map<Product, Integer> bestSellerMap = OrderDetailDAO.bestSellerMap(conn);
+                rowInTable = bestSellerMap.size();
                 pageQuantity = (rowInTable % cellInPage == 0) ? rowInTable / cellInPage : rowInTable / cellInPage + 1;
                 pageNum = (pageNum > pageQuantity) ? pageQuantity : pageNum;
                 int offset = (pageNum - 1) * cellInPage;
-                Map<Product, Integer> bestSellerMap = OrderDetailDAO.bestSellerMap(conn);
+                
                 int count =0;
                 for (Map.Entry<Product, Integer> entry : bestSellerMap.entrySet()) {
                     count++;

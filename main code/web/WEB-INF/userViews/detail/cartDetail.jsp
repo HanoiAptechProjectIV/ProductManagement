@@ -14,7 +14,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Your cart</title>
     </head>
-    <body>
+    <body onload="setMaxQuantity();">
         <jsp:include page="../_header.jsp"/>
         <div id="wrapper" class="container">
             <jsp:include page="../_menu.jsp"/> 
@@ -38,7 +38,8 @@
                                         <th>Remove</th>
                                         <th>Image</th>
                                         <th>Product Name</th>
-                                        <th>Quantity</th>
+                                        <th>Remain</th>
+                                        <th>Purchase quan</th>
                                         <th>Unit Price</th>
                                         <th>Total</th>
                                     </tr>
@@ -57,7 +58,9 @@
                                                ><img alt="<%=prod.getName()%> image" 
                                                   src="images/product/<%=prod.getImage()%>"></a></td>
                                         <td><%=prod.getName()%></td>
-                                        <td><input type="number" name="quantity<%=i%>" class="input-mini" value="<%=quantity%>"></td>
+                                        <td><%=prod.getQuantity()%></td>
+                                        <td><input type="number" id="quantity<%=i%>" name="quantity<%=i%>"  min="1"
+                                                   class="input-mini" value="<%=quantity%>"></td>
                                         <td><%=prod.getPrice()%> VND</td>
                                         <td><%=(prod.getPrice() * quantity)%> VND</td>
                                     </tr>			  
@@ -107,8 +110,29 @@
                 </div>
             </section>
             <jsp:include page="../_footer.jsp"/>
-        </div>        
+        </div>    
+<%
+    if (session.getAttribute("cart") != null) {
+        List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");   
+        if (cart.size() > 0) {
+%>        
         <script>
+            function setMaxQuantity(){
+                <%
+                    for(int i=0;i<cart.size();i++){
+                        Product prod = cart.get(i).getProduct();
+                        int quantity = cart.get(i).getQuantity();
+                %>
+                let inputNum<%=i%> = document.getElementById("quantity<%=i%>");
+                <%
+                        if(prod.getQuantity() < quantity){
+                %>
+                inputNum<%=i%>.value = '<%=prod.getQuantity()%>';
+                <%}%>
+                inputNum<%=i%>.max = '<%=prod.getQuantity()%>';
+                <%}%>
+            }
+            
             function changeValueCheckBox(checkbox) {
                 if(checkbox.value === 'false'){
                     checkbox.value = 'true';
@@ -117,5 +141,6 @@
                 }
             }
         </script>
+<%}}%>
     </body>
 </html>

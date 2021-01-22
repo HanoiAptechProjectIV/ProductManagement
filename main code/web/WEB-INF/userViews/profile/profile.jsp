@@ -29,8 +29,9 @@
                         <p id="notification" style="color: red;">${errorString}</p>
 
                         <c:if test="${user != null}">
+                            <a href="history?userId=${user.id}"><button class="btn">Order History</button></a>
                             <form id="my-form" action="${pageContext.request.contextPath}/profile" method="post" class="form-stacked">
-                                id<input id="userId" type="text" readonly hidden name="id" value="${user.id}"/>
+                                <input id="userId" type="hidden" readonly name="id" value="${user.id}"/>
                                 <fieldset>
                                     <div class="register-row">
                                         <div class="register-left register-column">

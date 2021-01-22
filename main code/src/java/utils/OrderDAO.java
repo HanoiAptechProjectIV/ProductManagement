@@ -36,6 +36,31 @@ public class OrderDAO {
         return row;
     }
 
+    public static List<Order> queryOrder(Connection conn) throws SQLException {
+        String sql = "Select * from [Order] order by id";
+
+        PreparedStatement pstm = conn.prepareStatement(sql);
+
+        ResultSet rs = pstm.executeQuery();
+        List<Order> list = new ArrayList<Order>();
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            LocalDateTime createdTime = rs.getTimestamp("created_time").toLocalDateTime();
+            LocalDateTime paymentTime = rs.getTimestamp("payment_time").toLocalDateTime();
+            int amount = rs.getInt("amount");
+            int userId = rs.getInt("user_id");
+
+            Order order = new Order();
+            order.setId(id);
+            order.setCreatedTime(createdTime);
+            order.setPaymentTime(paymentTime);
+            order.setAmount(amount);
+            order.setUserId(userId);
+            list.add(order);
+        }
+        return list;
+    }
+    
     public static List<Order> queryOrder(Connection conn, int offset, int total, String sortBy, String ordinal) throws SQLException {
         String sql = "Select * from [Order] order by "+sortBy+" "+ordinal+" offset " + offset + " rows fetch next " + total + " rows only";
 
@@ -86,6 +111,31 @@ public class OrderDAO {
         return null;
     }
 
+    public static List<Order> findOrderByUserId(Connection conn, int userId, int offset, int total, String sortBy, String ordinal) throws SQLException {
+        String sql = "Select * from [Order] a where a.[user_id]=? order by "+sortBy+" "+ordinal+" offset "+offset+" rows fetch next "+total+" rows only";
+
+        PreparedStatement pstm = conn.prepareStatement(sql);
+        pstm.setInt(1, userId);
+
+        ResultSet rs = pstm.executeQuery();
+        List<Order> list = new ArrayList<Order>();
+        while (rs.next()) {
+            LocalDateTime createdTime = rs.getTimestamp("created_time").toLocalDateTime();
+            LocalDateTime paymentTime = rs.getTimestamp("payment_time").toLocalDateTime();
+            int amount = rs.getInt("amount");
+            int id = rs.getInt("id");
+
+            Order order = new Order();
+            order.setId(id);
+            order.setCreatedTime(createdTime);
+            order.setPaymentTime(paymentTime);
+            order.setAmount(amount);
+            order.setUserId(userId);
+            list.add(order);
+        }
+        return list;
+    }
+    
     public static List<Order> findOrderByUserId(Connection conn, int userId) throws SQLException {
         String sql = "Select * from [Order] a where a.[user_id]=? order by id ASC";
 

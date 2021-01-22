@@ -136,16 +136,20 @@ public class CartServlet extends HttpServlet {
                 }
             } else {
                 List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
-                List<CartItem> cartTemp = cart.subList(0, cart.size());
+                List<CartItem> cartTemp = new ArrayList<>();
                 for(int i=0;i<cart.size();i++){
                     int quantity = Integer.parseInt(request.getParameter("quantity"+i));
                     boolean isRemove = Boolean.parseBoolean(request.getParameter("remove"+i));
                     
-                    cartTemp.get(i).setQuantity(quantity);
+                    cart.get(i).setQuantity(quantity);
                     if(isRemove){
-                        cartTemp.remove(cart.get(i));
+                        cartTemp.add(cart.get(i));
                     }
                 }
+                for(CartItem item : cartTemp){
+                    cart.remove(item);
+                }
+                session.setAttribute("cart", cart);
             }
         } catch (Exception e) {
             e.printStackTrace();

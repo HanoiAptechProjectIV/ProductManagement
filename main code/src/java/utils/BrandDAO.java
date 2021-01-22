@@ -18,6 +18,18 @@ import java.util.List;
  * @author Hung
  */
 public class BrandDAO {
+    public static int countDisplayRows(Connection conn) throws SQLException {
+        String sql = "SELECT COUNT(*) As [rowcount] FROM Brand where disable =0";
+        PreparedStatement pstm = conn.prepareStatement(sql);
+        ResultSet rs = pstm.executeQuery();
+        
+        int row = 0;
+        while(rs.next()){
+            row = rs.getInt("rowcount");
+        }
+        return row;
+    }
+    
     public static int countRows(Connection conn) throws SQLException {
         String sql = "SELECT COUNT(*) As [rowcount] FROM Brand";
         PreparedStatement pstm = conn.prepareStatement(sql);
@@ -29,6 +41,33 @@ public class BrandDAO {
         }
         return row;
     }
+    
+    public static List<Brand> queryDisplayBrand(Connection conn) throws SQLException {
+        String sql = "Select * from Brand where disable = 0 order by name";
+ 
+        PreparedStatement pstm = conn.prepareStatement(sql);
+ 
+        ResultSet rs = pstm.executeQuery();
+        List<Brand> list = new ArrayList<Brand>();
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String name = rs.getString("name");
+            String description = rs.getString("description");
+            String logo = rs.getString("logo");
+            String manufacturer= rs.getString("manufacturer");
+            boolean disable = rs.getBoolean("disable");
+            
+            Brand brand = new Brand();
+            brand.setId(id);
+            brand.setName(name);
+            brand.setDescription(description);
+            brand.setLogo(logo);
+            brand.setManufacturer(manufacturer);
+            brand.setDisable(disable);
+            list.add(brand);
+        }
+        return list;
+    } 
     
     public static List<Brand> queryBrand(Connection conn) throws SQLException {
         String sql = "Select * from Brand order by name";
@@ -56,6 +95,33 @@ public class BrandDAO {
         }
         return list;
     } 
+    
+    public static List<Brand> queryDisplayBrand(Connection conn, int offset, int total, String sortBy, String ordinal) throws SQLException {
+        String sql = "Select * from Brand where disable = 0 order by "+sortBy+" "+ordinal+" offset "+offset+" rows fetch next "+total+" rows only";
+ 
+        PreparedStatement pstm = conn.prepareStatement(sql);
+ 
+        ResultSet rs = pstm.executeQuery();
+        List<Brand> list = new ArrayList<Brand>();
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String name = rs.getString("name");
+            String description = rs.getString("description");
+            String logo = rs.getString("logo");
+            String manufacturer= rs.getString("manufacturer");
+            boolean disable = rs.getBoolean("disable");
+            
+            Brand brand = new Brand();
+            brand.setId(id);
+            brand.setName(name);
+            brand.setDescription(description);
+            brand.setLogo(logo);
+            brand.setManufacturer(manufacturer);
+            brand.setDisable(disable);
+            list.add(brand);
+        }
+        return list;
+    }
     
     public static List<Brand> queryBrand(Connection conn, int offset, int total, String sortBy, String ordinal) throws SQLException {
         String sql = "Select * from Brand order by "+sortBy+" "+ordinal+" offset "+offset+" rows fetch next "+total+" rows only";

@@ -14,6 +14,7 @@
     Object pageObj = request.getAttribute("page");
 %>
 <c:set var="sortByObj" value="${(sortBy != null) ? sortBy : 'nameASC'}"/>
+<div class="container" style="text-align: center; margin-top: 100px;">
 <c:forEach begin="1" end="${pageQuantity}" var="i">
     <c:choose>
         <c:when test="${i == 1 && page != i}">
@@ -61,10 +62,13 @@
 <c:if test="<%=pageObj != null%>">
 |    
 <form action="${pageContext.request.contextPath}<%=servletPath%>" style="display: inline-block;">
-    <input type="text" size="5" maxlength="3" name="page" placeholder="${page}">
-    <input type="submit" value="Go">
+    <div class="form-group" style="display: flex;">
+        <input type="text" size="5" maxlength="3" name="page" placeholder="${page}" >
+        <button class="btn btn-primary" type="submit">Go</button>
+    </div>
 </form>
 </c:if>
+</div>
 
 <script>
     <c:if test="${page != null}">

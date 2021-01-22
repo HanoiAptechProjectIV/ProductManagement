@@ -60,11 +60,11 @@ public class CategoriesServlet extends HttpServlet {
             if (name != null) {
                 list.add(CategoryDAO.findCategoryByName(conn, name));
             } else {
-                rowInTable = CategoryDAO.countRows(conn);
+                rowInTable = CategoryDAO.countDisplayRows(conn);
                 pageQuantity = (rowInTable % cellInPage == 0) ? rowInTable / cellInPage : rowInTable / cellInPage + 1;
                 pageNum = (pageNum > pageQuantity) ? pageQuantity : pageNum;
                 int offset = (pageNum - 1) * cellInPage;
-                list = CategoryDAO.queryCategory(conn, offset, cellInPage, abridgedSortBy, ordinal);
+                list = CategoryDAO.queryDisplayCategory(conn, offset, cellInPage, abridgedSortBy, ordinal);
 
                 request.setAttribute("pageQuantity", pageQuantity);
                 request.setAttribute("page", pageNum);

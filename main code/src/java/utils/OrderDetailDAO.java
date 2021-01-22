@@ -12,13 +12,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;  
-import java.util.Comparator;  
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;  
+import java.util.Map.Entry;
 
 /**
  *
@@ -51,13 +51,15 @@ public class OrderDetailDAO {
 
         for (OrderDetail detail : list) {
             product = ProductDAO.findProduct(conn, detail.getProductId());
-            if (prodPurQuan.containsKey(product.getId())) {
-                prodPurQuan.put(product.getId(), prodPurQuan.get(product.getId()) + detail.getPurchasedQuantity());
-            } else {
-                prodPurQuan.put(product.getId(), detail.getPurchasedQuantity());
+            if (!product.isDisable()) {
+                if (prodPurQuan.containsKey(product.getId())) {
+                    prodPurQuan.put(product.getId(), prodPurQuan.get(product.getId()) + detail.getPurchasedQuantity());
+                } else {
+                    prodPurQuan.put(product.getId(), detail.getPurchasedQuantity());
+                }
             }
         }
-        
+
         List<Entry<Integer, Integer>> sortList = new ArrayList<Entry<Integer, Integer>>(prodPurQuan.entrySet());
         Collections.sort(sortList, new Comparator<Entry<Integer, Integer>>() {
             @Override
@@ -65,13 +67,13 @@ public class OrderDetailDAO {
                 return o2.getValue().compareTo(o1.getValue());
             }
         });
-        
+
         Map<Product, Integer> bestSeller = new LinkedHashMap<Product, Integer>();
-        for(Entry<Integer, Integer> entry : sortList){
+        for (Entry<Integer, Integer> entry : sortList) {
             product = ProductDAO.findProduct(conn, entry.getKey());
             bestSeller.put(product, entry.getValue());
         }
-        
+
         return bestSeller;
     }
 

@@ -43,8 +43,8 @@ public class ProductsServlet extends HttpServlet {
 
         String errorString = null;
         String name = request.getParameter("search");
-        String categoryIdStr =request.getParameter("categoryId");
-        String brandIdStr =request.getParameter("brandId");
+        String categoryIdStr = request.getParameter("categoryId");
+        String brandIdStr = request.getParameter("brandId");
         List<Product> list = new ArrayList<>();
         String sortBy = (request.getParameter("sortBy") != null) ? request.getParameter("sortBy") : "nameASC";
         try {
@@ -61,21 +61,23 @@ public class ProductsServlet extends HttpServlet {
 
             if (name != null) {
                 list.add(ProductDAO.findProductByName(conn, name));
-            } else if(brandIdStr != null) {
-                int brandId = Integer.parseInt(brandIdStr);
-                list.addAll(ProductDAO.findProductByBrand(conn, brandId));
-            } else if(categoryIdStr != null) {
-                int categoryId = Integer.parseInt(categoryIdStr);
-                list.addAll(ProductDAO.findProductByCategory(conn, categoryId));
             } else {
-                rowInTable = ProductDAO.countRows(conn);
+                rowInTable = ProductDAO.countDisplayRows(conn);
                 pageQuantity = (rowInTable % cellInPage == 0) ? rowInTable / cellInPage : rowInTable / cellInPage + 1;
                 pageNum = (pageNum > pageQuantity) ? pageQuantity : pageNum;
                 int offset = (pageNum - 1) * cellInPage;
-                list = ProductDAO.queryProduct(conn, offset, cellInPage, abridgedSortBy, ordinal);
-
                 request.setAttribute("pageQuantity", pageQuantity);
                 request.setAttribute("page", pageNum);
+                
+                if (brandIdStr != null) {
+                    int brandId = Integer.parseInt(brandIdStr);
+                    list.addAll(ProductDAO.findProductByBrand(conn, brandId, offset, cellInPage, abridgedSortBy, ordinal));
+                } else if (categoryIdStr != null) {
+                    int categoryId = Integer.parseInt(categoryIdStr);
+                    list.addAll(ProductDAO.findProductByCategory(conn, categoryId, offset, cellInPage, abridgedSortBy, ordinal));
+                } else {
+                    list = ProductDAO.queryDisplayProduct(conn, offset, cellInPage, abridgedSortBy, ordinal);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

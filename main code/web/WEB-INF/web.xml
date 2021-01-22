@@ -16,6 +16,7 @@
     <filter-mapping>
         <filter-name>checkLoginedUserFilter</filter-name>
         <url-pattern>/profile</url-pattern>
+        <url-pattern>/history</url-pattern>
     </filter-mapping>    
     <filter-mapping>
         <filter-name>encodingFilter</filter-name>
@@ -24,6 +25,14 @@
     <welcome-file-list>
         <welcome-file>index</welcome-file>
     </welcome-file-list>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/errorPage.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/errorPage.jsp</location>
+    </error-page>
 <!--    <session-config>
         <session-timeout>10</session-timeout>
     </session-config>-->

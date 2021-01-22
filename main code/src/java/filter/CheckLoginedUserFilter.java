@@ -23,7 +23,7 @@ import utils.MyUtils;
  *
  * @author Hung
  */
-@WebFilter(filterName = "checkLoginedUserFilter", urlPatterns = {"/profile"})
+@WebFilter(filterName = "checkLoginedUserFilter", urlPatterns = {"/profile", "/history"})
 public class CheckLoginedUserFilter implements Filter {
 
     @Override

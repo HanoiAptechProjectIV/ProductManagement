@@ -45,7 +45,7 @@ public class OrderListServlet extends HttpServlet {
 
         String errorString = null;
         List<Order> list = new ArrayList<Order>();
-        String sortBy = (request.getParameter("sortBy") != null) ? request.getParameter("sortBy") : "idASC";
+        String sortBy = (request.getParameter("sortBy") != null) ? request.getParameter("sortBy") : "idDESC";
         try {
             String userName = request.getParameter("search");
             String id = request.getParameter("id");
@@ -66,7 +66,7 @@ public class OrderListServlet extends HttpServlet {
                 || abridgedSortBy.equals("purchased_quantity")
                 || abridgedSortBy.equals("status")){
                 abridgedSortBy = "id";
-                ordinal ="ASC";
+                ordinal ="DESC";
             }
 
             if (orderId != Integer.MAX_VALUE) {
@@ -78,7 +78,7 @@ public class OrderListServlet extends HttpServlet {
                 }
             } else {
                 rowInTable = OrderDAO.countRows(conn);
-                pageQuantity = (rowInTable % 2 == 0) ? rowInTable / 2 : rowInTable / 2 + 1;
+                pageQuantity = (rowInTable % rowInPage == 0) ? rowInTable / rowInPage : rowInTable / rowInPage + 1;
                 pageNum = (pageNum > pageQuantity) ? pageQuantity : pageNum;
                 int offset = (pageNum - 1) * rowInPage;
                 list = OrderDAO.queryOrder(conn, offset, rowInPage, abridgedSortBy, ordinal);

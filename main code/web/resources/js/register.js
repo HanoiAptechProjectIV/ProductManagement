@@ -23,6 +23,7 @@
         const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
         const passRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
         const phoneRegex = /(84|0)+([1-9]{1})([0-9]{8})\b/g;
+        const fullNameRegex = /(^[A-Za-z]{3,16})([ ]{0,1})([A-Za-z]{3,16})?([ ]{0,1})?([A-Za-z]{3,16})?([ ]{0,1})?([A-Za-z]{3,16})/;
 
         submitButton.addEventListener('click', (e) => {
 
@@ -76,6 +77,8 @@
             if (fullname.value === '') {
                 fullNameError.textContent = 'Name must not be blank';
                 return false;
+            } else if(!fullNameRegex.test(fullname.value)){
+                fullNameError.textContent = 'Invalid full name (full name must has atleast 2 words with 3 characters each word)';
             } else {
                 fullNameError.textContent = '';
             }

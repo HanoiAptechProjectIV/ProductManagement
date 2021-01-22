@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servletUserSide.navigation;
+package servletUserSide.profile;
 
 /**
  *
  * @author Hung
  */
+import beans.Order;
+import beans.User;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -21,17 +23,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import beans.Brand;
 import java.util.ArrayList;
 import utils.MyUtils;
-import utils.BrandDAO;
+import utils.OrderDAO;
+import utils.UserDAO;
 
-@WebServlet(urlPatterns = {"/brands"})
-public class BrandsServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/history"})
+public class OrderHistoryServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    public BrandsServlet() {
+    public OrderHistoryServlet() {
         super();
     }
 
@@ -42,12 +44,13 @@ public class BrandsServlet extends HttpServlet {
         Connection conn = MyUtils.getStoredConnection(request);
 
         String errorString = null;
-        String name = request.getParameter("search");
-        List<Brand> list = new ArrayList<>();
-        String sortBy = (request.getParameter("sortBy") != null) ? request.getParameter("sortBy") : "nameASC";
+        List<Order> list = new ArrayList<>();
+        String sortBy = (request.getParameter("sortBy") != null) ? request.getParameter("sortBy") : "idDESC";
         try {
+            int userId = Integer.parseInt(request.getParameter("userId"));
+            
             int rowInTable = 0;
-            int cellInPage = 6;
+            int rowInPage = 1;
             int pageQuantity = 1;
             int pageNum = (request.getParameter("page") != null)
                     ? Integer.parseInt(request.getParameter("page"))
@@ -56,38 +59,32 @@ public class BrandsServlet extends HttpServlet {
 
             String ordinal = (sortBy.contains("ASC")) ? "ASC" : "DESC";
             String abridgedSortBy = sortBy.substring(0, sortBy.lastIndexOf(ordinal));
-
-            if (name != null) {
-                list.add(BrandDAO.findBrandByName(conn, name));
-            } else {
-                rowInTable = BrandDAO.countDisplayRows(conn);
-                pageQuantity = (rowInTable % cellInPage == 0) ? rowInTable / cellInPage : rowInTable / cellInPage + 1;
-                pageNum = (pageNum > pageQuantity) ? pageQuantity : pageNum;
-                int offset = (pageNum - 1) * cellInPage;
-                list = BrandDAO.queryDisplayBrand(conn, offset, cellInPage, abridgedSortBy, ordinal);
-
-                request.setAttribute("pageQuantity", pageQuantity);
-                request.setAttribute("page", pageNum);
+            if (abridgedSortBy.equals("product_id")
+                    || abridgedSortBy.equals("purchased_quantity")
+                    || abridgedSortBy.equals("status")) {
+                abridgedSortBy = "id";
+                ordinal = "DESC";
             }
+            rowInTable = OrderDAO.findOrderByUserId(conn, userId).size();
+            pageQuantity = (rowInTable % rowInPage == 0) ? rowInTable / rowInPage : rowInTable / rowInPage + 1;
+            pageNum = (pageNum > pageQuantity) ? pageQuantity : pageNum;
+            int offset = (pageNum - 1) * rowInPage;
+            list = OrderDAO.findOrderByUserId(conn, userId, offset, rowInPage, abridgedSortBy, ordinal);
+
+            request.setAttribute("pageQuantity", pageQuantity);
+            request.setAttribute("page", pageNum);
         } catch (Exception e) {
             e.printStackTrace();
             errorString = e.getMessage();
         } finally {
             // Lưu thông tin vào request attribute trước khi forward sang views.
             request.setAttribute("errorString", errorString);
-            request.setAttribute("brandList", list);
+            request.setAttribute("orderList", list);
             request.setAttribute("sortBy", sortBy);
 
-            if (name != null) {
-                // Forward sang /WEB-INF/adminViews/brandListView.jsp
-                RequestDispatcher dispatcher = request.getServletContext()
-                        .getRequestDispatcher("/WEB-INF/userViews/detail/brandDetailView.jsp");
-                dispatcher.forward(request, response);
-            } else {
-                RequestDispatcher dispatcher = request.getServletContext()
-                        .getRequestDispatcher("/WEB-INF/userViews/navigation/brandsView.jsp");
-                dispatcher.forward(request, response);
-            }
+            RequestDispatcher dispatcher = request.getServletContext()
+                    .getRequestDispatcher("/WEB-INF/userViews/profile/historyView.jsp");
+            dispatcher.forward(request, response);
         }
     }
 

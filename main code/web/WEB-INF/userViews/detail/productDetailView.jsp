@@ -21,12 +21,7 @@
         <meta charset="UTF-8">
         <title>User Home Page</title>
     </head>
-    <body>
-
-        <jsp:include page="../_header.jsp"/>
-        <div id="wrapper" class="container">
-            <jsp:include page="../_menu.jsp"/>
-
+    <body onload="setMaxQuantity();">
             <%
                 Connection conn = MyUtils.getStoredConnection(request);
                 Product product = ((List<Product>) request.getAttribute("productList")).get(0);
@@ -43,6 +38,11 @@
                     }
                 }
             %>            
+
+        <jsp:include page="../_header.jsp"/>
+        <div id="wrapper" class="container">
+            <jsp:include page="../_menu.jsp"/>
+
             <section class="main-content">				
                 <div class="row">						
                     <div class="span9">
@@ -76,6 +76,7 @@
                                     <strong>Category: </strong> <a href="categories?search=<%=category.getName()%>"><span
                                             ><%=category.getName()%></span></a><br>
                                 </address>									
+                                <h4>Remain quantity: <%=product.getQuantity()%></h4>
                                 <h4><strong>Price: <%=product.getPrice()%> VND</strong></h4>
                             </div>
                             <div class="span5">
@@ -90,7 +91,7 @@
                                     <p>&nbsp;</p>
                                     <label>Quantity: </label>
                                     <input type="hidden" name="id" value="<%=product.getId()%>">
-                                    <input type="number" required name="quantity" min="1" class="span1" value="<%=oldQuantity%>">
+                                    <input type="number" required id="quantity" name="quantity" min="1" class="span1" value="<%=oldQuantity%>">
                                     <button class="btn btn-inverse" type="submit">Add to cart</button>
                                 </form>
                             </div>							
@@ -128,6 +129,14 @@
             </section>
             <jsp:include page="../_footer.jsp"/>
         </div>
-
+        <script>
+            function setMaxQuantity(){
+                let quantity = document.getElementById("quantity");
+                <% if(product.getQuantity() < oldQuantity){%>
+                        quantity.value = '<%=product.getQuantity()%>';
+                <%}%>
+                quantity.max ='<%=product.getQuantity()%>';
+            }
+        </script>
     </body>
 </html>  

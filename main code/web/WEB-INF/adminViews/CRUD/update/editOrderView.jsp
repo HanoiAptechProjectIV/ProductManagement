@@ -129,10 +129,9 @@
                             <select class="statusOption" required name="statusOptionId${orderDetail.id}" 
                                     onchange="changeStatusText();calculateAmount();">
                                 <option value="Pending">Pending</option>  
+                                <option value="Pending">Confirmed</option>  
                                 <option value="Canceled">Canceled</option>  
-                                <option value="Shipping">Shipping</option>  
                                 <option value="Success">Success</option>  
-                                <option value="Refund">Refund</option>  
                             </select>  
                         </td>
                     </tr>
@@ -252,8 +251,7 @@
                     i = 0;
                     let amountNum = 0;
                     Array.prototype.forEach.call(nameSelects, function (option) {
-                        if (statusSelects[i].value !== "Refund"
-                                && statusSelects[i].value !== "Canceled"
+                        if (statusSelects[i].value !== "Canceled"
                                 && statusSelects[i].value !== ""
                                 && option.value !== "") {
                             amountNum += namePriceMap.get(option.value) * quantityNumbers[i].value;

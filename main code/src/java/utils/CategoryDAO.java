@@ -18,6 +18,18 @@ import java.util.List;
  * @author Hung
  */
 public class CategoryDAO {
+    public static int countDisplayRows(Connection conn) throws SQLException {
+        String sql = "SELECT COUNT(*) As [rowcount] FROM Category where disable =0";
+        PreparedStatement pstm = conn.prepareStatement(sql);
+        ResultSet rs = pstm.executeQuery();
+        
+        int row = 0;
+        while(rs.next()){
+            row = rs.getInt("rowcount");
+        }
+        return row;
+    }    
+    
     public static int countRows(Connection conn) throws SQLException {
         String sql = "SELECT COUNT(*) As [rowcount] FROM Category";
         PreparedStatement pstm = conn.prepareStatement(sql);
@@ -30,8 +42,54 @@ public class CategoryDAO {
         return row;
     }
     
+    public static List<Category> queryDisplayCategory(Connection conn) throws SQLException {
+        String sql = "Select * from Category where disable = 0 order by name";
+ 
+        PreparedStatement pstm = conn.prepareStatement(sql);
+ 
+        ResultSet rs = pstm.executeQuery();
+        List<Category> list = new ArrayList<Category>();
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String name = rs.getString("name");
+            String description = rs.getString("description");
+            boolean disable = rs.getBoolean("disable");
+            
+            Category category = new Category();
+            category.setId(id);
+            category.setName(name);
+            category.setDescription(description);
+            category.setDisable(disable);
+            list.add(category);
+        }
+        return list;
+    } 
+    
     public static List<Category> queryCategory(Connection conn) throws SQLException {
         String sql = "Select * from Category order by name";
+ 
+        PreparedStatement pstm = conn.prepareStatement(sql);
+ 
+        ResultSet rs = pstm.executeQuery();
+        List<Category> list = new ArrayList<Category>();
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String name = rs.getString("name");
+            String description = rs.getString("description");
+            boolean disable = rs.getBoolean("disable");
+            
+            Category category = new Category();
+            category.setId(id);
+            category.setName(name);
+            category.setDescription(description);
+            category.setDisable(disable);
+            list.add(category);
+        }
+        return list;
+    } 
+    
+    public static List<Category> queryDisplayCategory(Connection conn, int offset, int total, String sortBy, String ordinal) throws SQLException {
+        String sql = "Select * from Category where disable = 0 order by "+sortBy+" "+ordinal+" offset "+offset+" rows fetch next "+total+" rows only";
  
         PreparedStatement pstm = conn.prepareStatement(sql);
  

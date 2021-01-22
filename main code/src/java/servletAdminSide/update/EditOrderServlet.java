@@ -155,7 +155,7 @@ public class EditOrderServlet extends HttpServlet {
                         OrderDetail orderDetail = new OrderDetail(idOrderDetail, id, productId, purchasedQuantity, status);
                         OrderDetailDAO.updateOrderDetail(conn, orderDetail);
 
-                        if (!status.equals("Refund") && !status.equals("Canceled")) {
+                        if (!status.equals("Canceled")) {
                             product.setQuantity(product.getQuantity() - (purchasedQuantity - detail.getPurchasedQuantity()));
                             ProductDAO.updateProduct(conn, product);
                         } else {
