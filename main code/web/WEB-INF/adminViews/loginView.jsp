@@ -33,7 +33,6 @@
                 <a href="${pageContext.request.contextPath}/admin/" class="btn btn-outline-warning">Cancel</a>
             </form>
 
-            <p style="color: blue">User Name: admin, password: 123</p>
         </div>
 
 

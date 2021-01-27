@@ -22,5 +22,6 @@
     }
     #searchInput{
         display: inline; float: left; padding-right: 0px; margin-right: 0px; height: 30px;
+        color: black;
     }
 </style>

@@ -73,8 +73,8 @@
                         <label>Date added</label>
                         <div class="col-md-12">
                             <div class="row">
-                            <input type="text" id="dateAddedInput" name="dateAdded" value="${product.dateAdded}" class="form-control col-md-9"/>
-                        <input class="btn btn-outline-primary col-md-3" type="button" onclick="getCurrentTime();" value="Get Current Time"/>
+                            <input type="text" id="dateAddedInput" name="dateAdded" value="${product.dateAdded}" class="form-control col-md-7"/>
+                        <input class="btn btn-outline-primary col-md-5" type="button" onclick="getCurrentTime();" value="Get Current Time"/>
                         </div>
                     </div>
                         

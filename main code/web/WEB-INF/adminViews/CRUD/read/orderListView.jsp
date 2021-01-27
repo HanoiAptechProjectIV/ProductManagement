@@ -37,8 +37,8 @@
             
         <div class="container">
             <div class='span12'>
-            <table class="" border="1" cellpadding="5" cellspacing="1" >
-                <tr class="">
+            <table class=" table-bordered table-striped table-hover" border="1" cellpadding="5" cellspacing="1" >
+                <tr class="table-info">
                     <c:set var="pageNum" value="${(page != null) ? page : 1}"/>
                     <th>Id
                         <a href="${pageContext.request.contextPath}/admin/orderList?page=${pageNum}&sortBy=idASC"

@@ -186,7 +186,7 @@
 
             <script>
                 const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-                const phoneRegex = /(84|0)+([1-9]{1})([0-9]{8})\b/g;
+                const phoneRegex = /(84|0)+([1-9]{1})([0-9]{8})*$\b/g;
                 const fullNameRegex = /(^[A-Za-z]{3,16})([ ]{0,1})([A-Za-z]{3,16})?([ ]{0,1})?([A-Za-z]{3,16})?([ ]{0,1})?([A-Za-z]{3,16})/;
                 const submitButton = document.querySelector('#submit-button');
                 const phoneError = document.querySelector('#phone-error');
@@ -226,25 +226,6 @@
                 }
 
                 const checkValid = () => {
-                    if (fullname.value === '') {
-                        fullNameError.textContent = 'Name must not be blank';
-                        return false;
-                    } else if(!fullNameRegex.test(fullname.value)){
-                        fullNameError.textContent = 'Invalid full name (full name must has atleast 2 words with 3 characters each word)';
-                    } else {
-                        fullNameError.textContent = '';
-                    }
-
-                    if (email.value === '') {
-                        emailError.textContent = 'Email must not be blank';
-                        return false;
-                    } else if (!emailRegex.test(String(email.value).toLocaleLowerCase())) {
-                        emailError.textContent = 'Invalid email (valid example: -_mY.ownsite12@you.me.com)';
-                        return false;
-                    } else {
-                        emailError.textContent = '';
-                    }
-
                     if (phone.value === '') {
                         phoneError.textContent = 'Phone must not be blank';
                         return false;
@@ -253,7 +234,28 @@
                         return false;
                     } else {
                         phoneError.textContent = '';
+                    }                    
+                    
+//                    if (fullname.value === '') {
+//                        fullNameError.textContent = 'Name must not be blank';
+//                        return false;
+//                    } else if(!fullNameRegex.test(fullname.value)){
+//                        fullNameError.textContent = 'Invalid full name (full name must has atleast 2 words with 3 characters each word)';
+//                    } else {
+//                        fullNameError.textContent = '';
+//                    }
+
+                    if (email.value === '') {
+                        emailError.textContent = 'Email must not be blank';
+                        return false;
+                    } else if (!emailRegex.test(email.value)) {
+                        emailError.textContent = 'Invalid email (valid example: -_mY.ownsite12@you.me.com)';
+                        return false;
+                    } else {
+                        emailError.textContent = '';
                     }
+
+
 
                     return true;
                 };

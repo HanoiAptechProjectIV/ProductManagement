@@ -76,11 +76,11 @@
                     <label>Payment time</label>
                     <div class="col-md-12">
                         <div class="row">
-                            <input class="form-control col-md-9" id="paymentTimeInput" type="text" name="paymentTime" value="<%
+                            <input class="form-control col-md-7" id="paymentTimeInput" type="text" name="paymentTime" value="<%
                             LocalDateTime ldt = LocalDateTime.of(1970, 1, 1, 0, 0, 0);
                             if (!order.getPaymentTime().equals(ldt)) {
                                 %><%=order.getPaymentTime()%><%}%>" /><br>
-                            <input class="btn btn-outline-primary col-md-3" type="button" onclick="getCurrentTime();" value="Get Current Time"/>
+                            <input class="btn btn-outline-primary col-md-5" type="button" onclick="getCurrentTime();" value="Get Current Time"/>
                         </div>
                     </div>
                     
@@ -121,7 +121,7 @@
                                         height="30" alt="<%=prod.getName()%> image"/>
                                     <p> | Quantity: <%=prod.getQuantity()%></p>
                                 </div>
-                                <select class="productNameOption form-control col-md-5" required name="productNameOptionId${orderDetail.id}"
+                                <select style="font-size: 15.5px;" class="productNameOption form-control col-md-7" required name="productNameOptionId${orderDetail.id}"
                                         onchange="findMaxValueQuantity();changeProductNameAnchor();calculateAmount();">
                                     <%for (Product product : listProduct) {%>
                                     <option value="<%=product.getName()%>"><%=product.getName()%></option>  
@@ -133,7 +133,8 @@
                         <td style="width: 14%">
                             <div class="col-md-12">
                                 <div class="form-group row">
-                                <input class="priceTxt form-control col-sm-8" type="text" readonly value="<%=prod.getPrice()%>" size="10"/>
+                                    <input class="priceTxt form-control col-sm-8" type="text" readonly value="<%=prod.getPrice()%>"
+                                           size="15" style="font-size: 15.5px;"/>
                                 <p class="col-sm-4" style="margin-top: 6px;">VND</p>
                             </div>
                             </div>
@@ -153,7 +154,7 @@
                                 <select class="statusOption form-control col-md-5" required name="statusOptionId${orderDetail.id}" 
                                     onchange="changeStatusText();calculateAmount();">
                                 <option value="Pending">Pending</option>  
-                                <option value="Pending">Confirmed</option>  
+                                <option value="Confirmed">Confirmed</option>  
                                 <option value="Canceled">Canceled</option>  
                                 <option value="Success">Success</option> 
                             </select>
@@ -166,6 +167,10 @@
                         }%>
                 </table>
                 <tr></tr>
+                <style>
+                    #addedTable{
+                    }
+                </style>
                 <table class="table table-bordered table-striped table-hover" id="addProductTable" border="1" cellpadding="5" cellspacing="1">
                     <tr><strong>Add product</=></strong></tr>
                     <tr class="table-info">
@@ -178,7 +183,7 @@
                     <tr>
                         <div class="form-group" style="display: flex; flex-direction: row;">
                             <input class="btn btn-outline-primary" type="button" onclick="addRow();" value="Add +"/>
-                            <input class="form-control col-sm-6" id="countRowTxt" type="text" value="0" name="countRow"/>
+                            <input class="form-control col-sm-2" id="countRowTxt" type="text" value="0" name="countRow"/>
                         </div>
                     </tr>
                 </table>

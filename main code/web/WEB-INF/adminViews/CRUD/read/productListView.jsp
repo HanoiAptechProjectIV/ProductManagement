@@ -109,7 +109,7 @@
                                 <a href="categoryList?search=<%=cate.getName()%>"><%=cate.getName()%></a>
                             </div>
                             <div id="categoryDiv">
-                                <p><%=cate.getDescription()%></p>
+                                <p><%=cate.getDescription()%></p><hr>
                                 <p><%=(cate.isDisable()) ? "disabled" : "displayed"%></p>
                             </div>
                         </td>
@@ -120,8 +120,8 @@
                             <div id="brandDiv">
                                 <img src="<%=bra.getLogo()%>"
                                      alt="<%=bra.getName()%> Logo" height="30"/>
-                                <p><%=bra.getManufacturer()%></p>
-                                <p><%=bra.getDescription()%></p>
+                                <p><%=bra.getManufacturer()%></p><hr>
+                                <p><%=bra.getDescription()%></p><hr>
                                 <p><%=(bra.isDisable()) ? "disabled" : "displayed"%></p>
                             </div>
                         </td>

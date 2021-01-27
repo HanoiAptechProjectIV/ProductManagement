@@ -24,8 +24,6 @@
   <div style="float: left; height: 60px; padding-top: 20px; text-align: right; margin:0 40px 40px;">
  
      <!-- Admin store in session with attribute: loginedAdmin -->
-    <b>${loginedAdmin.username}</b>
-   <br/>
  
   </div>
  

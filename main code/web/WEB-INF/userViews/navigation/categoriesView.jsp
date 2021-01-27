@@ -34,7 +34,7 @@
                                     <c:if test="${categoryList.size() > 0}">
                                         <c:forEach items="${categoryList}" var="category" >
                                             <c:if test="${category != null}">                                    
-                                                <li class="span3" style="min-height: 300px;">
+                                                <li class="span3" style="min-height: 150px;">
                                                     <div class="product-box">
 
                                                         <p><a href="${pageContext.request.contextPath}/categories?search=${category.name}">

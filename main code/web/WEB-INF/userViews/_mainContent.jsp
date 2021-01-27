@@ -49,7 +49,7 @@
                                         for (int i = 0; i < entry.getValue().size(); i++) {
                                             Product prod = entry.getValue().get(i);
                                     %>
-                                    <li class="span3" style="min-height: 300px;">
+                                    <li class="span3" style="min-height: 420px;">
                                         <div class="product-box" style="min-height: inherit;">
 
                                             <p><a href="${pageContext.request.contextPath}/products?search=<%=prod.getName()%>"
@@ -107,7 +107,7 @@
                                         for (int i = 4; i < entry.getValue().size(); i++) {
                                             Product prod = entry.getValue().get(i);
                                     %>
-                                    <li class="span3" style="min-height: 300px;">
+                                    <li class="span3" style="min-height: 420px;">
                                         <div class="product-box" style="min-height: inherit;">
 
                                             <p><a href="${pageContext.request.contextPath}/products?search=<%=prod.getName()%>"

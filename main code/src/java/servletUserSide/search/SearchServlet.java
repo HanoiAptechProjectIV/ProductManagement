@@ -42,9 +42,7 @@ public class SearchServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getServletContext()
-                .getRequestDispatcher("/WEB-INF/userViews/index.jsp");
-        dispatcher.forward(request, response);        
+            response.sendRedirect(request.getContextPath() +"/cart");        
     }
 
     @Override
@@ -54,53 +52,42 @@ public class SearchServlet extends HttpServlet {
 
         String errorString = null;
         String returnPage="";
-        List<Product> returnProd = null;
-        List<Category> returnCate = null;
-        List<Brand> returnBra = null;
+        List<Product> returnProd = new ArrayList<>();
+        List<Category> returnCate = new ArrayList<>();
+        List<Brand> returnBra = new ArrayList<>();
         try {
             String name = request.getParameter("name");
             
             List<Product> prodList = ProductDAO.queryDisplayProduct(conn);
             List<Brand> braList = BrandDAO.queryDisplayBrand(conn);
             List<Category> cateList = CategoryDAO.queryDisplayCategory(conn);
-            Product product = null;
-            Brand brand = null;
-            Category category = null;
             
             for(Product prod : prodList){
-                if(prod.getName().equals(name)){
-                    product = prod;
+                if((prod.getName().toLowerCase()).contains(name.toLowerCase())){
+                    returnProd.add(prod);
+                    request.setAttribute("productList", returnProd);
+                    returnPage = "navigation/productsView.jsp";
                 }
             }         
             for(Brand bra : braList){
-                if(bra.getName().equals(name)){
-                    brand = bra;
+                if((bra.getName().toLowerCase()).contains(name.toLowerCase())){
+                    returnBra.add(bra); 
+                    request.setAttribute("brandList", returnBra);
+                    returnPage = "navigation/brandsView.jsp";
                 }
             }
             for(Category cate : cateList){
-                if(cate.getName().equals(name)){
-                    category = cate;
+                if((cate.getName().toLowerCase()).contains(name.toLowerCase())){
+                    returnCate.add(cate);  
+                    request.setAttribute("categoryList", returnCate);
+                    returnPage = "navigation/categoriesView.jsp";
                 }
             }
-    
-            if(product != null){
-                returnPage = "detail/productDetailView.jsp";
-                returnProd = new ArrayList<>();
-                returnProd.add(product);
-                request.setAttribute("productList", returnProd);
-            } else if(brand != null){
-                returnPage = "detail/brandDetailView.jsp";
-                returnBra = new ArrayList<>();
-                returnBra.add(brand); 
-                request.setAttribute("brandList", returnBra);
-            } else if(category != null){
-                returnPage = "detail/categoryDetailView.jsp";
-                returnCate = new ArrayList<>();
-                returnCate.add(category);  
-                request.setAttribute("categoryList", returnCate);
-            } else {
+            
+            if(returnProd.isEmpty() && returnBra.isEmpty() && returnCate.isEmpty()){
                 returnPage = "detail/notFoundView.jsp";
             }
+    
         } catch (Exception e) {
             e.printStackTrace();
             errorString = e.getMessage();

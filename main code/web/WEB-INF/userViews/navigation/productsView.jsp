@@ -52,7 +52,7 @@
                                         }
                                         for (Product prod : productList) {
                                     %>
-                                    <li class="span3" style="min-height: 300px;">
+                                    <li class="span3" style="min-height: 420px;">
                                         <div class="product-box" style="min-height: inherit;">
 
                                             <p><a href="${pageContext.request.contextPath}/products?search=<%=prod.getName()%>"
@@ -82,15 +82,15 @@
                                                 if (cart == null || cart.isEmpty()) {
                                             %>
                                             <a href="cart?action=buy&id=<%=prod.getId()%>"
-                                               ><button id="btnAdd<%=prod.getId()%>" class="btn">Add to cart</button></a>
+                                               ><button type="button" id="btnAdd<%=prod.getId()%>" class="btn">Add to cart</button></a>
                                             <%} else {%>
                                             <a href="cart?action=buy&id=<%=prod.getId()%>"
-                                               ><button id="btnAdd<%=prod.getId()%>" class="btn">Add to cart</button></a>                                            
+                                               ><button type="button" id="btnAdd<%=prod.getId()%>" class="btn">Add to cart</button></a>                                            
                                             <%for (CartItem item : cart) {
                                                     if (item.getProduct().getId() == prod.getId()) {
                                             %>
                                             <a href="cart?action=remove&id=<%=prod.getId()%>"
-                                               ><button id="btnRemove<%=prod.getId()%>" class="btn">Remove from cart</button></a>                                          
+                                               ><button type="button" id="btnRemove<%=prod.getId()%>" class="btn">Remove from cart</button></a>                                          
                                             <% break;
                                                 } %>
                                             <%}%>
